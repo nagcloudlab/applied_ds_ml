@@ -95,3 +95,62 @@ Use local SVG icons consistently:
 - Keep one concept tied to one code block.
 - Avoid advanced modeling terms in Day 1 unless the topic requires them.
 - Prefer practical examples over abstract theory.
+
+## Rendered Examples
+
+The raw markdown below produces each block type. Copy these exactly when authoring new notebooks.
+
+### Concept Card
+
+```html
+<div style="background:#EAF3FF; border-left:6px solid #2F80ED; padding:14px; border-radius:6px;">
+<img src="../../../assets/icons/concept.svg" width="22" style="vertical-align:middle; margin-right:6px;"><b>Concept</b><br>
+A variable is a name that stores a value.
+</div>
+```
+
+### Code Lab
+
+```html
+<div style="background:#E9F8EF; border-left:6px solid #27AE60; padding:14px; border-radius:6px;">
+<img src="../../../assets/icons/code.svg" width="22" style="vertical-align:middle; margin-right:6px;"><b>Code Lab</b><br>
+Create a few variables for a customer purchase example.
+</div>
+```
+
+### Read the Output
+
+```html
+<div style="background:#FFF8E1; border-left:6px solid #F2C94C; padding:14px; border-radius:6px;">
+<img src="../../../assets/icons/read-output.svg" width="22" style="vertical-align:middle; margin-right:6px;"><b>Read the Output</b><br>
+Check how each variable name makes the stored value understandable.
+</div>
+```
+
+### Practice Task
+
+```html
+<div style="background:#F7FBFF; border-left:6px solid #56CCF2; padding:14px; border-radius:6px;">
+<img src="../../../assets/icons/practice.svg" width="22" style="vertical-align:middle; margin-right:6px;"><b>Try It</b><br>
+Change one value in the list and predict how the total will change before running the cell again.
+</div>
+```
+
+## Complete Concept Cycle Example
+
+This shows the full block sequence from Notebook 02 Concept 1 (Python Variables).
+
+**Step 1: Concept Card** -- introduces the idea.
+
+**Step 2: Code Lab** -- states the goal before the student runs code.
+
+**Step 3: Read the Output** -- directs interpretation of the result.
+
+**Step 4: Try It** -- gives one small student action.
+
+| Block | Color | Border | Purpose |
+|---|---|---|---|
+| Concept Card | Blue (`#EAF3FF`) | `#2F80ED` | Define the idea in simple language |
+| Code Lab | Green (`#E9F8EF`) | `#27AE60` | State the goal before the student runs code |
+| Read the Output | Yellow (`#FFF8E1`) | `#F2C94C` | Guide interpretation of the result |
+| Try It | Light blue (`#F7FBFF`) | `#56CCF2` | Give one small student action |

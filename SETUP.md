@@ -1,3 +1,5 @@
+This project is tested with Python 3.11. Python 3.10 also works. Python 3.12+ may work but is not tested. Python 3.9 or older is not supported.
+
 # Student Environment Setup Guide
 
 Use this guide before running the notebooks.
@@ -37,6 +39,54 @@ If Python 3.11 is available, create a virtual environment:
 ```powershell
 py -3.11 -m venv .venv
 ```
+
+## macOS and Linux Setup
+
+Open a terminal inside the `applied_ds_ml` project folder.
+
+Check whether Python 3.11 is installed:
+
+```bash
+python3.11 --version
+```
+
+If Python 3.11 is available, create a virtual environment:
+
+```bash
+python3.11 -m venv .venv
+```
+
+Activate the environment:
+
+```bash
+source .venv/bin/activate
+```
+
+Upgrade packaging tools:
+
+```bash
+python -m pip install --upgrade pip setuptools wheel
+```
+
+Install required libraries:
+
+```bash
+pip install -r requirements.txt
+```
+
+Register the environment as a Jupyter kernel:
+
+```bash
+python -m ipykernel install --user --name applied_ds_ml --display-name "Python (applied_ds_ml)"
+```
+
+Start Jupyter:
+
+```bash
+jupyter notebook
+```
+
+Note: on macOS, use `python3` instead of `py` if `python3.11` is not available on your PATH.
 
 ## If Python 3.11 Is Not Found
 
@@ -158,3 +208,25 @@ Complete these checks before starting the first notebook:
 - Jupyter opens successfully.
 - The kernel `Python (applied_ds_ml)` is available.
 - The first Day 1 notebook opens without errors.
+
+## Troubleshooting
+
+### Proxy or SSL errors
+
+If `pip install` fails with SSL or certificate errors behind a corporate proxy:
+
+```bash
+pip install -r requirements.txt --trusted-host pypi.org --trusted-host files.pythonhosted.org
+```
+
+### Wrong kernel in notebook
+
+If imports fail inside a notebook but work in the terminal, the notebook may be using the wrong kernel. In Jupyter, click Kernel > Change Kernel and select `Python (applied_ds_ml)`.
+
+### Import errors after install
+
+Make sure the virtual environment is activated before starting Jupyter. The terminal prompt should show `(.venv)`. If it does not, activate the environment first.
+
+### pip install hangs
+
+Check your network connection and proxy settings. Try running `pip install numpy` alone first to confirm connectivity.

@@ -69,6 +69,8 @@ Future module planning:
 
 - `course_roadmap/FUTURE_MODULES_FROM_CHAT.md`
 
+PyCaret is not used in Day 1. It is an optional library for later days. See `requirements-optional-pycaret.txt`.
+
 ### Later Days
 
 Later days will be added one notebook at a time:

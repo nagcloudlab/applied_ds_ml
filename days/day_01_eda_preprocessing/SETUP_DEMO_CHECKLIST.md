@@ -4,6 +4,10 @@ Use this as a trainer checklist before opening Notebook 01.
 
 This is not a slide deck. It is a live demo flow.
 
+**How this differs from SETUP.md:** SETUP.md is the full student setup reference (all platforms, troubleshooting). This checklist is a streamlined trainer script for the live classroom demo. For detailed troubleshooting, refer students to SETUP.md.
+
+**Estimated demo time:** 20-40 minutes (depending on classroom network speed and student questions).
+
 ## Demo Goal
 
 Help learners confirm that their environment is ready for hands-on notebooks.

@@ -10,6 +10,10 @@ The goal is not to memorize code. The goal is to learn a repeatable workflow:
 QUESTION -> DATA -> CODE -> EVIDENCE -> DECISION
 ```
 
+## Prerequisites
+
+No prior Python experience is needed. Familiarity with spreadsheets (rows, columns, basic formulas) is helpful but not required.
+
 ## Day 1 Start Flow
 
 Before the first notebook, the session starts with:
@@ -48,6 +52,18 @@ Run the notebooks in this order.
 6. `notebooks/06_scaling_normalization_encoding.ipynb`
 7. `notebooks/07_day_01_mini_eda_project.ipynb`
 
+## Estimated Time per Notebook
+
+| Notebook | Topic | Estimated Time |
+|---|---|---|
+| 01 | Ecosystem and setup | 25-35 min |
+| 02 | Python, NumPy, Pandas | 45-60 min |
+| 03 | Inspection and cleaning | 60-75 min |
+| 04 | Basic statistics | 75-90 min |
+| 05 | Visualization | 75-90 min |
+| 06 | Scaling and encoding | 60-75 min |
+| 07 | Mini EDA project | 60-90 min |
+
 ## How to Use Each Notebook
 
 For every concept:
@@ -83,6 +99,20 @@ Notebook 03 creates:
 Notebook 06 creates:
 
 - `data/customer_activity_preprocessed.csv`
+
+## If Something Goes Wrong
+
+### Wrong kernel selected
+
+In Jupyter, click Kernel > Change Kernel > select `Python (applied_ds_ml)`.
+
+### Notebook produces errors after edits
+
+Click Kernel > Restart & Run All to re-run every cell from top to bottom.
+
+### File not found error
+
+Some notebooks load files created by earlier notebooks. If you see `FileNotFoundError`, go back and run the earlier notebook that creates the file. Check the DATA_DICTIONARY.md for which notebook creates each file.
 
 ## Expected Skills After Each Notebook
 

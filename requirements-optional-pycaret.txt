@@ -1,4 +1,5 @@
-# Optional only.
-# Use this later for the PyCaret lab if the classroom machines support it.
-# Recommended Python for PyCaret labs: Python 3.10 or Python 3.11.
-pycaret
+# Optional: PyCaret automated ML library
+# Use this ONLY when reaching the optional PyCaret lab (not in Day 1).
+# Recommended Python: 3.10 or 3.11
+# Warning: PyCaret installs many dependencies (~500 MB, may take 5-10 minutes).
+pycaret==3.3.2

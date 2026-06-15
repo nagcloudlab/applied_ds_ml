@@ -56,6 +56,8 @@ Use this order before Notebook 01:
 3. Run the live setup demo using `SETUP_DEMO_CHECKLIST.md`.
 4. Open Notebook 01 and verify the kernel.
 
+Slide deck files are located in `days/day_01_eda_preprocessing/slides/`.
+
 Trainer line:
 
 ```text
@@ -175,6 +177,26 @@ Answer:
 We preserve raw data so we can audit or redo cleaning later.
 ```
 
+## Adaptive Teaching Strategies
+
+### Fast learners
+
+- Ask them to write extra observations after each code cell.
+- Challenge them to predict the output before running the cell.
+- Let them attempt the Practice Task independently while you help others.
+
+### Struggling learners
+
+- Slow the pace. Focus on reading output, not writing code from scratch.
+- Pair them with a faster learner for practice tasks.
+- Skip optional "Try It" prompts and focus on the main Code Lab cells.
+
+### Time is short
+
+- Focus on Notebooks 01-04 and 07. Notebooks 05 and 06 can be assigned as take-home practice.
+- In each notebook, run the Code Lab cells but reduce practice task time.
+- Always keep the mini EDA project (NB07) because it ties everything together.
+
 ## Board Explanation Ideas
 
 Draw these during class:
@@ -257,6 +279,10 @@ Say:
 ```text
 Use only data you are allowed to use. Avoid exposing private information.
 ```
+
+### PyCaret
+
+PyCaret is not used in Day 1. It is an optional tool for later days. If students ask about it, say: "PyCaret is an automated ML library. We will not use it today. Focus on understanding the manual workflow first."
 
 ## Day 1 Trainer Checklist
 
