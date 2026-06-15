@@ -55,12 +55,19 @@ Current notebook:
 
 Day 1 support handouts:
 
+- `days/day_01_eda_preprocessing/slides/SECTION_01_AI_WORLD_AND_DATA_SCIENCE.md`
+- `days/day_01_eda_preprocessing/slides/SECTION_02_DATA_SCIENCE_LIFECYCLE_AND_PROJECT_FLOW.md`
+- `days/day_01_eda_preprocessing/SETUP_DEMO_CHECKLIST.md`
 - `days/day_01_eda_preprocessing/DAY_01_STUDENT_GUIDE.md`
 - `days/day_01_eda_preprocessing/DAY_01_TRAINER_GUIDE.md`
 - `days/day_01_eda_preprocessing/DATA_DICTIONARY.md`
 - `days/day_01_eda_preprocessing/GLOSSARY.md`
 - `days/day_01_eda_preprocessing/BEYOND_TOC_NOTES.md`
 - `days/day_01_eda_preprocessing/solutions/DAY_01_PRACTICE_ANSWERS.md`
+
+Future module planning:
+
+- `course_roadmap/FUTURE_MODULES_FROM_CHAT.md`
 
 ### Later Days
 

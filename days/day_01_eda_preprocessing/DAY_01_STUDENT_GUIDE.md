@@ -10,6 +10,17 @@ The goal is not to memorize code. The goal is to learn a repeatable workflow:
 QUESTION -> DATA -> CODE -> EVIDENCE -> DECISION
 ```
 
+## Day 1 Start Flow
+
+Before the first notebook, the session starts with:
+
+1. AI world and where Data Science fits
+2. Data Science lifecycle and project flow
+3. Live setup demo
+4. Notebook 01 environment check
+
+This order helps you understand why the tools matter before using them.
+
 ## What You Will Learn
 
 By the end of Day 1, you should be able to:
@@ -169,4 +180,3 @@ Before moving to Day 2, confirm that you can:
 - Create and interpret common charts.
 - Scale and encode columns.
 - Write a short EDA summary.
-

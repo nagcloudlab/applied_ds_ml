@@ -16,7 +16,9 @@ Do not rush to algorithms. Understand the data first.
 
 | Segment | Notebook | Suggested time |
 |---|---|---|
-| Setup and ecosystem | 01 | 35-45 min |
+| Opening slides: AI world and Data Science lifecycle | Slides | 60-90 min |
+| Live setup demo | Checklist | 20-40 min |
+| Ecosystem and notebook orientation | 01 | 25-35 min |
 | Python, NumPy, Pandas | 02 | 45-60 min |
 | Inspection and cleaning | 03 | 60-75 min |
 | Basic statistics | 04 | 75-90 min |
@@ -44,6 +46,21 @@ For every concept, follow this pattern:
 4. Read the output.
 5. Ask students to explain the output.
 6. Write one plain-English observation.
+
+## Opening Flow
+
+Use this order before Notebook 01:
+
+1. Present `slides/SECTION_01_AI_WORLD_AND_DATA_SCIENCE.md`.
+2. Present `slides/SECTION_02_DATA_SCIENCE_LIFECYCLE_AND_PROJECT_FLOW.md`.
+3. Run the live setup demo using `SETUP_DEMO_CHECKLIST.md`.
+4. Open Notebook 01 and verify the kernel.
+
+Trainer line:
+
+```text
+Slides create the map. The setup demo prepares the vehicle. The notebook starts the journey.
+```
 
 ## Core Talk Tracks
 
@@ -262,4 +279,3 @@ During class:
 After class:
 
 - Students should submit the mini EDA report from Notebook 07.
-

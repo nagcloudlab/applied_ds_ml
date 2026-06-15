@@ -32,6 +32,9 @@ Use these files to support teaching and self-study.
 
 | File | Purpose |
 |---|---|
+| `slides/SECTION_01_AI_WORLD_AND_DATA_SCIENCE.md` | Main opening slide deck for AI world and Data Science positioning |
+| `slides/SECTION_02_DATA_SCIENCE_LIFECYCLE_AND_PROJECT_FLOW.md` | Slide deck for Data Science lifecycle and project flow |
+| `SETUP_DEMO_CHECKLIST.md` | Trainer checklist for the live setup demo before Notebook 01 |
 | `DAY_01_STUDENT_GUIDE.md` | Student-facing overview, notebook order, expected skills, and checklist |
 | `DAY_01_TRAINER_GUIDE.md` | Trainer timing, talk tracks, teaching prompts, and common doubts |
 | `DATA_DICTIONARY.md` | Explanation of dataset files and columns |
