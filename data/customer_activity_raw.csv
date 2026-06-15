@@ -1,0 +1,11 @@
+customer_id,name,city,membership,monthly_spend,visits_per_month,signup_month
+101,Asha, Mumbai,Gold,1200.0,4.0,Jan
+102,Ravi,delhi,Silver,850.0,3.0,Feb
+103,Meera,Chennai,Gold,1450.0,5.0,Feb
+104,John,Mumbai,Bronze,700.0,2.0,Mar
+105,Fatima,,Silver,,6.0,Apr
+106,Chen,chennai,gold,1600.0,5.0,Apr
+106,Chen,chennai,gold,1600.0,5.0,Apr
+107,Sara,Delhi ,,950.0,,May
+108,Vikram,Mumbai,Bronze,-200.0,1.0,Jun
+109,Nina,Delhi,Silver,1100.0,4.0,Jun
