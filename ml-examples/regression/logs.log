@@ -1,0 +1,1370 @@
+2026-06-17 21:29:13,256:WARNING:
+'cuml' is a soft dependency and not included in the pycaret installation. Please run: `pip install cuml` to install.
+2026-06-17 21:29:13,256:WARNING:
+'cuml' is a soft dependency and not included in the pycaret installation. Please run: `pip install cuml` to install.
+2026-06-17 21:29:13,256:WARNING:
+'cuml' is a soft dependency and not included in the pycaret installation. Please run: `pip install cuml` to install.
+2026-06-17 21:29:13,256:WARNING:
+'cuml' is a soft dependency and not included in the pycaret installation. Please run: `pip install cuml` to install.
+2026-06-17 21:29:13,587:INFO:PyCaret RegressionExperiment
+2026-06-17 21:29:13,587:INFO:Logging name: reg-default-name
+2026-06-17 21:29:13,587:INFO:ML Usecase: MLUsecase.REGRESSION
+2026-06-17 21:29:13,588:INFO:version 3.3.2
+2026-06-17 21:29:13,588:INFO:Initializing setup()
+2026-06-17 21:29:13,588:INFO:self.USI: 850c
+2026-06-17 21:29:13,588:INFO:self._variable_keys: {'memory', 'fold_groups_param', '_ml_usecase', 'X', 'X_train', 'USI', 'idx', 'n_jobs_param', 'logging_param', 'pipeline', 'seed', 'html_param', 'data', 'X_test', '_available_plots', 'log_plots_param', 'fold_shuffle_param', 'gpu_n_jobs_param', 'y_train', 'fold_generator', 'target_param', 'transform_target_param', 'exp_name_log', 'exp_id', 'gpu_param', 'y', 'y_test'}
+2026-06-17 21:29:13,588:INFO:Checking environment
+2026-06-17 21:29:13,588:INFO:python_version: 3.11.9
+2026-06-17 21:29:13,588:INFO:python_build: ('tags/v3.11.9:de54cf5', 'Apr  2 2024 10:12:12')
+2026-06-17 21:29:13,588:INFO:machine: AMD64
+2026-06-17 21:29:13,604:INFO:platform: Windows-10-10.0.26200-SP0
+2026-06-17 21:29:13,605:INFO:Memory: svmem(total=34160107520, available=17634799616, percent=48.4, used=16525307904, free=17634799616)
+2026-06-17 21:29:13,605:INFO:Physical Core: 8
+2026-06-17 21:29:13,605:INFO:Logical Core: 16
+2026-06-17 21:29:13,605:INFO:Checking libraries
+2026-06-17 21:29:13,605:INFO:System:
+2026-06-17 21:29:13,605:INFO:    python: 3.11.9 (tags/v3.11.9:de54cf5, Apr  2 2024, 10:12:12) [MSC v.1938 64 bit (AMD64)]
+2026-06-17 21:29:13,605:INFO:executable: C:\Users\nagcl\lab\applied_ds_ml\.venv\Scripts\python.exe
+2026-06-17 21:29:13,605:INFO:   machine: Windows-10-10.0.26200-SP0
+2026-06-17 21:29:13,605:INFO:PyCaret required dependencies:
+2026-06-17 21:29:13,606:WARNING:C:\Users\nagcl\lab\applied_ds_ml\.venv\Lib\site-packages\_distutils_hack\__init__.py:30: UserWarning: Setuptools is replacing distutils. Support for replacing an already imported distutils is deprecated. In the future, this condition will fail. Register concerns at https://github.com/pypa/setuptools/issues/new?template=distutils-deprecation.yml
+  warnings.warn(
+
+2026-06-17 21:29:13,651:INFO:                 pip: 26.1.2
+2026-06-17 21:29:13,651:INFO:          setuptools: 82.0.1
+2026-06-17 21:29:13,651:INFO:             pycaret: 3.3.2
+2026-06-17 21:29:13,651:INFO:             IPython: 9.14.1
+2026-06-17 21:29:13,651:INFO:          ipywidgets: 8.1.8
+2026-06-17 21:29:13,651:INFO:                tqdm: 4.68.3
+2026-06-17 21:29:13,651:INFO:               numpy: 1.26.4
+2026-06-17 21:29:13,651:INFO:              pandas: 2.1.4
+2026-06-17 21:29:13,651:INFO:              jinja2: 3.1.6
+2026-06-17 21:29:13,651:INFO:               scipy: 1.11.4
+2026-06-17 21:29:13,651:INFO:              joblib: 1.3.2
+2026-06-17 21:29:13,651:INFO:             sklearn: 1.4.2
+2026-06-17 21:29:13,651:INFO:                pyod: 3.4.0
+2026-06-17 21:29:13,651:INFO:            imblearn: 0.14.2
+2026-06-17 21:29:13,651:INFO:   category_encoders: 2.7.0
+2026-06-17 21:29:13,651:INFO:            lightgbm: 4.6.0
+2026-06-17 21:29:13,651:INFO:               numba: 0.65.1
+2026-06-17 21:29:13,651:INFO:            requests: 2.34.2
+2026-06-17 21:29:13,651:INFO:          matplotlib: 3.7.5
+2026-06-17 21:29:13,651:INFO:          scikitplot: 0.3.7
+2026-06-17 21:29:13,651:INFO:         yellowbrick: 1.5
+2026-06-17 21:29:13,651:INFO:              plotly: 6.8.0
+2026-06-17 21:29:13,652:INFO:    plotly-resampler: Not installed
+2026-06-17 21:29:13,652:INFO:             kaleido: 1.3.0
+2026-06-17 21:29:13,652:INFO:           schemdraw: 0.15
+2026-06-17 21:29:13,652:INFO:         statsmodels: 0.14.6
+2026-06-17 21:29:13,652:INFO:              sktime: 0.26.0
+2026-06-17 21:29:13,652:INFO:               tbats: 1.1.3
+2026-06-17 21:29:13,652:INFO:            pmdarima: 2.0.4
+2026-06-17 21:29:13,652:INFO:              psutil: 7.2.2
+2026-06-17 21:29:13,652:INFO:          markupsafe: 3.0.3
+2026-06-17 21:29:13,652:INFO:             pickle5: Not installed
+2026-06-17 21:29:13,652:INFO:         cloudpickle: 3.1.2
+2026-06-17 21:29:13,652:INFO:         deprecation: 2.1.0
+2026-06-17 21:29:13,652:INFO:              xxhash: 3.7.0
+2026-06-17 21:29:13,652:INFO:           wurlitzer: Not installed
+2026-06-17 21:29:13,652:INFO:PyCaret optional dependencies:
+2026-06-17 21:29:13,661:INFO:                shap: Not installed
+2026-06-17 21:29:13,661:INFO:           interpret: Not installed
+2026-06-17 21:29:13,661:INFO:                umap: Not installed
+2026-06-17 21:29:13,661:INFO:     ydata_profiling: Not installed
+2026-06-17 21:29:13,661:INFO:  explainerdashboard: Not installed
+2026-06-17 21:29:13,661:INFO:             autoviz: Not installed
+2026-06-17 21:29:13,661:INFO:           fairlearn: Not installed
+2026-06-17 21:29:13,661:INFO:          deepchecks: Not installed
+2026-06-17 21:29:13,661:INFO:             xgboost: Not installed
+2026-06-17 21:29:13,661:INFO:            catboost: Not installed
+2026-06-17 21:29:13,661:INFO:              kmodes: Not installed
+2026-06-17 21:29:13,661:INFO:             mlxtend: Not installed
+2026-06-17 21:29:13,661:INFO:       statsforecast: Not installed
+2026-06-17 21:29:13,661:INFO:        tune_sklearn: Not installed
+2026-06-17 21:29:13,661:INFO:                 ray: Not installed
+2026-06-17 21:29:13,661:INFO:            hyperopt: Not installed
+2026-06-17 21:29:13,661:INFO:              optuna: Not installed
+2026-06-17 21:29:13,661:INFO:               skopt: Not installed
+2026-06-17 21:29:13,661:INFO:              mlflow: Not installed
+2026-06-17 21:29:13,661:INFO:              gradio: Not installed
+2026-06-17 21:29:13,661:INFO:             fastapi: Not installed
+2026-06-17 21:29:13,661:INFO:             uvicorn: Not installed
+2026-06-17 21:29:13,661:INFO:              m2cgen: Not installed
+2026-06-17 21:29:13,661:INFO:           evidently: Not installed
+2026-06-17 21:29:13,661:INFO:               fugue: Not installed
+2026-06-17 21:29:13,661:INFO:           streamlit: Not installed
+2026-06-17 21:29:13,661:INFO:             prophet: Not installed
+2026-06-17 21:29:13,661:INFO:None
+2026-06-17 21:29:13,662:INFO:Set up data.
+2026-06-17 21:29:13,664:INFO:Set up folding strategy.
+2026-06-17 21:29:13,664:INFO:Set up train/test split.
+2026-06-17 21:29:13,666:INFO:Set up index.
+2026-06-17 21:29:13,666:INFO:Assigning column types.
+2026-06-17 21:29:13,667:INFO:Engine successfully changes for model 'lr' to 'sklearn'.
+2026-06-17 21:29:13,667:INFO:Engine for model 'lasso' has not been set explicitly, hence returning None.
+2026-06-17 21:29:13,670:INFO:Engine for model 'ridge' has not been set explicitly, hence returning None.
+2026-06-17 21:29:13,674:INFO:Engine for model 'en' has not been set explicitly, hence returning None.
+2026-06-17 21:29:13,715:INFO:Engine for model 'svm' has not been set explicitly, hence returning None.
+2026-06-17 21:29:13,746:INFO:Engine for model 'knn' has not been set explicitly, hence returning None.
+2026-06-17 21:29:13,746:WARNING:
+'xgboost' is a soft dependency and not included in the pycaret installation. Please run: `pip install xgboost` to install.
+Alternately, you can install this by running `pip install pycaret[models]`
+2026-06-17 21:29:13,746:WARNING:
+'catboost' is a soft dependency and not included in the pycaret installation. Please run: `pip install catboost` to install.
+Alternately, you can install this by running `pip install pycaret[models]`
+2026-06-17 21:29:13,747:INFO:Engine for model 'lasso' has not been set explicitly, hence returning None.
+2026-06-17 21:29:13,750:INFO:Engine for model 'ridge' has not been set explicitly, hence returning None.
+2026-06-17 21:29:13,753:INFO:Engine for model 'en' has not been set explicitly, hence returning None.
+2026-06-17 21:29:13,790:INFO:Engine for model 'svm' has not been set explicitly, hence returning None.
+2026-06-17 21:29:13,820:INFO:Engine for model 'knn' has not been set explicitly, hence returning None.
+2026-06-17 21:29:13,821:WARNING:
+'xgboost' is a soft dependency and not included in the pycaret installation. Please run: `pip install xgboost` to install.
+Alternately, you can install this by running `pip install pycaret[models]`
+2026-06-17 21:29:13,821:WARNING:
+'catboost' is a soft dependency and not included in the pycaret installation. Please run: `pip install catboost` to install.
+Alternately, you can install this by running `pip install pycaret[models]`
+2026-06-17 21:29:13,821:INFO:Engine successfully changes for model 'lasso' to 'sklearn'.
+2026-06-17 21:29:13,824:INFO:Engine for model 'ridge' has not been set explicitly, hence returning None.
+2026-06-17 21:29:13,827:INFO:Engine for model 'en' has not been set explicitly, hence returning None.
+2026-06-17 21:29:13,864:INFO:Engine for model 'svm' has not been set explicitly, hence returning None.
+2026-06-17 21:29:13,892:INFO:Engine for model 'knn' has not been set explicitly, hence returning None.
+2026-06-17 21:29:13,893:WARNING:
+'xgboost' is a soft dependency and not included in the pycaret installation. Please run: `pip install xgboost` to install.
+Alternately, you can install this by running `pip install pycaret[models]`
+2026-06-17 21:29:13,893:WARNING:
+'catboost' is a soft dependency and not included in the pycaret installation. Please run: `pip install catboost` to install.
+Alternately, you can install this by running `pip install pycaret[models]`
+2026-06-17 21:29:13,896:INFO:Engine for model 'ridge' has not been set explicitly, hence returning None.
+2026-06-17 21:29:13,899:INFO:Engine for model 'en' has not been set explicitly, hence returning None.
+2026-06-17 21:29:13,937:INFO:Engine for model 'svm' has not been set explicitly, hence returning None.
+2026-06-17 21:29:13,968:INFO:Engine for model 'knn' has not been set explicitly, hence returning None.
+2026-06-17 21:29:13,968:WARNING:
+'xgboost' is a soft dependency and not included in the pycaret installation. Please run: `pip install xgboost` to install.
+Alternately, you can install this by running `pip install pycaret[models]`
+2026-06-17 21:29:13,969:WARNING:
+'catboost' is a soft dependency and not included in the pycaret installation. Please run: `pip install catboost` to install.
+Alternately, you can install this by running `pip install pycaret[models]`
+2026-06-17 21:29:13,969:INFO:Engine successfully changes for model 'ridge' to 'sklearn'.
+2026-06-17 21:29:13,975:INFO:Engine for model 'en' has not been set explicitly, hence returning None.
+2026-06-17 21:29:14,014:INFO:Engine for model 'svm' has not been set explicitly, hence returning None.
+2026-06-17 21:29:14,044:INFO:Engine for model 'knn' has not been set explicitly, hence returning None.
+2026-06-17 21:29:14,044:WARNING:
+'xgboost' is a soft dependency and not included in the pycaret installation. Please run: `pip install xgboost` to install.
+Alternately, you can install this by running `pip install pycaret[models]`
+2026-06-17 21:29:14,044:WARNING:
+'catboost' is a soft dependency and not included in the pycaret installation. Please run: `pip install catboost` to install.
+Alternately, you can install this by running `pip install pycaret[models]`
+2026-06-17 21:29:14,052:INFO:Engine for model 'en' has not been set explicitly, hence returning None.
+2026-06-17 21:29:14,091:INFO:Engine for model 'svm' has not been set explicitly, hence returning None.
+2026-06-17 21:29:14,122:INFO:Engine for model 'knn' has not been set explicitly, hence returning None.
+2026-06-17 21:29:14,123:WARNING:
+'xgboost' is a soft dependency and not included in the pycaret installation. Please run: `pip install xgboost` to install.
+Alternately, you can install this by running `pip install pycaret[models]`
+2026-06-17 21:29:14,123:WARNING:
+'catboost' is a soft dependency and not included in the pycaret installation. Please run: `pip install catboost` to install.
+Alternately, you can install this by running `pip install pycaret[models]`
+2026-06-17 21:29:14,123:INFO:Engine successfully changes for model 'en' to 'sklearn'.
+2026-06-17 21:29:14,169:INFO:Engine for model 'svm' has not been set explicitly, hence returning None.
+2026-06-17 21:29:14,200:INFO:Engine for model 'knn' has not been set explicitly, hence returning None.
+2026-06-17 21:29:14,200:WARNING:
+'xgboost' is a soft dependency and not included in the pycaret installation. Please run: `pip install xgboost` to install.
+Alternately, you can install this by running `pip install pycaret[models]`
+2026-06-17 21:29:14,200:WARNING:
+'catboost' is a soft dependency and not included in the pycaret installation. Please run: `pip install catboost` to install.
+Alternately, you can install this by running `pip install pycaret[models]`
+2026-06-17 21:29:14,245:INFO:Engine for model 'svm' has not been set explicitly, hence returning None.
+2026-06-17 21:29:14,277:INFO:Engine for model 'knn' has not been set explicitly, hence returning None.
+2026-06-17 21:29:14,278:WARNING:
+'xgboost' is a soft dependency and not included in the pycaret installation. Please run: `pip install xgboost` to install.
+Alternately, you can install this by running `pip install pycaret[models]`
+2026-06-17 21:29:14,278:WARNING:
+'catboost' is a soft dependency and not included in the pycaret installation. Please run: `pip install catboost` to install.
+Alternately, you can install this by running `pip install pycaret[models]`
+2026-06-17 21:29:14,278:INFO:Engine successfully changes for model 'knn' to 'sklearn'.
+2026-06-17 21:29:14,323:INFO:Engine for model 'svm' has not been set explicitly, hence returning None.
+2026-06-17 21:29:14,354:WARNING:
+'xgboost' is a soft dependency and not included in the pycaret installation. Please run: `pip install xgboost` to install.
+Alternately, you can install this by running `pip install pycaret[models]`
+2026-06-17 21:29:14,354:WARNING:
+'catboost' is a soft dependency and not included in the pycaret installation. Please run: `pip install catboost` to install.
+Alternately, you can install this by running `pip install pycaret[models]`
+2026-06-17 21:29:14,399:INFO:Engine for model 'svm' has not been set explicitly, hence returning None.
+2026-06-17 21:29:14,431:WARNING:
+'xgboost' is a soft dependency and not included in the pycaret installation. Please run: `pip install xgboost` to install.
+Alternately, you can install this by running `pip install pycaret[models]`
+2026-06-17 21:29:14,431:WARNING:
+'catboost' is a soft dependency and not included in the pycaret installation. Please run: `pip install catboost` to install.
+Alternately, you can install this by running `pip install pycaret[models]`
+2026-06-17 21:29:14,432:INFO:Engine successfully changes for model 'svm' to 'sklearn'.
+2026-06-17 21:29:14,508:WARNING:
+'xgboost' is a soft dependency and not included in the pycaret installation. Please run: `pip install xgboost` to install.
+Alternately, you can install this by running `pip install pycaret[models]`
+2026-06-17 21:29:14,508:WARNING:
+'catboost' is a soft dependency and not included in the pycaret installation. Please run: `pip install catboost` to install.
+Alternately, you can install this by running `pip install pycaret[models]`
+2026-06-17 21:29:14,583:WARNING:
+'xgboost' is a soft dependency and not included in the pycaret installation. Please run: `pip install xgboost` to install.
+Alternately, you can install this by running `pip install pycaret[models]`
+2026-06-17 21:29:14,584:WARNING:
+'catboost' is a soft dependency and not included in the pycaret installation. Please run: `pip install catboost` to install.
+Alternately, you can install this by running `pip install pycaret[models]`
+2026-06-17 21:29:14,587:INFO:Preparing preprocessing pipeline...
+2026-06-17 21:29:14,587:INFO:Set up simple imputation.
+2026-06-17 21:29:14,602:INFO:Finished creating preprocessing pipeline.
+2026-06-17 21:29:14,605:INFO:Pipeline: Pipeline(memory=FastMemory(location=C:\Users\nagcl\AppData\Local\Temp\joblib),
+         steps=[('numerical_imputer',
+                 TransformerWrapper(include=['area', 'bedrooms', 'age',
+                                             'distance'],
+                                    transformer=SimpleImputer())),
+                ('categorical_imputer',
+                 TransformerWrapper(include=[],
+                                    transformer=SimpleImputer(strategy='most_frequent')))])
+2026-06-17 21:29:14,605:INFO:Creating final display dataframe.
+2026-06-17 21:29:14,634:INFO:Setup _display_container:                     Description             Value
+0                    Session id                42
+1                        Target             price
+2                   Target type        Regression
+3           Original data shape           (20, 5)
+4        Transformed data shape           (20, 5)
+5   Transformed train set shape           (16, 5)
+6    Transformed test set shape            (4, 5)
+7              Numeric features                 4
+8                    Preprocess              True
+9               Imputation type            simple
+10           Numeric imputation              mean
+11       Categorical imputation              mode
+12               Fold Generator             KFold
+13                  Fold Number                10
+14                     CPU Jobs                -1
+15                      Use GPU             False
+16               Log Experiment             False
+17              Experiment Name  reg-default-name
+18                          USI              850c
+2026-06-17 21:29:14,714:WARNING:
+'xgboost' is a soft dependency and not included in the pycaret installation. Please run: `pip install xgboost` to install.
+Alternately, you can install this by running `pip install pycaret[models]`
+2026-06-17 21:29:14,714:WARNING:
+'catboost' is a soft dependency and not included in the pycaret installation. Please run: `pip install catboost` to install.
+Alternately, you can install this by running `pip install pycaret[models]`
+2026-06-17 21:29:14,787:WARNING:
+'xgboost' is a soft dependency and not included in the pycaret installation. Please run: `pip install xgboost` to install.
+Alternately, you can install this by running `pip install pycaret[models]`
+2026-06-17 21:29:14,788:WARNING:
+'catboost' is a soft dependency and not included in the pycaret installation. Please run: `pip install catboost` to install.
+Alternately, you can install this by running `pip install pycaret[models]`
+2026-06-17 21:29:14,788:INFO:setup() successfully completed in 1.2s...............
+2026-06-17 21:29:14,788:INFO:gpu_param set to False
+2026-06-17 21:29:14,860:WARNING:
+'xgboost' is a soft dependency and not included in the pycaret installation. Please run: `pip install xgboost` to install.
+Alternately, you can install this by running `pip install pycaret[models]`
+2026-06-17 21:29:14,861:WARNING:
+'catboost' is a soft dependency and not included in the pycaret installation. Please run: `pip install catboost` to install.
+Alternately, you can install this by running `pip install pycaret[models]`
+2026-06-17 21:29:14,935:WARNING:
+'xgboost' is a soft dependency and not included in the pycaret installation. Please run: `pip install xgboost` to install.
+Alternately, you can install this by running `pip install pycaret[models]`
+2026-06-17 21:29:14,935:WARNING:
+'catboost' is a soft dependency and not included in the pycaret installation. Please run: `pip install catboost` to install.
+Alternately, you can install this by running `pip install pycaret[models]`
+2026-06-17 21:29:14,939:INFO:Initializing compare_models()
+2026-06-17 21:29:14,939:INFO:compare_models(self=<pycaret.regression.oop.RegressionExperiment object at 0x0000020EC652E8D0>, include=None, exclude=None, fold=None, round=4, cross_validation=True, sort=R2, n_select=1, budget_time=None, turbo=True, errors=ignore, fit_kwargs=None, groups=None, experiment_custom_tags=None, probability_threshold=None, verbose=True, parallel=None, caller_params={'self': <pycaret.regression.oop.RegressionExperiment object at 0x0000020EC652E8D0>, 'include': None, 'exclude': None, 'fold': None, 'round': 4, 'cross_validation': True, 'sort': 'R2', 'n_select': 1, 'budget_time': None, 'turbo': True, 'errors': 'ignore', 'fit_kwargs': None, 'groups': None, 'experiment_custom_tags': None, 'engine': None, 'verbose': True, 'parallel': None, '__class__': <class 'pycaret.regression.oop.RegressionExperiment'>})
+2026-06-17 21:29:14,939:INFO:Checking exceptions
+2026-06-17 21:29:14,940:INFO:Preparing display monitor
+2026-06-17 21:29:14,956:INFO:Initializing Linear Regression
+2026-06-17 21:29:14,957:INFO:Total runtime is 1.652240753173828e-05 minutes
+2026-06-17 21:29:14,957:INFO:SubProcess create_model() called ==================================
+2026-06-17 21:29:14,957:INFO:Initializing create_model()
+2026-06-17 21:29:14,957:INFO:create_model(self=<pycaret.regression.oop.RegressionExperiment object at 0x0000020EC652E8D0>, estimator=lr, fold=KFold(n_splits=10, random_state=None, shuffle=False), round=4, cross_validation=True, predict=True, fit_kwargs={}, groups=None, refit=False, probability_threshold=None, experiment_custom_tags=None, verbose=False, system=False, add_to_model_list=True, metrics=None, display=<pycaret.internal.display.display.CommonDisplay object at 0x0000020EECE5CA10>, model_only=True, return_train_score=False, error_score=0.0, kwargs={})
+2026-06-17 21:29:14,957:INFO:Checking exceptions
+2026-06-17 21:29:14,957:INFO:Importing libraries
+2026-06-17 21:29:14,957:INFO:Copying training dataset
+2026-06-17 21:29:14,959:INFO:Defining folds
+2026-06-17 21:29:14,959:INFO:Declaring metric variables
+2026-06-17 21:29:14,960:INFO:Importing untrained model
+2026-06-17 21:29:14,960:INFO:Linear Regression Imported successfully
+2026-06-17 21:29:14,960:INFO:Starting cross validation
+2026-06-17 21:29:14,963:INFO:Cross validating with KFold(n_splits=10, random_state=None, shuffle=False), n_jobs=-1
+2026-06-17 21:29:17,422:WARNING:C:\Users\nagcl\lab\applied_ds_ml\.venv\Lib\site-packages\_distutils_hack\__init__.py:30: UserWarning: Setuptools is replacing distutils. Support for replacing an already imported distutils is deprecated. In the future, this condition will fail. Register concerns at https://github.com/pypa/setuptools/issues/new?template=distutils-deprecation.yml
+  warnings.warn(
+
+2026-06-17 21:29:17,487:WARNING:C:\Users\nagcl\lab\applied_ds_ml\.venv\Lib\site-packages\_distutils_hack\__init__.py:30: UserWarning: Setuptools is replacing distutils. Support for replacing an already imported distutils is deprecated. In the future, this condition will fail. Register concerns at https://github.com/pypa/setuptools/issues/new?template=distutils-deprecation.yml
+  warnings.warn(
+
+2026-06-17 21:29:17,487:WARNING:C:\Users\nagcl\lab\applied_ds_ml\.venv\Lib\site-packages\_distutils_hack\__init__.py:30: UserWarning: Setuptools is replacing distutils. Support for replacing an already imported distutils is deprecated. In the future, this condition will fail. Register concerns at https://github.com/pypa/setuptools/issues/new?template=distutils-deprecation.yml
+  warnings.warn(
+
+2026-06-17 21:29:17,502:WARNING:C:\Users\nagcl\lab\applied_ds_ml\.venv\Lib\site-packages\_distutils_hack\__init__.py:30: UserWarning: Setuptools is replacing distutils. Support for replacing an already imported distutils is deprecated. In the future, this condition will fail. Register concerns at https://github.com/pypa/setuptools/issues/new?template=distutils-deprecation.yml
+  warnings.warn(
+
+2026-06-17 21:29:17,510:WARNING:C:\Users\nagcl\lab\applied_ds_ml\.venv\Lib\site-packages\_distutils_hack\__init__.py:30: UserWarning: Setuptools is replacing distutils. Support for replacing an already imported distutils is deprecated. In the future, this condition will fail. Register concerns at https://github.com/pypa/setuptools/issues/new?template=distutils-deprecation.yml
+  warnings.warn(
+
+2026-06-17 21:29:17,539:WARNING:C:\Users\nagcl\lab\applied_ds_ml\.venv\Lib\site-packages\_distutils_hack\__init__.py:30: UserWarning: Setuptools is replacing distutils. Support for replacing an already imported distutils is deprecated. In the future, this condition will fail. Register concerns at https://github.com/pypa/setuptools/issues/new?template=distutils-deprecation.yml
+  warnings.warn(
+
+2026-06-17 21:29:17,546:WARNING:C:\Users\nagcl\lab\applied_ds_ml\.venv\Lib\site-packages\_distutils_hack\__init__.py:30: UserWarning: Setuptools is replacing distutils. Support for replacing an already imported distutils is deprecated. In the future, this condition will fail. Register concerns at https://github.com/pypa/setuptools/issues/new?template=distutils-deprecation.yml
+  warnings.warn(
+
+2026-06-17 21:29:17,553:WARNING:C:\Users\nagcl\lab\applied_ds_ml\.venv\Lib\site-packages\_distutils_hack\__init__.py:30: UserWarning: Setuptools is replacing distutils. Support for replacing an already imported distutils is deprecated. In the future, this condition will fail. Register concerns at https://github.com/pypa/setuptools/issues/new?template=distutils-deprecation.yml
+  warnings.warn(
+
+2026-06-17 21:29:17,571:WARNING:C:\Users\nagcl\lab\applied_ds_ml\.venv\Lib\site-packages\_distutils_hack\__init__.py:30: UserWarning: Setuptools is replacing distutils. Support for replacing an already imported distutils is deprecated. In the future, this condition will fail. Register concerns at https://github.com/pypa/setuptools/issues/new?template=distutils-deprecation.yml
+  warnings.warn(
+
+2026-06-17 21:29:17,577:WARNING:C:\Users\nagcl\lab\applied_ds_ml\.venv\Lib\site-packages\_distutils_hack\__init__.py:30: UserWarning: Setuptools is replacing distutils. Support for replacing an already imported distutils is deprecated. In the future, this condition will fail. Register concerns at https://github.com/pypa/setuptools/issues/new?template=distutils-deprecation.yml
+  warnings.warn(
+
+2026-06-17 21:29:17,706:WARNING:C:\Users\nagcl\lab\applied_ds_ml\.venv\Lib\site-packages\sklearn\metrics\_regression.py:1187: UndefinedMetricWarning: R^2 score is not well-defined with less than two samples.
+  warnings.warn(msg, UndefinedMetricWarning)
+
+2026-06-17 21:29:17,718:WARNING:C:\Users\nagcl\lab\applied_ds_ml\.venv\Lib\site-packages\sklearn\metrics\_regression.py:1187: UndefinedMetricWarning: R^2 score is not well-defined with less than two samples.
+  warnings.warn(msg, UndefinedMetricWarning)
+
+2026-06-17 21:29:17,727:WARNING:C:\Users\nagcl\lab\applied_ds_ml\.venv\Lib\site-packages\sklearn\metrics\_regression.py:1187: UndefinedMetricWarning: R^2 score is not well-defined with less than two samples.
+  warnings.warn(msg, UndefinedMetricWarning)
+
+2026-06-17 21:29:17,734:WARNING:C:\Users\nagcl\lab\applied_ds_ml\.venv\Lib\site-packages\sklearn\metrics\_regression.py:1187: UndefinedMetricWarning: R^2 score is not well-defined with less than two samples.
+  warnings.warn(msg, UndefinedMetricWarning)
+
+2026-06-17 21:29:17,739:INFO:Calculating mean and std
+2026-06-17 21:29:17,753:INFO:Creating metrics dataframe
+2026-06-17 21:29:17,756:INFO:Uploading results into container
+2026-06-17 21:29:17,756:INFO:Uploading model into container now
+2026-06-17 21:29:17,756:INFO:_master_model_container: 1
+2026-06-17 21:29:17,757:INFO:_display_container: 2
+2026-06-17 21:29:17,757:INFO:LinearRegression(n_jobs=-1)
+2026-06-17 21:29:17,757:INFO:create_model() successfully completed......................................
+2026-06-17 21:29:17,823:INFO:SubProcess create_model() end ==================================
+2026-06-17 21:29:17,824:INFO:Creating metrics dataframe
+2026-06-17 21:29:17,825:INFO:Initializing Lasso Regression
+2026-06-17 21:29:17,825:INFO:Total runtime is 0.047814218203226726 minutes
+2026-06-17 21:29:17,825:INFO:SubProcess create_model() called ==================================
+2026-06-17 21:29:17,826:INFO:Initializing create_model()
+2026-06-17 21:29:17,826:INFO:create_model(self=<pycaret.regression.oop.RegressionExperiment object at 0x0000020EC652E8D0>, estimator=lasso, fold=KFold(n_splits=10, random_state=None, shuffle=False), round=4, cross_validation=True, predict=True, fit_kwargs={}, groups=None, refit=False, probability_threshold=None, experiment_custom_tags=None, verbose=False, system=False, add_to_model_list=True, metrics=None, display=<pycaret.internal.display.display.CommonDisplay object at 0x0000020EECE5CA10>, model_only=True, return_train_score=False, error_score=0.0, kwargs={})
+2026-06-17 21:29:17,826:INFO:Checking exceptions
+2026-06-17 21:29:17,826:INFO:Importing libraries
+2026-06-17 21:29:17,826:INFO:Copying training dataset
+2026-06-17 21:29:17,827:INFO:Defining folds
+2026-06-17 21:29:17,827:INFO:Declaring metric variables
+2026-06-17 21:29:17,827:INFO:Importing untrained model
+2026-06-17 21:29:17,828:INFO:Lasso Regression Imported successfully
+2026-06-17 21:29:17,828:INFO:Starting cross validation
+2026-06-17 21:29:17,828:INFO:Cross validating with KFold(n_splits=10, random_state=None, shuffle=False), n_jobs=-1
+2026-06-17 21:29:17,859:WARNING:C:\Users\nagcl\lab\applied_ds_ml\.venv\Lib\site-packages\sklearn\metrics\_regression.py:1187: UndefinedMetricWarning: R^2 score is not well-defined with less than two samples.
+  warnings.warn(msg, UndefinedMetricWarning)
+
+2026-06-17 21:29:17,862:WARNING:C:\Users\nagcl\lab\applied_ds_ml\.venv\Lib\site-packages\sklearn\metrics\_regression.py:1187: UndefinedMetricWarning: R^2 score is not well-defined with less than two samples.
+  warnings.warn(msg, UndefinedMetricWarning)
+
+2026-06-17 21:29:17,863:WARNING:C:\Users\nagcl\lab\applied_ds_ml\.venv\Lib\site-packages\sklearn\metrics\_regression.py:1187: UndefinedMetricWarning: R^2 score is not well-defined with less than two samples.
+  warnings.warn(msg, UndefinedMetricWarning)
+
+2026-06-17 21:29:17,870:WARNING:C:\Users\nagcl\lab\applied_ds_ml\.venv\Lib\site-packages\sklearn\metrics\_regression.py:1187: UndefinedMetricWarning: R^2 score is not well-defined with less than two samples.
+  warnings.warn(msg, UndefinedMetricWarning)
+
+2026-06-17 21:29:19,405:WARNING:C:\Users\nagcl\lab\applied_ds_ml\.venv\Lib\site-packages\_distutils_hack\__init__.py:30: UserWarning: Setuptools is replacing distutils. Support for replacing an already imported distutils is deprecated. In the future, this condition will fail. Register concerns at https://github.com/pypa/setuptools/issues/new?template=distutils-deprecation.yml
+  warnings.warn(
+
+2026-06-17 21:29:19,420:WARNING:C:\Users\nagcl\lab\applied_ds_ml\.venv\Lib\site-packages\_distutils_hack\__init__.py:30: UserWarning: Setuptools is replacing distutils. Support for replacing an already imported distutils is deprecated. In the future, this condition will fail. Register concerns at https://github.com/pypa/setuptools/issues/new?template=distutils-deprecation.yml
+  warnings.warn(
+
+2026-06-17 21:29:19,422:WARNING:C:\Users\nagcl\lab\applied_ds_ml\.venv\Lib\site-packages\_distutils_hack\__init__.py:30: UserWarning: Setuptools is replacing distutils. Support for replacing an already imported distutils is deprecated. In the future, this condition will fail. Register concerns at https://github.com/pypa/setuptools/issues/new?template=distutils-deprecation.yml
+  warnings.warn(
+
+2026-06-17 21:29:19,424:WARNING:C:\Users\nagcl\lab\applied_ds_ml\.venv\Lib\site-packages\_distutils_hack\__init__.py:30: UserWarning: Setuptools is replacing distutils. Support for replacing an already imported distutils is deprecated. In the future, this condition will fail. Register concerns at https://github.com/pypa/setuptools/issues/new?template=distutils-deprecation.yml
+  warnings.warn(
+
+2026-06-17 21:29:19,436:WARNING:C:\Users\nagcl\lab\applied_ds_ml\.venv\Lib\site-packages\_distutils_hack\__init__.py:30: UserWarning: Setuptools is replacing distutils. Support for replacing an already imported distutils is deprecated. In the future, this condition will fail. Register concerns at https://github.com/pypa/setuptools/issues/new?template=distutils-deprecation.yml
+  warnings.warn(
+
+2026-06-17 21:29:19,443:WARNING:C:\Users\nagcl\lab\applied_ds_ml\.venv\Lib\site-packages\_distutils_hack\__init__.py:30: UserWarning: Setuptools is replacing distutils. Support for replacing an already imported distutils is deprecated. In the future, this condition will fail. Register concerns at https://github.com/pypa/setuptools/issues/new?template=distutils-deprecation.yml
+  warnings.warn(
+
+2026-06-17 21:29:19,585:INFO:Calculating mean and std
+2026-06-17 21:29:19,586:INFO:Creating metrics dataframe
+2026-06-17 21:29:19,588:INFO:Uploading results into container
+2026-06-17 21:29:19,589:INFO:Uploading model into container now
+2026-06-17 21:29:19,589:INFO:_master_model_container: 2
+2026-06-17 21:29:19,589:INFO:_display_container: 2
+2026-06-17 21:29:19,590:INFO:Lasso(random_state=42)
+2026-06-17 21:29:19,590:INFO:create_model() successfully completed......................................
+2026-06-17 21:29:19,663:INFO:SubProcess create_model() end ==================================
+2026-06-17 21:29:19,663:INFO:Creating metrics dataframe
+2026-06-17 21:29:19,665:INFO:Initializing Ridge Regression
+2026-06-17 21:29:19,665:INFO:Total runtime is 0.07847640911738078 minutes
+2026-06-17 21:29:19,665:INFO:SubProcess create_model() called ==================================
+2026-06-17 21:29:19,665:INFO:Initializing create_model()
+2026-06-17 21:29:19,665:INFO:create_model(self=<pycaret.regression.oop.RegressionExperiment object at 0x0000020EC652E8D0>, estimator=ridge, fold=KFold(n_splits=10, random_state=None, shuffle=False), round=4, cross_validation=True, predict=True, fit_kwargs={}, groups=None, refit=False, probability_threshold=None, experiment_custom_tags=None, verbose=False, system=False, add_to_model_list=True, metrics=None, display=<pycaret.internal.display.display.CommonDisplay object at 0x0000020EECE5CA10>, model_only=True, return_train_score=False, error_score=0.0, kwargs={})
+2026-06-17 21:29:19,665:INFO:Checking exceptions
+2026-06-17 21:29:19,665:INFO:Importing libraries
+2026-06-17 21:29:19,665:INFO:Copying training dataset
+2026-06-17 21:29:19,667:INFO:Defining folds
+2026-06-17 21:29:19,667:INFO:Declaring metric variables
+2026-06-17 21:29:19,667:INFO:Importing untrained model
+2026-06-17 21:29:19,667:INFO:Ridge Regression Imported successfully
+2026-06-17 21:29:19,667:INFO:Starting cross validation
+2026-06-17 21:29:19,667:INFO:Cross validating with KFold(n_splits=10, random_state=None, shuffle=False), n_jobs=-1
+2026-06-17 21:29:19,691:WARNING:C:\Users\nagcl\lab\applied_ds_ml\.venv\Lib\site-packages\sklearn\metrics\_regression.py:1187: UndefinedMetricWarning: R^2 score is not well-defined with less than two samples.
+  warnings.warn(msg, UndefinedMetricWarning)
+
+2026-06-17 21:29:19,691:WARNING:C:\Users\nagcl\lab\applied_ds_ml\.venv\Lib\site-packages\sklearn\metrics\_regression.py:1187: UndefinedMetricWarning: R^2 score is not well-defined with less than two samples.
+  warnings.warn(msg, UndefinedMetricWarning)
+
+2026-06-17 21:29:19,695:WARNING:C:\Users\nagcl\lab\applied_ds_ml\.venv\Lib\site-packages\sklearn\metrics\_regression.py:1187: UndefinedMetricWarning: R^2 score is not well-defined with less than two samples.
+  warnings.warn(msg, UndefinedMetricWarning)
+
+2026-06-17 21:29:19,696:WARNING:C:\Users\nagcl\lab\applied_ds_ml\.venv\Lib\site-packages\sklearn\metrics\_regression.py:1187: UndefinedMetricWarning: R^2 score is not well-defined with less than two samples.
+  warnings.warn(msg, UndefinedMetricWarning)
+
+2026-06-17 21:29:19,703:INFO:Calculating mean and std
+2026-06-17 21:29:19,703:INFO:Creating metrics dataframe
+2026-06-17 21:29:19,704:INFO:Uploading results into container
+2026-06-17 21:29:19,704:INFO:Uploading model into container now
+2026-06-17 21:29:19,705:INFO:_master_model_container: 3
+2026-06-17 21:29:19,705:INFO:_display_container: 2
+2026-06-17 21:29:19,705:INFO:Ridge(random_state=42)
+2026-06-17 21:29:19,705:INFO:create_model() successfully completed......................................
+2026-06-17 21:29:19,753:INFO:SubProcess create_model() end ==================================
+2026-06-17 21:29:19,753:INFO:Creating metrics dataframe
+2026-06-17 21:29:19,755:INFO:Initializing Elastic Net
+2026-06-17 21:29:19,755:INFO:Total runtime is 0.07998658816019695 minutes
+2026-06-17 21:29:19,755:INFO:SubProcess create_model() called ==================================
+2026-06-17 21:29:19,755:INFO:Initializing create_model()
+2026-06-17 21:29:19,755:INFO:create_model(self=<pycaret.regression.oop.RegressionExperiment object at 0x0000020EC652E8D0>, estimator=en, fold=KFold(n_splits=10, random_state=None, shuffle=False), round=4, cross_validation=True, predict=True, fit_kwargs={}, groups=None, refit=False, probability_threshold=None, experiment_custom_tags=None, verbose=False, system=False, add_to_model_list=True, metrics=None, display=<pycaret.internal.display.display.CommonDisplay object at 0x0000020EECE5CA10>, model_only=True, return_train_score=False, error_score=0.0, kwargs={})
+2026-06-17 21:29:19,755:INFO:Checking exceptions
+2026-06-17 21:29:19,755:INFO:Importing libraries
+2026-06-17 21:29:19,755:INFO:Copying training dataset
+2026-06-17 21:29:19,756:INFO:Defining folds
+2026-06-17 21:29:19,756:INFO:Declaring metric variables
+2026-06-17 21:29:19,757:INFO:Importing untrained model
+2026-06-17 21:29:19,757:INFO:Elastic Net Imported successfully
+2026-06-17 21:29:19,757:INFO:Starting cross validation
+2026-06-17 21:29:19,757:INFO:Cross validating with KFold(n_splits=10, random_state=None, shuffle=False), n_jobs=-1
+2026-06-17 21:29:19,782:WARNING:C:\Users\nagcl\lab\applied_ds_ml\.venv\Lib\site-packages\sklearn\metrics\_regression.py:1187: UndefinedMetricWarning: R^2 score is not well-defined with less than two samples.
+  warnings.warn(msg, UndefinedMetricWarning)
+
+2026-06-17 21:29:19,784:WARNING:C:\Users\nagcl\lab\applied_ds_ml\.venv\Lib\site-packages\sklearn\metrics\_regression.py:1187: UndefinedMetricWarning: R^2 score is not well-defined with less than two samples.
+  warnings.warn(msg, UndefinedMetricWarning)
+
+2026-06-17 21:29:19,785:WARNING:C:\Users\nagcl\lab\applied_ds_ml\.venv\Lib\site-packages\sklearn\metrics\_regression.py:1187: UndefinedMetricWarning: R^2 score is not well-defined with less than two samples.
+  warnings.warn(msg, UndefinedMetricWarning)
+
+2026-06-17 21:29:19,787:WARNING:C:\Users\nagcl\lab\applied_ds_ml\.venv\Lib\site-packages\sklearn\metrics\_regression.py:1187: UndefinedMetricWarning: R^2 score is not well-defined with less than two samples.
+  warnings.warn(msg, UndefinedMetricWarning)
+
+2026-06-17 21:29:19,793:INFO:Calculating mean and std
+2026-06-17 21:29:19,793:INFO:Creating metrics dataframe
+2026-06-17 21:29:19,794:INFO:Uploading results into container
+2026-06-17 21:29:19,794:INFO:Uploading model into container now
+2026-06-17 21:29:19,795:INFO:_master_model_container: 4
+2026-06-17 21:29:19,795:INFO:_display_container: 2
+2026-06-17 21:29:19,795:INFO:ElasticNet(random_state=42)
+2026-06-17 21:29:19,795:INFO:create_model() successfully completed......................................
+2026-06-17 21:29:19,840:INFO:SubProcess create_model() end ==================================
+2026-06-17 21:29:19,840:INFO:Creating metrics dataframe
+2026-06-17 21:29:19,841:INFO:Initializing Least Angle Regression
+2026-06-17 21:29:19,841:INFO:Total runtime is 0.08141385316848757 minutes
+2026-06-17 21:29:19,841:INFO:SubProcess create_model() called ==================================
+2026-06-17 21:29:19,841:INFO:Initializing create_model()
+2026-06-17 21:29:19,841:INFO:create_model(self=<pycaret.regression.oop.RegressionExperiment object at 0x0000020EC652E8D0>, estimator=lar, fold=KFold(n_splits=10, random_state=None, shuffle=False), round=4, cross_validation=True, predict=True, fit_kwargs={}, groups=None, refit=False, probability_threshold=None, experiment_custom_tags=None, verbose=False, system=False, add_to_model_list=True, metrics=None, display=<pycaret.internal.display.display.CommonDisplay object at 0x0000020EECE5CA10>, model_only=True, return_train_score=False, error_score=0.0, kwargs={})
+2026-06-17 21:29:19,842:INFO:Checking exceptions
+2026-06-17 21:29:19,842:INFO:Importing libraries
+2026-06-17 21:29:19,842:INFO:Copying training dataset
+2026-06-17 21:29:19,844:INFO:Defining folds
+2026-06-17 21:29:19,844:INFO:Declaring metric variables
+2026-06-17 21:29:19,844:INFO:Importing untrained model
+2026-06-17 21:29:19,844:INFO:Least Angle Regression Imported successfully
+2026-06-17 21:29:19,844:INFO:Starting cross validation
+2026-06-17 21:29:19,845:INFO:Cross validating with KFold(n_splits=10, random_state=None, shuffle=False), n_jobs=-1
+2026-06-17 21:29:19,874:WARNING:C:\Users\nagcl\lab\applied_ds_ml\.venv\Lib\site-packages\sklearn\metrics\_regression.py:1187: UndefinedMetricWarning: R^2 score is not well-defined with less than two samples.
+  warnings.warn(msg, UndefinedMetricWarning)
+
+2026-06-17 21:29:19,874:WARNING:C:\Users\nagcl\lab\applied_ds_ml\.venv\Lib\site-packages\sklearn\metrics\_regression.py:1187: UndefinedMetricWarning: R^2 score is not well-defined with less than two samples.
+  warnings.warn(msg, UndefinedMetricWarning)
+
+2026-06-17 21:29:19,874:WARNING:C:\Users\nagcl\lab\applied_ds_ml\.venv\Lib\site-packages\sklearn\metrics\_regression.py:1187: UndefinedMetricWarning: R^2 score is not well-defined with less than two samples.
+  warnings.warn(msg, UndefinedMetricWarning)
+
+2026-06-17 21:29:19,879:WARNING:C:\Users\nagcl\lab\applied_ds_ml\.venv\Lib\site-packages\sklearn\metrics\_regression.py:1187: UndefinedMetricWarning: R^2 score is not well-defined with less than two samples.
+  warnings.warn(msg, UndefinedMetricWarning)
+
+2026-06-17 21:29:19,882:INFO:Calculating mean and std
+2026-06-17 21:29:19,882:INFO:Creating metrics dataframe
+2026-06-17 21:29:19,883:INFO:Uploading results into container
+2026-06-17 21:29:19,883:INFO:Uploading model into container now
+2026-06-17 21:29:19,883:INFO:_master_model_container: 5
+2026-06-17 21:29:19,883:INFO:_display_container: 2
+2026-06-17 21:29:19,884:INFO:Lars(random_state=42)
+2026-06-17 21:29:19,884:INFO:create_model() successfully completed......................................
+2026-06-17 21:29:19,928:INFO:SubProcess create_model() end ==================================
+2026-06-17 21:29:19,928:INFO:Creating metrics dataframe
+2026-06-17 21:29:19,930:INFO:Initializing Lasso Least Angle Regression
+2026-06-17 21:29:19,930:INFO:Total runtime is 0.08289055824279787 minutes
+2026-06-17 21:29:19,930:INFO:SubProcess create_model() called ==================================
+2026-06-17 21:29:19,930:INFO:Initializing create_model()
+2026-06-17 21:29:19,930:INFO:create_model(self=<pycaret.regression.oop.RegressionExperiment object at 0x0000020EC652E8D0>, estimator=llar, fold=KFold(n_splits=10, random_state=None, shuffle=False), round=4, cross_validation=True, predict=True, fit_kwargs={}, groups=None, refit=False, probability_threshold=None, experiment_custom_tags=None, verbose=False, system=False, add_to_model_list=True, metrics=None, display=<pycaret.internal.display.display.CommonDisplay object at 0x0000020EECE5CA10>, model_only=True, return_train_score=False, error_score=0.0, kwargs={})
+2026-06-17 21:29:19,930:INFO:Checking exceptions
+2026-06-17 21:29:19,930:INFO:Importing libraries
+2026-06-17 21:29:19,930:INFO:Copying training dataset
+2026-06-17 21:29:19,932:INFO:Defining folds
+2026-06-17 21:29:19,932:INFO:Declaring metric variables
+2026-06-17 21:29:19,932:INFO:Importing untrained model
+2026-06-17 21:29:19,932:INFO:Lasso Least Angle Regression Imported successfully
+2026-06-17 21:29:19,932:INFO:Starting cross validation
+2026-06-17 21:29:19,932:INFO:Cross validating with KFold(n_splits=10, random_state=None, shuffle=False), n_jobs=-1
+2026-06-17 21:29:19,959:WARNING:C:\Users\nagcl\lab\applied_ds_ml\.venv\Lib\site-packages\sklearn\metrics\_regression.py:1187: UndefinedMetricWarning: R^2 score is not well-defined with less than two samples.
+  warnings.warn(msg, UndefinedMetricWarning)
+
+2026-06-17 21:29:19,963:WARNING:C:\Users\nagcl\lab\applied_ds_ml\.venv\Lib\site-packages\sklearn\metrics\_regression.py:1187: UndefinedMetricWarning: R^2 score is not well-defined with less than two samples.
+  warnings.warn(msg, UndefinedMetricWarning)
+
+2026-06-17 21:29:19,966:WARNING:C:\Users\nagcl\lab\applied_ds_ml\.venv\Lib\site-packages\sklearn\metrics\_regression.py:1187: UndefinedMetricWarning: R^2 score is not well-defined with less than two samples.
+  warnings.warn(msg, UndefinedMetricWarning)
+
+2026-06-17 21:29:19,969:INFO:Calculating mean and std
+2026-06-17 21:29:19,969:INFO:Creating metrics dataframe
+2026-06-17 21:29:19,970:INFO:Uploading results into container
+2026-06-17 21:29:19,970:INFO:Uploading model into container now
+2026-06-17 21:29:19,970:INFO:_master_model_container: 6
+2026-06-17 21:29:19,971:INFO:_display_container: 2
+2026-06-17 21:29:19,971:INFO:LassoLars(random_state=42)
+2026-06-17 21:29:19,971:INFO:create_model() successfully completed......................................
+2026-06-17 21:29:20,029:INFO:SubProcess create_model() end ==================================
+2026-06-17 21:29:20,029:INFO:Creating metrics dataframe
+2026-06-17 21:29:20,031:INFO:Initializing Orthogonal Matching Pursuit
+2026-06-17 21:29:20,031:INFO:Total runtime is 0.08457770744959515 minutes
+2026-06-17 21:29:20,031:INFO:SubProcess create_model() called ==================================
+2026-06-17 21:29:20,031:INFO:Initializing create_model()
+2026-06-17 21:29:20,031:INFO:create_model(self=<pycaret.regression.oop.RegressionExperiment object at 0x0000020EC652E8D0>, estimator=omp, fold=KFold(n_splits=10, random_state=None, shuffle=False), round=4, cross_validation=True, predict=True, fit_kwargs={}, groups=None, refit=False, probability_threshold=None, experiment_custom_tags=None, verbose=False, system=False, add_to_model_list=True, metrics=None, display=<pycaret.internal.display.display.CommonDisplay object at 0x0000020EECE5CA10>, model_only=True, return_train_score=False, error_score=0.0, kwargs={})
+2026-06-17 21:29:20,031:INFO:Checking exceptions
+2026-06-17 21:29:20,031:INFO:Importing libraries
+2026-06-17 21:29:20,031:INFO:Copying training dataset
+2026-06-17 21:29:20,033:INFO:Defining folds
+2026-06-17 21:29:20,033:INFO:Declaring metric variables
+2026-06-17 21:29:20,033:INFO:Importing untrained model
+2026-06-17 21:29:20,033:INFO:Orthogonal Matching Pursuit Imported successfully
+2026-06-17 21:29:20,034:INFO:Starting cross validation
+2026-06-17 21:29:20,034:INFO:Cross validating with KFold(n_splits=10, random_state=None, shuffle=False), n_jobs=-1
+2026-06-17 21:29:20,091:WARNING:C:\Users\nagcl\lab\applied_ds_ml\.venv\Lib\site-packages\sklearn\metrics\_regression.py:1187: UndefinedMetricWarning: R^2 score is not well-defined with less than two samples.
+  warnings.warn(msg, UndefinedMetricWarning)
+
+2026-06-17 21:29:20,094:WARNING:C:\Users\nagcl\lab\applied_ds_ml\.venv\Lib\site-packages\sklearn\metrics\_regression.py:1187: UndefinedMetricWarning: R^2 score is not well-defined with less than two samples.
+  warnings.warn(msg, UndefinedMetricWarning)
+
+2026-06-17 21:29:20,097:WARNING:C:\Users\nagcl\lab\applied_ds_ml\.venv\Lib\site-packages\sklearn\metrics\_regression.py:1187: UndefinedMetricWarning: R^2 score is not well-defined with less than two samples.
+  warnings.warn(msg, UndefinedMetricWarning)
+
+2026-06-17 21:29:20,098:WARNING:C:\Users\nagcl\lab\applied_ds_ml\.venv\Lib\site-packages\sklearn\metrics\_regression.py:1187: UndefinedMetricWarning: R^2 score is not well-defined with less than two samples.
+  warnings.warn(msg, UndefinedMetricWarning)
+
+2026-06-17 21:29:20,110:INFO:Calculating mean and std
+2026-06-17 21:29:20,111:INFO:Creating metrics dataframe
+2026-06-17 21:29:20,113:INFO:Uploading results into container
+2026-06-17 21:29:20,114:INFO:Uploading model into container now
+2026-06-17 21:29:20,114:INFO:_master_model_container: 7
+2026-06-17 21:29:20,114:INFO:_display_container: 2
+2026-06-17 21:29:20,114:INFO:OrthogonalMatchingPursuit()
+2026-06-17 21:29:20,114:INFO:create_model() successfully completed......................................
+2026-06-17 21:29:20,175:INFO:SubProcess create_model() end ==================================
+2026-06-17 21:29:20,175:INFO:Creating metrics dataframe
+2026-06-17 21:29:20,177:INFO:Initializing Bayesian Ridge
+2026-06-17 21:29:20,177:INFO:Total runtime is 0.08701047102610272 minutes
+2026-06-17 21:29:20,177:INFO:SubProcess create_model() called ==================================
+2026-06-17 21:29:20,177:INFO:Initializing create_model()
+2026-06-17 21:29:20,177:INFO:create_model(self=<pycaret.regression.oop.RegressionExperiment object at 0x0000020EC652E8D0>, estimator=br, fold=KFold(n_splits=10, random_state=None, shuffle=False), round=4, cross_validation=True, predict=True, fit_kwargs={}, groups=None, refit=False, probability_threshold=None, experiment_custom_tags=None, verbose=False, system=False, add_to_model_list=True, metrics=None, display=<pycaret.internal.display.display.CommonDisplay object at 0x0000020EECE5CA10>, model_only=True, return_train_score=False, error_score=0.0, kwargs={})
+2026-06-17 21:29:20,177:INFO:Checking exceptions
+2026-06-17 21:29:20,177:INFO:Importing libraries
+2026-06-17 21:29:20,177:INFO:Copying training dataset
+2026-06-17 21:29:20,179:INFO:Defining folds
+2026-06-17 21:29:20,179:INFO:Declaring metric variables
+2026-06-17 21:29:20,179:INFO:Importing untrained model
+2026-06-17 21:29:20,180:INFO:Bayesian Ridge Imported successfully
+2026-06-17 21:29:20,180:INFO:Starting cross validation
+2026-06-17 21:29:20,180:INFO:Cross validating with KFold(n_splits=10, random_state=None, shuffle=False), n_jobs=-1
+2026-06-17 21:29:20,205:WARNING:C:\Users\nagcl\lab\applied_ds_ml\.venv\Lib\site-packages\sklearn\metrics\_regression.py:1187: UndefinedMetricWarning: R^2 score is not well-defined with less than two samples.
+  warnings.warn(msg, UndefinedMetricWarning)
+
+2026-06-17 21:29:20,205:WARNING:C:\Users\nagcl\lab\applied_ds_ml\.venv\Lib\site-packages\sklearn\metrics\_regression.py:1187: UndefinedMetricWarning: R^2 score is not well-defined with less than two samples.
+  warnings.warn(msg, UndefinedMetricWarning)
+
+2026-06-17 21:29:20,209:WARNING:C:\Users\nagcl\lab\applied_ds_ml\.venv\Lib\site-packages\sklearn\metrics\_regression.py:1187: UndefinedMetricWarning: R^2 score is not well-defined with less than two samples.
+  warnings.warn(msg, UndefinedMetricWarning)
+
+2026-06-17 21:29:20,210:WARNING:C:\Users\nagcl\lab\applied_ds_ml\.venv\Lib\site-packages\sklearn\metrics\_regression.py:1187: UndefinedMetricWarning: R^2 score is not well-defined with less than two samples.
+  warnings.warn(msg, UndefinedMetricWarning)
+
+2026-06-17 21:29:20,216:INFO:Calculating mean and std
+2026-06-17 21:29:20,216:INFO:Creating metrics dataframe
+2026-06-17 21:29:20,217:INFO:Uploading results into container
+2026-06-17 21:29:20,218:INFO:Uploading model into container now
+2026-06-17 21:29:20,218:INFO:_master_model_container: 8
+2026-06-17 21:29:20,218:INFO:_display_container: 2
+2026-06-17 21:29:20,218:INFO:BayesianRidge()
+2026-06-17 21:29:20,218:INFO:create_model() successfully completed......................................
+2026-06-17 21:29:20,265:INFO:SubProcess create_model() end ==================================
+2026-06-17 21:29:20,265:INFO:Creating metrics dataframe
+2026-06-17 21:29:20,267:INFO:Initializing Passive Aggressive Regressor
+2026-06-17 21:29:20,267:INFO:Total runtime is 0.08851692676544191 minutes
+2026-06-17 21:29:20,267:INFO:SubProcess create_model() called ==================================
+2026-06-17 21:29:20,267:INFO:Initializing create_model()
+2026-06-17 21:29:20,267:INFO:create_model(self=<pycaret.regression.oop.RegressionExperiment object at 0x0000020EC652E8D0>, estimator=par, fold=KFold(n_splits=10, random_state=None, shuffle=False), round=4, cross_validation=True, predict=True, fit_kwargs={}, groups=None, refit=False, probability_threshold=None, experiment_custom_tags=None, verbose=False, system=False, add_to_model_list=True, metrics=None, display=<pycaret.internal.display.display.CommonDisplay object at 0x0000020EECE5CA10>, model_only=True, return_train_score=False, error_score=0.0, kwargs={})
+2026-06-17 21:29:20,267:INFO:Checking exceptions
+2026-06-17 21:29:20,267:INFO:Importing libraries
+2026-06-17 21:29:20,267:INFO:Copying training dataset
+2026-06-17 21:29:20,269:INFO:Defining folds
+2026-06-17 21:29:20,269:INFO:Declaring metric variables
+2026-06-17 21:29:20,269:INFO:Importing untrained model
+2026-06-17 21:29:20,269:INFO:Passive Aggressive Regressor Imported successfully
+2026-06-17 21:29:20,269:INFO:Starting cross validation
+2026-06-17 21:29:20,269:INFO:Cross validating with KFold(n_splits=10, random_state=None, shuffle=False), n_jobs=-1
+2026-06-17 21:29:20,294:WARNING:C:\Users\nagcl\lab\applied_ds_ml\.venv\Lib\site-packages\sklearn\metrics\_regression.py:1187: UndefinedMetricWarning: R^2 score is not well-defined with less than two samples.
+  warnings.warn(msg, UndefinedMetricWarning)
+
+2026-06-17 21:29:20,295:WARNING:C:\Users\nagcl\lab\applied_ds_ml\.venv\Lib\site-packages\sklearn\metrics\_regression.py:1187: UndefinedMetricWarning: R^2 score is not well-defined with less than two samples.
+  warnings.warn(msg, UndefinedMetricWarning)
+
+2026-06-17 21:29:20,296:WARNING:C:\Users\nagcl\lab\applied_ds_ml\.venv\Lib\site-packages\sklearn\metrics\_regression.py:1187: UndefinedMetricWarning: R^2 score is not well-defined with less than two samples.
+  warnings.warn(msg, UndefinedMetricWarning)
+
+2026-06-17 21:29:20,298:WARNING:C:\Users\nagcl\lab\applied_ds_ml\.venv\Lib\site-packages\sklearn\metrics\_regression.py:1187: UndefinedMetricWarning: R^2 score is not well-defined with less than two samples.
+  warnings.warn(msg, UndefinedMetricWarning)
+
+2026-06-17 21:29:20,306:INFO:Calculating mean and std
+2026-06-17 21:29:20,306:INFO:Creating metrics dataframe
+2026-06-17 21:29:20,307:INFO:Uploading results into container
+2026-06-17 21:29:20,307:INFO:Uploading model into container now
+2026-06-17 21:29:20,307:INFO:_master_model_container: 9
+2026-06-17 21:29:20,308:INFO:_display_container: 2
+2026-06-17 21:29:20,308:INFO:PassiveAggressiveRegressor(random_state=42)
+2026-06-17 21:29:20,308:INFO:create_model() successfully completed......................................
+2026-06-17 21:29:20,353:INFO:SubProcess create_model() end ==================================
+2026-06-17 21:29:20,353:INFO:Creating metrics dataframe
+2026-06-17 21:29:20,355:INFO:Initializing Huber Regressor
+2026-06-17 21:29:20,355:INFO:Total runtime is 0.08998444875081382 minutes
+2026-06-17 21:29:20,355:INFO:SubProcess create_model() called ==================================
+2026-06-17 21:29:20,355:INFO:Initializing create_model()
+2026-06-17 21:29:20,355:INFO:create_model(self=<pycaret.regression.oop.RegressionExperiment object at 0x0000020EC652E8D0>, estimator=huber, fold=KFold(n_splits=10, random_state=None, shuffle=False), round=4, cross_validation=True, predict=True, fit_kwargs={}, groups=None, refit=False, probability_threshold=None, experiment_custom_tags=None, verbose=False, system=False, add_to_model_list=True, metrics=None, display=<pycaret.internal.display.display.CommonDisplay object at 0x0000020EECE5CA10>, model_only=True, return_train_score=False, error_score=0.0, kwargs={})
+2026-06-17 21:29:20,355:INFO:Checking exceptions
+2026-06-17 21:29:20,355:INFO:Importing libraries
+2026-06-17 21:29:20,355:INFO:Copying training dataset
+2026-06-17 21:29:20,357:INFO:Defining folds
+2026-06-17 21:29:20,357:INFO:Declaring metric variables
+2026-06-17 21:29:20,357:INFO:Importing untrained model
+2026-06-17 21:29:20,357:INFO:Huber Regressor Imported successfully
+2026-06-17 21:29:20,357:INFO:Starting cross validation
+2026-06-17 21:29:20,358:INFO:Cross validating with KFold(n_splits=10, random_state=None, shuffle=False), n_jobs=-1
+2026-06-17 21:29:20,397:WARNING:C:\Users\nagcl\lab\applied_ds_ml\.venv\Lib\site-packages\sklearn\linear_model\_huber.py:342: ConvergenceWarning: lbfgs failed to converge (status=1):
+STOP: TOTAL NO. of ITERATIONS REACHED LIMIT.
+
+Increase the number of iterations (max_iter) or scale the data as shown in:
+    https://scikit-learn.org/stable/modules/preprocessing.html
+  self.n_iter_ = _check_optimize_result("lbfgs", opt_res, self.max_iter)
+
+2026-06-17 21:29:20,397:WARNING:C:\Users\nagcl\lab\applied_ds_ml\.venv\Lib\site-packages\sklearn\linear_model\_huber.py:342: ConvergenceWarning: lbfgs failed to converge (status=1):
+STOP: TOTAL NO. of ITERATIONS REACHED LIMIT.
+
+Increase the number of iterations (max_iter) or scale the data as shown in:
+    https://scikit-learn.org/stable/modules/preprocessing.html
+  self.n_iter_ = _check_optimize_result("lbfgs", opt_res, self.max_iter)
+
+2026-06-17 21:29:20,397:WARNING:C:\Users\nagcl\lab\applied_ds_ml\.venv\Lib\site-packages\sklearn\linear_model\_huber.py:342: ConvergenceWarning: lbfgs failed to converge (status=1):
+STOP: TOTAL NO. of ITERATIONS REACHED LIMIT.
+
+Increase the number of iterations (max_iter) or scale the data as shown in:
+    https://scikit-learn.org/stable/modules/preprocessing.html
+  self.n_iter_ = _check_optimize_result("lbfgs", opt_res, self.max_iter)
+
+2026-06-17 21:29:20,397:WARNING:C:\Users\nagcl\lab\applied_ds_ml\.venv\Lib\site-packages\sklearn\linear_model\_huber.py:342: ConvergenceWarning: lbfgs failed to converge (status=1):
+STOP: TOTAL NO. of ITERATIONS REACHED LIMIT.
+
+Increase the number of iterations (max_iter) or scale the data as shown in:
+    https://scikit-learn.org/stable/modules/preprocessing.html
+  self.n_iter_ = _check_optimize_result("lbfgs", opt_res, self.max_iter)
+
+2026-06-17 21:29:20,397:WARNING:C:\Users\nagcl\lab\applied_ds_ml\.venv\Lib\site-packages\sklearn\linear_model\_huber.py:342: ConvergenceWarning: lbfgs failed to converge (status=1):
+STOP: TOTAL NO. of ITERATIONS REACHED LIMIT.
+
+Increase the number of iterations (max_iter) or scale the data as shown in:
+    https://scikit-learn.org/stable/modules/preprocessing.html
+  self.n_iter_ = _check_optimize_result("lbfgs", opt_res, self.max_iter)
+
+2026-06-17 21:29:20,397:WARNING:C:\Users\nagcl\lab\applied_ds_ml\.venv\Lib\site-packages\sklearn\linear_model\_huber.py:342: ConvergenceWarning: lbfgs failed to converge (status=1):
+STOP: TOTAL NO. of ITERATIONS REACHED LIMIT.
+
+Increase the number of iterations (max_iter) or scale the data as shown in:
+    https://scikit-learn.org/stable/modules/preprocessing.html
+  self.n_iter_ = _check_optimize_result("lbfgs", opt_res, self.max_iter)
+
+2026-06-17 21:29:20,399:WARNING:C:\Users\nagcl\lab\applied_ds_ml\.venv\Lib\site-packages\sklearn\metrics\_regression.py:1187: UndefinedMetricWarning: R^2 score is not well-defined with less than two samples.
+  warnings.warn(msg, UndefinedMetricWarning)
+
+2026-06-17 21:29:20,400:WARNING:C:\Users\nagcl\lab\applied_ds_ml\.venv\Lib\site-packages\sklearn\metrics\_regression.py:1187: UndefinedMetricWarning: R^2 score is not well-defined with less than two samples.
+  warnings.warn(msg, UndefinedMetricWarning)
+
+2026-06-17 21:29:20,401:WARNING:C:\Users\nagcl\lab\applied_ds_ml\.venv\Lib\site-packages\sklearn\metrics\_regression.py:1187: UndefinedMetricWarning: R^2 score is not well-defined with less than two samples.
+  warnings.warn(msg, UndefinedMetricWarning)
+
+2026-06-17 21:29:20,402:WARNING:C:\Users\nagcl\lab\applied_ds_ml\.venv\Lib\site-packages\sklearn\metrics\_regression.py:1187: UndefinedMetricWarning: R^2 score is not well-defined with less than two samples.
+  warnings.warn(msg, UndefinedMetricWarning)
+
+2026-06-17 21:29:20,405:INFO:Calculating mean and std
+2026-06-17 21:29:20,405:INFO:Creating metrics dataframe
+2026-06-17 21:29:20,406:INFO:Uploading results into container
+2026-06-17 21:29:20,406:INFO:Uploading model into container now
+2026-06-17 21:29:20,406:INFO:_master_model_container: 10
+2026-06-17 21:29:20,407:INFO:_display_container: 2
+2026-06-17 21:29:20,407:INFO:HuberRegressor()
+2026-06-17 21:29:20,407:INFO:create_model() successfully completed......................................
+2026-06-17 21:29:20,452:INFO:SubProcess create_model() end ==================================
+2026-06-17 21:29:20,452:INFO:Creating metrics dataframe
+2026-06-17 21:29:20,454:INFO:Initializing K Neighbors Regressor
+2026-06-17 21:29:20,454:INFO:Total runtime is 0.09162084658940635 minutes
+2026-06-17 21:29:20,454:INFO:SubProcess create_model() called ==================================
+2026-06-17 21:29:20,454:INFO:Initializing create_model()
+2026-06-17 21:29:20,454:INFO:create_model(self=<pycaret.regression.oop.RegressionExperiment object at 0x0000020EC652E8D0>, estimator=knn, fold=KFold(n_splits=10, random_state=None, shuffle=False), round=4, cross_validation=True, predict=True, fit_kwargs={}, groups=None, refit=False, probability_threshold=None, experiment_custom_tags=None, verbose=False, system=False, add_to_model_list=True, metrics=None, display=<pycaret.internal.display.display.CommonDisplay object at 0x0000020EECE5CA10>, model_only=True, return_train_score=False, error_score=0.0, kwargs={})
+2026-06-17 21:29:20,454:INFO:Checking exceptions
+2026-06-17 21:29:20,454:INFO:Importing libraries
+2026-06-17 21:29:20,454:INFO:Copying training dataset
+2026-06-17 21:29:20,455:INFO:Defining folds
+2026-06-17 21:29:20,455:INFO:Declaring metric variables
+2026-06-17 21:29:20,456:INFO:Importing untrained model
+2026-06-17 21:29:20,456:INFO:K Neighbors Regressor Imported successfully
+2026-06-17 21:29:20,456:INFO:Starting cross validation
+2026-06-17 21:29:20,456:INFO:Cross validating with KFold(n_splits=10, random_state=None, shuffle=False), n_jobs=-1
+2026-06-17 21:29:20,510:WARNING:C:\Users\nagcl\lab\applied_ds_ml\.venv\Lib\site-packages\sklearn\metrics\_regression.py:1187: UndefinedMetricWarning: R^2 score is not well-defined with less than two samples.
+  warnings.warn(msg, UndefinedMetricWarning)
+
+2026-06-17 21:29:20,511:WARNING:C:\Users\nagcl\lab\applied_ds_ml\.venv\Lib\site-packages\sklearn\metrics\_regression.py:1187: UndefinedMetricWarning: R^2 score is not well-defined with less than two samples.
+  warnings.warn(msg, UndefinedMetricWarning)
+
+2026-06-17 21:29:20,513:WARNING:C:\Users\nagcl\lab\applied_ds_ml\.venv\Lib\site-packages\sklearn\metrics\_regression.py:1187: UndefinedMetricWarning: R^2 score is not well-defined with less than two samples.
+  warnings.warn(msg, UndefinedMetricWarning)
+
+2026-06-17 21:29:20,521:WARNING:C:\Users\nagcl\lab\applied_ds_ml\.venv\Lib\site-packages\sklearn\metrics\_regression.py:1187: UndefinedMetricWarning: R^2 score is not well-defined with less than two samples.
+  warnings.warn(msg, UndefinedMetricWarning)
+
+2026-06-17 21:29:20,523:INFO:Calculating mean and std
+2026-06-17 21:29:20,523:INFO:Creating metrics dataframe
+2026-06-17 21:29:20,524:INFO:Uploading results into container
+2026-06-17 21:29:20,524:INFO:Uploading model into container now
+2026-06-17 21:29:20,525:INFO:_master_model_container: 11
+2026-06-17 21:29:20,525:INFO:_display_container: 2
+2026-06-17 21:29:20,525:INFO:KNeighborsRegressor(n_jobs=-1)
+2026-06-17 21:29:20,525:INFO:create_model() successfully completed......................................
+2026-06-17 21:29:20,579:INFO:SubProcess create_model() end ==================================
+2026-06-17 21:29:20,579:INFO:Creating metrics dataframe
+2026-06-17 21:29:20,581:INFO:Initializing Decision Tree Regressor
+2026-06-17 21:29:20,581:INFO:Total runtime is 0.09374762376149497 minutes
+2026-06-17 21:29:20,581:INFO:SubProcess create_model() called ==================================
+2026-06-17 21:29:20,581:INFO:Initializing create_model()
+2026-06-17 21:29:20,581:INFO:create_model(self=<pycaret.regression.oop.RegressionExperiment object at 0x0000020EC652E8D0>, estimator=dt, fold=KFold(n_splits=10, random_state=None, shuffle=False), round=4, cross_validation=True, predict=True, fit_kwargs={}, groups=None, refit=False, probability_threshold=None, experiment_custom_tags=None, verbose=False, system=False, add_to_model_list=True, metrics=None, display=<pycaret.internal.display.display.CommonDisplay object at 0x0000020EECE5CA10>, model_only=True, return_train_score=False, error_score=0.0, kwargs={})
+2026-06-17 21:29:20,581:INFO:Checking exceptions
+2026-06-17 21:29:20,581:INFO:Importing libraries
+2026-06-17 21:29:20,581:INFO:Copying training dataset
+2026-06-17 21:29:20,582:INFO:Defining folds
+2026-06-17 21:29:20,583:INFO:Declaring metric variables
+2026-06-17 21:29:20,583:INFO:Importing untrained model
+2026-06-17 21:29:20,583:INFO:Decision Tree Regressor Imported successfully
+2026-06-17 21:29:20,583:INFO:Starting cross validation
+2026-06-17 21:29:20,583:INFO:Cross validating with KFold(n_splits=10, random_state=None, shuffle=False), n_jobs=-1
+2026-06-17 21:29:20,607:WARNING:C:\Users\nagcl\lab\applied_ds_ml\.venv\Lib\site-packages\sklearn\metrics\_regression.py:1187: UndefinedMetricWarning: R^2 score is not well-defined with less than two samples.
+  warnings.warn(msg, UndefinedMetricWarning)
+
+2026-06-17 21:29:20,608:WARNING:C:\Users\nagcl\lab\applied_ds_ml\.venv\Lib\site-packages\sklearn\metrics\_regression.py:1187: UndefinedMetricWarning: R^2 score is not well-defined with less than two samples.
+  warnings.warn(msg, UndefinedMetricWarning)
+
+2026-06-17 21:29:20,610:WARNING:C:\Users\nagcl\lab\applied_ds_ml\.venv\Lib\site-packages\sklearn\metrics\_regression.py:1187: UndefinedMetricWarning: R^2 score is not well-defined with less than two samples.
+  warnings.warn(msg, UndefinedMetricWarning)
+
+2026-06-17 21:29:20,612:WARNING:C:\Users\nagcl\lab\applied_ds_ml\.venv\Lib\site-packages\sklearn\metrics\_regression.py:1187: UndefinedMetricWarning: R^2 score is not well-defined with less than two samples.
+  warnings.warn(msg, UndefinedMetricWarning)
+
+2026-06-17 21:29:20,619:INFO:Calculating mean and std
+2026-06-17 21:29:20,619:INFO:Creating metrics dataframe
+2026-06-17 21:29:20,620:INFO:Uploading results into container
+2026-06-17 21:29:20,620:INFO:Uploading model into container now
+2026-06-17 21:29:20,620:INFO:_master_model_container: 12
+2026-06-17 21:29:20,620:INFO:_display_container: 2
+2026-06-17 21:29:20,621:INFO:DecisionTreeRegressor(random_state=42)
+2026-06-17 21:29:20,621:INFO:create_model() successfully completed......................................
+2026-06-17 21:29:20,664:INFO:SubProcess create_model() end ==================================
+2026-06-17 21:29:20,664:INFO:Creating metrics dataframe
+2026-06-17 21:29:20,666:INFO:Initializing Random Forest Regressor
+2026-06-17 21:29:20,666:INFO:Total runtime is 0.09516471227010093 minutes
+2026-06-17 21:29:20,666:INFO:SubProcess create_model() called ==================================
+2026-06-17 21:29:20,666:INFO:Initializing create_model()
+2026-06-17 21:29:20,666:INFO:create_model(self=<pycaret.regression.oop.RegressionExperiment object at 0x0000020EC652E8D0>, estimator=rf, fold=KFold(n_splits=10, random_state=None, shuffle=False), round=4, cross_validation=True, predict=True, fit_kwargs={}, groups=None, refit=False, probability_threshold=None, experiment_custom_tags=None, verbose=False, system=False, add_to_model_list=True, metrics=None, display=<pycaret.internal.display.display.CommonDisplay object at 0x0000020EECE5CA10>, model_only=True, return_train_score=False, error_score=0.0, kwargs={})
+2026-06-17 21:29:20,666:INFO:Checking exceptions
+2026-06-17 21:29:20,666:INFO:Importing libraries
+2026-06-17 21:29:20,666:INFO:Copying training dataset
+2026-06-17 21:29:20,668:INFO:Defining folds
+2026-06-17 21:29:20,668:INFO:Declaring metric variables
+2026-06-17 21:29:20,668:INFO:Importing untrained model
+2026-06-17 21:29:20,668:INFO:Random Forest Regressor Imported successfully
+2026-06-17 21:29:20,669:INFO:Starting cross validation
+2026-06-17 21:29:20,669:INFO:Cross validating with KFold(n_splits=10, random_state=None, shuffle=False), n_jobs=-1
+2026-06-17 21:29:20,824:WARNING:C:\Users\nagcl\lab\applied_ds_ml\.venv\Lib\site-packages\sklearn\metrics\_regression.py:1187: UndefinedMetricWarning: R^2 score is not well-defined with less than two samples.
+  warnings.warn(msg, UndefinedMetricWarning)
+
+2026-06-17 21:29:20,828:WARNING:C:\Users\nagcl\lab\applied_ds_ml\.venv\Lib\site-packages\sklearn\metrics\_regression.py:1187: UndefinedMetricWarning: R^2 score is not well-defined with less than two samples.
+  warnings.warn(msg, UndefinedMetricWarning)
+
+2026-06-17 21:29:20,839:WARNING:C:\Users\nagcl\lab\applied_ds_ml\.venv\Lib\site-packages\sklearn\metrics\_regression.py:1187: UndefinedMetricWarning: R^2 score is not well-defined with less than two samples.
+  warnings.warn(msg, UndefinedMetricWarning)
+
+2026-06-17 21:29:20,843:WARNING:C:\Users\nagcl\lab\applied_ds_ml\.venv\Lib\site-packages\sklearn\metrics\_regression.py:1187: UndefinedMetricWarning: R^2 score is not well-defined with less than two samples.
+  warnings.warn(msg, UndefinedMetricWarning)
+
+2026-06-17 21:29:20,850:INFO:Calculating mean and std
+2026-06-17 21:29:20,850:INFO:Creating metrics dataframe
+2026-06-17 21:29:20,851:INFO:Uploading results into container
+2026-06-17 21:29:20,851:INFO:Uploading model into container now
+2026-06-17 21:29:20,852:INFO:_master_model_container: 13
+2026-06-17 21:29:20,852:INFO:_display_container: 2
+2026-06-17 21:29:20,852:INFO:RandomForestRegressor(n_jobs=-1, random_state=42)
+2026-06-17 21:29:20,852:INFO:create_model() successfully completed......................................
+2026-06-17 21:29:20,897:INFO:SubProcess create_model() end ==================================
+2026-06-17 21:29:20,897:INFO:Creating metrics dataframe
+2026-06-17 21:29:20,898:INFO:Initializing Extra Trees Regressor
+2026-06-17 21:29:20,898:INFO:Total runtime is 0.09902814229329429 minutes
+2026-06-17 21:29:20,899:INFO:SubProcess create_model() called ==================================
+2026-06-17 21:29:20,899:INFO:Initializing create_model()
+2026-06-17 21:29:20,899:INFO:create_model(self=<pycaret.regression.oop.RegressionExperiment object at 0x0000020EC652E8D0>, estimator=et, fold=KFold(n_splits=10, random_state=None, shuffle=False), round=4, cross_validation=True, predict=True, fit_kwargs={}, groups=None, refit=False, probability_threshold=None, experiment_custom_tags=None, verbose=False, system=False, add_to_model_list=True, metrics=None, display=<pycaret.internal.display.display.CommonDisplay object at 0x0000020EECE5CA10>, model_only=True, return_train_score=False, error_score=0.0, kwargs={})
+2026-06-17 21:29:20,899:INFO:Checking exceptions
+2026-06-17 21:29:20,899:INFO:Importing libraries
+2026-06-17 21:29:20,899:INFO:Copying training dataset
+2026-06-17 21:29:20,901:INFO:Defining folds
+2026-06-17 21:29:20,901:INFO:Declaring metric variables
+2026-06-17 21:29:20,901:INFO:Importing untrained model
+2026-06-17 21:29:20,901:INFO:Extra Trees Regressor Imported successfully
+2026-06-17 21:29:20,901:INFO:Starting cross validation
+2026-06-17 21:29:20,901:INFO:Cross validating with KFold(n_splits=10, random_state=None, shuffle=False), n_jobs=-1
+2026-06-17 21:29:21,020:WARNING:C:\Users\nagcl\lab\applied_ds_ml\.venv\Lib\site-packages\sklearn\metrics\_regression.py:1187: UndefinedMetricWarning: R^2 score is not well-defined with less than two samples.
+  warnings.warn(msg, UndefinedMetricWarning)
+
+2026-06-17 21:29:21,029:WARNING:C:\Users\nagcl\lab\applied_ds_ml\.venv\Lib\site-packages\sklearn\metrics\_regression.py:1187: UndefinedMetricWarning: R^2 score is not well-defined with less than two samples.
+  warnings.warn(msg, UndefinedMetricWarning)
+
+2026-06-17 21:29:21,035:WARNING:C:\Users\nagcl\lab\applied_ds_ml\.venv\Lib\site-packages\sklearn\metrics\_regression.py:1187: UndefinedMetricWarning: R^2 score is not well-defined with less than two samples.
+  warnings.warn(msg, UndefinedMetricWarning)
+
+2026-06-17 21:29:21,039:WARNING:C:\Users\nagcl\lab\applied_ds_ml\.venv\Lib\site-packages\sklearn\metrics\_regression.py:1187: UndefinedMetricWarning: R^2 score is not well-defined with less than two samples.
+  warnings.warn(msg, UndefinedMetricWarning)
+
+2026-06-17 21:29:21,042:INFO:Calculating mean and std
+2026-06-17 21:29:21,043:INFO:Creating metrics dataframe
+2026-06-17 21:29:21,044:INFO:Uploading results into container
+2026-06-17 21:29:21,044:INFO:Uploading model into container now
+2026-06-17 21:29:21,044:INFO:_master_model_container: 14
+2026-06-17 21:29:21,044:INFO:_display_container: 2
+2026-06-17 21:29:21,044:INFO:ExtraTreesRegressor(n_jobs=-1, random_state=42)
+2026-06-17 21:29:21,044:INFO:create_model() successfully completed......................................
+2026-06-17 21:29:21,096:INFO:SubProcess create_model() end ==================================
+2026-06-17 21:29:21,096:INFO:Creating metrics dataframe
+2026-06-17 21:29:21,097:INFO:Initializing AdaBoost Regressor
+2026-06-17 21:29:21,097:INFO:Total runtime is 0.1023437261581421 minutes
+2026-06-17 21:29:21,097:INFO:SubProcess create_model() called ==================================
+2026-06-17 21:29:21,098:INFO:Initializing create_model()
+2026-06-17 21:29:21,098:INFO:create_model(self=<pycaret.regression.oop.RegressionExperiment object at 0x0000020EC652E8D0>, estimator=ada, fold=KFold(n_splits=10, random_state=None, shuffle=False), round=4, cross_validation=True, predict=True, fit_kwargs={}, groups=None, refit=False, probability_threshold=None, experiment_custom_tags=None, verbose=False, system=False, add_to_model_list=True, metrics=None, display=<pycaret.internal.display.display.CommonDisplay object at 0x0000020EECE5CA10>, model_only=True, return_train_score=False, error_score=0.0, kwargs={})
+2026-06-17 21:29:21,098:INFO:Checking exceptions
+2026-06-17 21:29:21,098:INFO:Importing libraries
+2026-06-17 21:29:21,098:INFO:Copying training dataset
+2026-06-17 21:29:21,100:INFO:Defining folds
+2026-06-17 21:29:21,100:INFO:Declaring metric variables
+2026-06-17 21:29:21,100:INFO:Importing untrained model
+2026-06-17 21:29:21,100:INFO:AdaBoost Regressor Imported successfully
+2026-06-17 21:29:21,100:INFO:Starting cross validation
+2026-06-17 21:29:21,100:INFO:Cross validating with KFold(n_splits=10, random_state=None, shuffle=False), n_jobs=-1
+2026-06-17 21:29:21,167:WARNING:C:\Users\nagcl\lab\applied_ds_ml\.venv\Lib\site-packages\sklearn\metrics\_regression.py:1187: UndefinedMetricWarning: R^2 score is not well-defined with less than two samples.
+  warnings.warn(msg, UndefinedMetricWarning)
+
+2026-06-17 21:29:21,171:WARNING:C:\Users\nagcl\lab\applied_ds_ml\.venv\Lib\site-packages\sklearn\metrics\_regression.py:1187: UndefinedMetricWarning: R^2 score is not well-defined with less than two samples.
+  warnings.warn(msg, UndefinedMetricWarning)
+
+2026-06-17 21:29:21,176:WARNING:C:\Users\nagcl\lab\applied_ds_ml\.venv\Lib\site-packages\sklearn\metrics\_regression.py:1187: UndefinedMetricWarning: R^2 score is not well-defined with less than two samples.
+  warnings.warn(msg, UndefinedMetricWarning)
+
+2026-06-17 21:29:21,180:WARNING:C:\Users\nagcl\lab\applied_ds_ml\.venv\Lib\site-packages\sklearn\metrics\_regression.py:1187: UndefinedMetricWarning: R^2 score is not well-defined with less than two samples.
+  warnings.warn(msg, UndefinedMetricWarning)
+
+2026-06-17 21:29:21,181:INFO:Calculating mean and std
+2026-06-17 21:29:21,181:INFO:Creating metrics dataframe
+2026-06-17 21:29:21,182:INFO:Uploading results into container
+2026-06-17 21:29:21,182:INFO:Uploading model into container now
+2026-06-17 21:29:21,182:INFO:_master_model_container: 15
+2026-06-17 21:29:21,182:INFO:_display_container: 2
+2026-06-17 21:29:21,183:INFO:AdaBoostRegressor(random_state=42)
+2026-06-17 21:29:21,183:INFO:create_model() successfully completed......................................
+2026-06-17 21:29:21,227:INFO:SubProcess create_model() end ==================================
+2026-06-17 21:29:21,227:INFO:Creating metrics dataframe
+2026-06-17 21:29:21,229:INFO:Initializing Gradient Boosting Regressor
+2026-06-17 21:29:21,229:INFO:Total runtime is 0.10454786221186321 minutes
+2026-06-17 21:29:21,229:INFO:SubProcess create_model() called ==================================
+2026-06-17 21:29:21,229:INFO:Initializing create_model()
+2026-06-17 21:29:21,229:INFO:create_model(self=<pycaret.regression.oop.RegressionExperiment object at 0x0000020EC652E8D0>, estimator=gbr, fold=KFold(n_splits=10, random_state=None, shuffle=False), round=4, cross_validation=True, predict=True, fit_kwargs={}, groups=None, refit=False, probability_threshold=None, experiment_custom_tags=None, verbose=False, system=False, add_to_model_list=True, metrics=None, display=<pycaret.internal.display.display.CommonDisplay object at 0x0000020EECE5CA10>, model_only=True, return_train_score=False, error_score=0.0, kwargs={})
+2026-06-17 21:29:21,229:INFO:Checking exceptions
+2026-06-17 21:29:21,229:INFO:Importing libraries
+2026-06-17 21:29:21,229:INFO:Copying training dataset
+2026-06-17 21:29:21,231:INFO:Defining folds
+2026-06-17 21:29:21,231:INFO:Declaring metric variables
+2026-06-17 21:29:21,231:INFO:Importing untrained model
+2026-06-17 21:29:21,231:INFO:Gradient Boosting Regressor Imported successfully
+2026-06-17 21:29:21,232:INFO:Starting cross validation
+2026-06-17 21:29:21,232:INFO:Cross validating with KFold(n_splits=10, random_state=None, shuffle=False), n_jobs=-1
+2026-06-17 21:29:21,282:WARNING:C:\Users\nagcl\lab\applied_ds_ml\.venv\Lib\site-packages\sklearn\metrics\_regression.py:1187: UndefinedMetricWarning: R^2 score is not well-defined with less than two samples.
+  warnings.warn(msg, UndefinedMetricWarning)
+
+2026-06-17 21:29:21,286:WARNING:C:\Users\nagcl\lab\applied_ds_ml\.venv\Lib\site-packages\sklearn\metrics\_regression.py:1187: UndefinedMetricWarning: R^2 score is not well-defined with less than two samples.
+  warnings.warn(msg, UndefinedMetricWarning)
+
+2026-06-17 21:29:21,296:WARNING:C:\Users\nagcl\lab\applied_ds_ml\.venv\Lib\site-packages\sklearn\metrics\_regression.py:1187: UndefinedMetricWarning: R^2 score is not well-defined with less than two samples.
+  warnings.warn(msg, UndefinedMetricWarning)
+
+2026-06-17 21:29:21,298:WARNING:C:\Users\nagcl\lab\applied_ds_ml\.venv\Lib\site-packages\sklearn\metrics\_regression.py:1187: UndefinedMetricWarning: R^2 score is not well-defined with less than two samples.
+  warnings.warn(msg, UndefinedMetricWarning)
+
+2026-06-17 21:29:21,301:INFO:Calculating mean and std
+2026-06-17 21:29:21,301:INFO:Creating metrics dataframe
+2026-06-17 21:29:21,302:INFO:Uploading results into container
+2026-06-17 21:29:21,302:INFO:Uploading model into container now
+2026-06-17 21:29:21,303:INFO:_master_model_container: 16
+2026-06-17 21:29:21,303:INFO:_display_container: 2
+2026-06-17 21:29:21,303:INFO:GradientBoostingRegressor(random_state=42)
+2026-06-17 21:29:21,303:INFO:create_model() successfully completed......................................
+2026-06-17 21:29:21,348:INFO:SubProcess create_model() end ==================================
+2026-06-17 21:29:21,348:INFO:Creating metrics dataframe
+2026-06-17 21:29:21,349:INFO:Initializing Light Gradient Boosting Machine
+2026-06-17 21:29:21,349:INFO:Total runtime is 0.10654253959655763 minutes
+2026-06-17 21:29:21,349:INFO:SubProcess create_model() called ==================================
+2026-06-17 21:29:21,350:INFO:Initializing create_model()
+2026-06-17 21:29:21,350:INFO:create_model(self=<pycaret.regression.oop.RegressionExperiment object at 0x0000020EC652E8D0>, estimator=lightgbm, fold=KFold(n_splits=10, random_state=None, shuffle=False), round=4, cross_validation=True, predict=True, fit_kwargs={}, groups=None, refit=False, probability_threshold=None, experiment_custom_tags=None, verbose=False, system=False, add_to_model_list=True, metrics=None, display=<pycaret.internal.display.display.CommonDisplay object at 0x0000020EECE5CA10>, model_only=True, return_train_score=False, error_score=0.0, kwargs={})
+2026-06-17 21:29:21,350:INFO:Checking exceptions
+2026-06-17 21:29:21,350:INFO:Importing libraries
+2026-06-17 21:29:21,350:INFO:Copying training dataset
+2026-06-17 21:29:21,351:INFO:Defining folds
+2026-06-17 21:29:21,351:INFO:Declaring metric variables
+2026-06-17 21:29:21,352:INFO:Importing untrained model
+2026-06-17 21:29:21,352:INFO:Light Gradient Boosting Machine Imported successfully
+2026-06-17 21:29:21,352:INFO:Starting cross validation
+2026-06-17 21:29:21,352:INFO:Cross validating with KFold(n_splits=10, random_state=None, shuffle=False), n_jobs=-1
+2026-06-17 21:29:21,572:WARNING:C:\Users\nagcl\lab\applied_ds_ml\.venv\Lib\site-packages\sklearn\metrics\_regression.py:1187: UndefinedMetricWarning: R^2 score is not well-defined with less than two samples.
+  warnings.warn(msg, UndefinedMetricWarning)
+
+2026-06-17 21:29:21,576:WARNING:C:\Users\nagcl\lab\applied_ds_ml\.venv\Lib\site-packages\sklearn\metrics\_regression.py:1187: UndefinedMetricWarning: R^2 score is not well-defined with less than two samples.
+  warnings.warn(msg, UndefinedMetricWarning)
+
+2026-06-17 21:29:21,579:WARNING:C:\Users\nagcl\lab\applied_ds_ml\.venv\Lib\site-packages\sklearn\metrics\_regression.py:1187: UndefinedMetricWarning: R^2 score is not well-defined with less than two samples.
+  warnings.warn(msg, UndefinedMetricWarning)
+
+2026-06-17 21:29:21,580:WARNING:C:\Users\nagcl\lab\applied_ds_ml\.venv\Lib\site-packages\sklearn\metrics\_regression.py:1187: UndefinedMetricWarning: R^2 score is not well-defined with less than two samples.
+  warnings.warn(msg, UndefinedMetricWarning)
+
+2026-06-17 21:29:21,584:INFO:Calculating mean and std
+2026-06-17 21:29:21,584:INFO:Creating metrics dataframe
+2026-06-17 21:29:21,586:INFO:Uploading results into container
+2026-06-17 21:29:21,586:INFO:Uploading model into container now
+2026-06-17 21:29:21,586:INFO:_master_model_container: 17
+2026-06-17 21:29:21,587:INFO:_display_container: 2
+2026-06-17 21:29:21,587:INFO:LGBMRegressor(n_jobs=-1, random_state=42)
+2026-06-17 21:29:21,587:INFO:create_model() successfully completed......................................
+2026-06-17 21:29:21,656:INFO:SubProcess create_model() end ==================================
+2026-06-17 21:29:21,656:INFO:Creating metrics dataframe
+2026-06-17 21:29:21,658:INFO:Initializing Dummy Regressor
+2026-06-17 21:29:21,658:INFO:Total runtime is 0.11169819831848146 minutes
+2026-06-17 21:29:21,659:INFO:SubProcess create_model() called ==================================
+2026-06-17 21:29:21,659:INFO:Initializing create_model()
+2026-06-17 21:29:21,659:INFO:create_model(self=<pycaret.regression.oop.RegressionExperiment object at 0x0000020EC652E8D0>, estimator=dummy, fold=KFold(n_splits=10, random_state=None, shuffle=False), round=4, cross_validation=True, predict=True, fit_kwargs={}, groups=None, refit=False, probability_threshold=None, experiment_custom_tags=None, verbose=False, system=False, add_to_model_list=True, metrics=None, display=<pycaret.internal.display.display.CommonDisplay object at 0x0000020EECE5CA10>, model_only=True, return_train_score=False, error_score=0.0, kwargs={})
+2026-06-17 21:29:21,659:INFO:Checking exceptions
+2026-06-17 21:29:21,659:INFO:Importing libraries
+2026-06-17 21:29:21,659:INFO:Copying training dataset
+2026-06-17 21:29:21,662:INFO:Defining folds
+2026-06-17 21:29:21,662:INFO:Declaring metric variables
+2026-06-17 21:29:21,662:INFO:Importing untrained model
+2026-06-17 21:29:21,662:INFO:Dummy Regressor Imported successfully
+2026-06-17 21:29:21,662:INFO:Starting cross validation
+2026-06-17 21:29:21,663:INFO:Cross validating with KFold(n_splits=10, random_state=None, shuffle=False), n_jobs=-1
+2026-06-17 21:29:21,695:WARNING:C:\Users\nagcl\lab\applied_ds_ml\.venv\Lib\site-packages\sklearn\metrics\_regression.py:1187: UndefinedMetricWarning: R^2 score is not well-defined with less than two samples.
+  warnings.warn(msg, UndefinedMetricWarning)
+
+2026-06-17 21:29:21,696:WARNING:C:\Users\nagcl\lab\applied_ds_ml\.venv\Lib\site-packages\sklearn\metrics\_regression.py:1187: UndefinedMetricWarning: R^2 score is not well-defined with less than two samples.
+  warnings.warn(msg, UndefinedMetricWarning)
+
+2026-06-17 21:29:21,698:WARNING:C:\Users\nagcl\lab\applied_ds_ml\.venv\Lib\site-packages\sklearn\metrics\_regression.py:1187: UndefinedMetricWarning: R^2 score is not well-defined with less than two samples.
+  warnings.warn(msg, UndefinedMetricWarning)
+
+2026-06-17 21:29:21,699:WARNING:C:\Users\nagcl\lab\applied_ds_ml\.venv\Lib\site-packages\sklearn\metrics\_regression.py:1187: UndefinedMetricWarning: R^2 score is not well-defined with less than two samples.
+  warnings.warn(msg, UndefinedMetricWarning)
+
+2026-06-17 21:29:21,707:INFO:Calculating mean and std
+2026-06-17 21:29:21,707:INFO:Creating metrics dataframe
+2026-06-17 21:29:21,708:INFO:Uploading results into container
+2026-06-17 21:29:21,708:INFO:Uploading model into container now
+2026-06-17 21:29:21,709:INFO:_master_model_container: 18
+2026-06-17 21:29:21,709:INFO:_display_container: 2
+2026-06-17 21:29:21,709:INFO:DummyRegressor()
+2026-06-17 21:29:21,709:INFO:create_model() successfully completed......................................
+2026-06-17 21:29:21,754:INFO:SubProcess create_model() end ==================================
+2026-06-17 21:29:21,754:INFO:Creating metrics dataframe
+2026-06-17 21:29:21,756:WARNING:C:\Users\nagcl\lab\applied_ds_ml\.venv\Lib\site-packages\pycaret\internal\pycaret_experiment\supervised_experiment.py:339: FutureWarning: Styler.applymap has been deprecated. Use Styler.map instead.
+  .applymap(highlight_cols, subset=["TT (Sec)"])
+
+2026-06-17 21:29:21,757:INFO:Initializing create_model()
+2026-06-17 21:29:21,757:INFO:create_model(self=<pycaret.regression.oop.RegressionExperiment object at 0x0000020EC652E8D0>, estimator=LinearRegression(n_jobs=-1), fold=KFold(n_splits=10, random_state=None, shuffle=False), round=4, cross_validation=False, predict=False, fit_kwargs={}, groups=None, refit=True, probability_threshold=None, experiment_custom_tags=None, verbose=False, system=False, add_to_model_list=True, metrics=None, display=None, model_only=True, return_train_score=False, error_score=0.0, kwargs={})
+2026-06-17 21:29:21,757:INFO:Checking exceptions
+2026-06-17 21:29:21,758:INFO:Importing libraries
+2026-06-17 21:29:21,758:INFO:Copying training dataset
+2026-06-17 21:29:21,759:INFO:Defining folds
+2026-06-17 21:29:21,759:INFO:Declaring metric variables
+2026-06-17 21:29:21,759:INFO:Importing untrained model
+2026-06-17 21:29:21,759:INFO:Declaring custom model
+2026-06-17 21:29:21,760:INFO:Linear Regression Imported successfully
+2026-06-17 21:29:21,760:INFO:Cross validation set to False
+2026-06-17 21:29:21,760:INFO:Fitting Model
+2026-06-17 21:29:21,763:INFO:LinearRegression(n_jobs=-1)
+2026-06-17 21:29:21,763:INFO:create_model() successfully completed......................................
+2026-06-17 21:29:21,815:INFO:_master_model_container: 18
+2026-06-17 21:29:21,815:INFO:_display_container: 2
+2026-06-17 21:29:21,816:INFO:LinearRegression(n_jobs=-1)
+2026-06-17 21:29:21,816:INFO:compare_models() successfully completed......................................
+2026-06-17 21:29:21,824:INFO:Initializing compare_models()
+2026-06-17 21:29:21,824:INFO:compare_models(self=<pycaret.regression.oop.RegressionExperiment object at 0x0000020EC652E8D0>, include=['lr', 'dt', 'rf'], exclude=None, fold=None, round=4, cross_validation=True, sort=RMSE, n_select=1, budget_time=None, turbo=True, errors=ignore, fit_kwargs=None, groups=None, experiment_custom_tags=None, probability_threshold=None, verbose=True, parallel=None, caller_params={'self': <pycaret.regression.oop.RegressionExperiment object at 0x0000020EC652E8D0>, 'include': ['lr', 'dt', 'rf'], 'exclude': None, 'fold': None, 'round': 4, 'cross_validation': True, 'sort': 'RMSE', 'n_select': 1, 'budget_time': None, 'turbo': True, 'errors': 'ignore', 'fit_kwargs': None, 'groups': None, 'experiment_custom_tags': None, 'engine': None, 'verbose': True, 'parallel': None, '__class__': <class 'pycaret.regression.oop.RegressionExperiment'>})
+2026-06-17 21:29:21,824:INFO:Checking exceptions
+2026-06-17 21:29:21,825:INFO:Preparing display monitor
+2026-06-17 21:29:21,826:INFO:Initializing Linear Regression
+2026-06-17 21:29:21,826:INFO:Total runtime is 0.0 minutes
+2026-06-17 21:29:21,826:INFO:SubProcess create_model() called ==================================
+2026-06-17 21:29:21,826:INFO:Initializing create_model()
+2026-06-17 21:29:21,826:INFO:create_model(self=<pycaret.regression.oop.RegressionExperiment object at 0x0000020EC652E8D0>, estimator=lr, fold=KFold(n_splits=10, random_state=None, shuffle=False), round=4, cross_validation=True, predict=True, fit_kwargs={}, groups=None, refit=False, probability_threshold=None, experiment_custom_tags=None, verbose=False, system=False, add_to_model_list=True, metrics=None, display=<pycaret.internal.display.display.CommonDisplay object at 0x0000020EECE5F150>, model_only=True, return_train_score=False, error_score=0.0, kwargs={})
+2026-06-17 21:29:21,826:INFO:Checking exceptions
+2026-06-17 21:29:21,826:INFO:Importing libraries
+2026-06-17 21:29:21,826:INFO:Copying training dataset
+2026-06-17 21:29:21,828:INFO:Defining folds
+2026-06-17 21:29:21,828:INFO:Declaring metric variables
+2026-06-17 21:29:21,828:INFO:Importing untrained model
+2026-06-17 21:29:21,828:INFO:Linear Regression Imported successfully
+2026-06-17 21:29:21,828:INFO:Starting cross validation
+2026-06-17 21:29:21,828:INFO:Cross validating with KFold(n_splits=10, random_state=None, shuffle=False), n_jobs=-1
+2026-06-17 21:29:21,855:WARNING:C:\Users\nagcl\lab\applied_ds_ml\.venv\Lib\site-packages\sklearn\metrics\_regression.py:1187: UndefinedMetricWarning: R^2 score is not well-defined with less than two samples.
+  warnings.warn(msg, UndefinedMetricWarning)
+
+2026-06-17 21:29:21,856:WARNING:C:\Users\nagcl\lab\applied_ds_ml\.venv\Lib\site-packages\sklearn\metrics\_regression.py:1187: UndefinedMetricWarning: R^2 score is not well-defined with less than two samples.
+  warnings.warn(msg, UndefinedMetricWarning)
+
+2026-06-17 21:29:21,858:WARNING:C:\Users\nagcl\lab\applied_ds_ml\.venv\Lib\site-packages\sklearn\metrics\_regression.py:1187: UndefinedMetricWarning: R^2 score is not well-defined with less than two samples.
+  warnings.warn(msg, UndefinedMetricWarning)
+
+2026-06-17 21:29:21,860:WARNING:C:\Users\nagcl\lab\applied_ds_ml\.venv\Lib\site-packages\sklearn\metrics\_regression.py:1187: UndefinedMetricWarning: R^2 score is not well-defined with less than two samples.
+  warnings.warn(msg, UndefinedMetricWarning)
+
+2026-06-17 21:29:21,866:INFO:Calculating mean and std
+2026-06-17 21:29:21,866:INFO:Creating metrics dataframe
+2026-06-17 21:29:21,867:INFO:Uploading results into container
+2026-06-17 21:29:21,867:INFO:Uploading model into container now
+2026-06-17 21:29:21,867:INFO:_master_model_container: 19
+2026-06-17 21:29:21,868:INFO:_display_container: 3
+2026-06-17 21:29:21,868:INFO:LinearRegression(n_jobs=-1)
+2026-06-17 21:29:21,868:INFO:create_model() successfully completed......................................
+2026-06-17 21:29:21,924:INFO:SubProcess create_model() end ==================================
+2026-06-17 21:29:21,924:INFO:Creating metrics dataframe
+2026-06-17 21:29:21,927:INFO:Initializing Decision Tree Regressor
+2026-06-17 21:29:21,927:INFO:Total runtime is 0.001691265900929769 minutes
+2026-06-17 21:29:21,927:INFO:SubProcess create_model() called ==================================
+2026-06-17 21:29:21,928:INFO:Initializing create_model()
+2026-06-17 21:29:21,928:INFO:create_model(self=<pycaret.regression.oop.RegressionExperiment object at 0x0000020EC652E8D0>, estimator=dt, fold=KFold(n_splits=10, random_state=None, shuffle=False), round=4, cross_validation=True, predict=True, fit_kwargs={}, groups=None, refit=False, probability_threshold=None, experiment_custom_tags=None, verbose=False, system=False, add_to_model_list=True, metrics=None, display=<pycaret.internal.display.display.CommonDisplay object at 0x0000020EECE5F150>, model_only=True, return_train_score=False, error_score=0.0, kwargs={})
+2026-06-17 21:29:21,928:INFO:Checking exceptions
+2026-06-17 21:29:21,928:INFO:Importing libraries
+2026-06-17 21:29:21,928:INFO:Copying training dataset
+2026-06-17 21:29:21,932:INFO:Defining folds
+2026-06-17 21:29:21,932:INFO:Declaring metric variables
+2026-06-17 21:29:21,932:INFO:Importing untrained model
+2026-06-17 21:29:21,933:INFO:Decision Tree Regressor Imported successfully
+2026-06-17 21:29:21,933:INFO:Starting cross validation
+2026-06-17 21:29:21,933:INFO:Cross validating with KFold(n_splits=10, random_state=None, shuffle=False), n_jobs=-1
+2026-06-17 21:29:21,983:WARNING:C:\Users\nagcl\lab\applied_ds_ml\.venv\Lib\site-packages\sklearn\metrics\_regression.py:1187: UndefinedMetricWarning: R^2 score is not well-defined with less than two samples.
+  warnings.warn(msg, UndefinedMetricWarning)
+
+2026-06-17 21:29:21,987:WARNING:C:\Users\nagcl\lab\applied_ds_ml\.venv\Lib\site-packages\sklearn\metrics\_regression.py:1187: UndefinedMetricWarning: R^2 score is not well-defined with less than two samples.
+  warnings.warn(msg, UndefinedMetricWarning)
+
+2026-06-17 21:29:21,990:WARNING:C:\Users\nagcl\lab\applied_ds_ml\.venv\Lib\site-packages\sklearn\metrics\_regression.py:1187: UndefinedMetricWarning: R^2 score is not well-defined with less than two samples.
+  warnings.warn(msg, UndefinedMetricWarning)
+
+2026-06-17 21:29:21,999:INFO:Calculating mean and std
+2026-06-17 21:29:21,999:INFO:Creating metrics dataframe
+2026-06-17 21:29:22,000:INFO:Uploading results into container
+2026-06-17 21:29:22,000:INFO:Uploading model into container now
+2026-06-17 21:29:22,001:INFO:_master_model_container: 20
+2026-06-17 21:29:22,001:INFO:_display_container: 3
+2026-06-17 21:29:22,001:INFO:DecisionTreeRegressor(random_state=42)
+2026-06-17 21:29:22,001:INFO:create_model() successfully completed......................................
+2026-06-17 21:29:22,054:INFO:SubProcess create_model() end ==================================
+2026-06-17 21:29:22,055:INFO:Creating metrics dataframe
+2026-06-17 21:29:22,056:INFO:Initializing Random Forest Regressor
+2026-06-17 21:29:22,056:INFO:Total runtime is 0.003848544756571452 minutes
+2026-06-17 21:29:22,056:INFO:SubProcess create_model() called ==================================
+2026-06-17 21:29:22,056:INFO:Initializing create_model()
+2026-06-17 21:29:22,056:INFO:create_model(self=<pycaret.regression.oop.RegressionExperiment object at 0x0000020EC652E8D0>, estimator=rf, fold=KFold(n_splits=10, random_state=None, shuffle=False), round=4, cross_validation=True, predict=True, fit_kwargs={}, groups=None, refit=False, probability_threshold=None, experiment_custom_tags=None, verbose=False, system=False, add_to_model_list=True, metrics=None, display=<pycaret.internal.display.display.CommonDisplay object at 0x0000020EECE5F150>, model_only=True, return_train_score=False, error_score=0.0, kwargs={})
+2026-06-17 21:29:22,056:INFO:Checking exceptions
+2026-06-17 21:29:22,056:INFO:Importing libraries
+2026-06-17 21:29:22,057:INFO:Copying training dataset
+2026-06-17 21:29:22,058:INFO:Defining folds
+2026-06-17 21:29:22,058:INFO:Declaring metric variables
+2026-06-17 21:29:22,058:INFO:Importing untrained model
+2026-06-17 21:29:22,058:INFO:Random Forest Regressor Imported successfully
+2026-06-17 21:29:22,058:INFO:Starting cross validation
+2026-06-17 21:29:22,059:INFO:Cross validating with KFold(n_splits=10, random_state=None, shuffle=False), n_jobs=-1
+2026-06-17 21:29:22,213:WARNING:C:\Users\nagcl\lab\applied_ds_ml\.venv\Lib\site-packages\sklearn\metrics\_regression.py:1187: UndefinedMetricWarning: R^2 score is not well-defined with less than two samples.
+  warnings.warn(msg, UndefinedMetricWarning)
+
+2026-06-17 21:29:22,219:WARNING:C:\Users\nagcl\lab\applied_ds_ml\.venv\Lib\site-packages\sklearn\metrics\_regression.py:1187: UndefinedMetricWarning: R^2 score is not well-defined with less than two samples.
+  warnings.warn(msg, UndefinedMetricWarning)
+
+2026-06-17 21:29:22,229:WARNING:C:\Users\nagcl\lab\applied_ds_ml\.venv\Lib\site-packages\sklearn\metrics\_regression.py:1187: UndefinedMetricWarning: R^2 score is not well-defined with less than two samples.
+  warnings.warn(msg, UndefinedMetricWarning)
+
+2026-06-17 21:29:22,237:WARNING:C:\Users\nagcl\lab\applied_ds_ml\.venv\Lib\site-packages\sklearn\metrics\_regression.py:1187: UndefinedMetricWarning: R^2 score is not well-defined with less than two samples.
+  warnings.warn(msg, UndefinedMetricWarning)
+
+2026-06-17 21:29:22,240:INFO:Calculating mean and std
+2026-06-17 21:29:22,240:INFO:Creating metrics dataframe
+2026-06-17 21:29:22,241:INFO:Uploading results into container
+2026-06-17 21:29:22,242:INFO:Uploading model into container now
+2026-06-17 21:29:22,242:INFO:_master_model_container: 21
+2026-06-17 21:29:22,242:INFO:_display_container: 3
+2026-06-17 21:29:22,242:INFO:RandomForestRegressor(n_jobs=-1, random_state=42)
+2026-06-17 21:29:22,242:INFO:create_model() successfully completed......................................
+2026-06-17 21:29:22,290:INFO:SubProcess create_model() end ==================================
+2026-06-17 21:29:22,290:INFO:Creating metrics dataframe
+2026-06-17 21:29:22,292:WARNING:C:\Users\nagcl\lab\applied_ds_ml\.venv\Lib\site-packages\pycaret\internal\pycaret_experiment\supervised_experiment.py:339: FutureWarning: Styler.applymap has been deprecated. Use Styler.map instead.
+  .applymap(highlight_cols, subset=["TT (Sec)"])
+
+2026-06-17 21:29:22,292:INFO:Initializing create_model()
+2026-06-17 21:29:22,292:INFO:create_model(self=<pycaret.regression.oop.RegressionExperiment object at 0x0000020EC652E8D0>, estimator=LinearRegression(n_jobs=-1), fold=KFold(n_splits=10, random_state=None, shuffle=False), round=4, cross_validation=False, predict=False, fit_kwargs={}, groups=None, refit=True, probability_threshold=None, experiment_custom_tags=None, verbose=False, system=False, add_to_model_list=True, metrics=None, display=None, model_only=True, return_train_score=False, error_score=0.0, kwargs={})
+2026-06-17 21:29:22,292:INFO:Checking exceptions
+2026-06-17 21:29:22,293:INFO:Importing libraries
+2026-06-17 21:29:22,293:INFO:Copying training dataset
+2026-06-17 21:29:22,294:INFO:Defining folds
+2026-06-17 21:29:22,294:INFO:Declaring metric variables
+2026-06-17 21:29:22,294:INFO:Importing untrained model
+2026-06-17 21:29:22,295:INFO:Declaring custom model
+2026-06-17 21:29:22,295:INFO:Linear Regression Imported successfully
+2026-06-17 21:29:22,295:INFO:Cross validation set to False
+2026-06-17 21:29:22,295:INFO:Fitting Model
+2026-06-17 21:29:22,299:INFO:LinearRegression(n_jobs=-1)
+2026-06-17 21:29:22,299:INFO:create_model() successfully completed......................................
+2026-06-17 21:29:22,351:INFO:_master_model_container: 21
+2026-06-17 21:29:22,351:INFO:_display_container: 3
+2026-06-17 21:29:22,351:INFO:LinearRegression(n_jobs=-1)
+2026-06-17 21:29:22,351:INFO:compare_models() successfully completed......................................
+2026-06-17 21:29:22,356:INFO:Initializing create_model()
+2026-06-17 21:29:22,356:INFO:create_model(self=<pycaret.regression.oop.RegressionExperiment object at 0x0000020EC652E8D0>, estimator=lr, fold=None, round=4, cross_validation=True, predict=True, fit_kwargs=None, groups=None, refit=True, probability_threshold=None, experiment_custom_tags=None, verbose=True, system=True, add_to_model_list=True, metrics=None, display=None, model_only=True, return_train_score=False, error_score=0.0, kwargs={})
+2026-06-17 21:29:22,356:INFO:Checking exceptions
+2026-06-17 21:29:22,357:INFO:Importing libraries
+2026-06-17 21:29:22,357:INFO:Copying training dataset
+2026-06-17 21:29:22,358:INFO:Defining folds
+2026-06-17 21:29:22,358:INFO:Declaring metric variables
+2026-06-17 21:29:22,358:INFO:Importing untrained model
+2026-06-17 21:29:22,359:INFO:Linear Regression Imported successfully
+2026-06-17 21:29:22,359:INFO:Starting cross validation
+2026-06-17 21:29:22,359:INFO:Cross validating with KFold(n_splits=10, random_state=None, shuffle=False), n_jobs=-1
+2026-06-17 21:29:22,385:WARNING:C:\Users\nagcl\lab\applied_ds_ml\.venv\Lib\site-packages\sklearn\metrics\_regression.py:1187: UndefinedMetricWarning: R^2 score is not well-defined with less than two samples.
+  warnings.warn(msg, UndefinedMetricWarning)
+
+2026-06-17 21:29:22,390:WARNING:C:\Users\nagcl\lab\applied_ds_ml\.venv\Lib\site-packages\sklearn\metrics\_regression.py:1187: UndefinedMetricWarning: R^2 score is not well-defined with less than two samples.
+  warnings.warn(msg, UndefinedMetricWarning)
+
+2026-06-17 21:29:22,391:WARNING:C:\Users\nagcl\lab\applied_ds_ml\.venv\Lib\site-packages\sklearn\metrics\_regression.py:1187: UndefinedMetricWarning: R^2 score is not well-defined with less than two samples.
+  warnings.warn(msg, UndefinedMetricWarning)
+
+2026-06-17 21:29:22,393:WARNING:C:\Users\nagcl\lab\applied_ds_ml\.venv\Lib\site-packages\sklearn\metrics\_regression.py:1187: UndefinedMetricWarning: R^2 score is not well-defined with less than two samples.
+  warnings.warn(msg, UndefinedMetricWarning)
+
+2026-06-17 21:29:22,396:INFO:Calculating mean and std
+2026-06-17 21:29:22,396:INFO:Creating metrics dataframe
+2026-06-17 21:29:22,397:INFO:Finalizing model
+2026-06-17 21:29:22,401:INFO:Uploading results into container
+2026-06-17 21:29:22,402:INFO:Uploading model into container now
+2026-06-17 21:29:22,406:INFO:_master_model_container: 22
+2026-06-17 21:29:22,406:INFO:_display_container: 4
+2026-06-17 21:29:22,406:INFO:LinearRegression(n_jobs=-1)
+2026-06-17 21:29:22,406:INFO:create_model() successfully completed......................................
+2026-06-17 21:29:22,464:INFO:Initializing create_model()
+2026-06-17 21:29:22,464:INFO:create_model(self=<pycaret.regression.oop.RegressionExperiment object at 0x0000020EC652E8D0>, estimator=rf, fold=None, round=4, cross_validation=True, predict=True, fit_kwargs=None, groups=None, refit=True, probability_threshold=None, experiment_custom_tags=None, verbose=True, system=True, add_to_model_list=True, metrics=None, display=None, model_only=True, return_train_score=False, error_score=0.0, kwargs={})
+2026-06-17 21:29:22,464:INFO:Checking exceptions
+2026-06-17 21:29:22,464:INFO:Importing libraries
+2026-06-17 21:29:22,464:INFO:Copying training dataset
+2026-06-17 21:29:22,466:INFO:Defining folds
+2026-06-17 21:29:22,466:INFO:Declaring metric variables
+2026-06-17 21:29:22,466:INFO:Importing untrained model
+2026-06-17 21:29:22,466:INFO:Random Forest Regressor Imported successfully
+2026-06-17 21:29:22,467:INFO:Starting cross validation
+2026-06-17 21:29:22,467:INFO:Cross validating with KFold(n_splits=10, random_state=None, shuffle=False), n_jobs=-1
+2026-06-17 21:29:22,614:WARNING:C:\Users\nagcl\lab\applied_ds_ml\.venv\Lib\site-packages\sklearn\metrics\_regression.py:1187: UndefinedMetricWarning: R^2 score is not well-defined with less than two samples.
+  warnings.warn(msg, UndefinedMetricWarning)
+
+2026-06-17 21:29:22,622:WARNING:C:\Users\nagcl\lab\applied_ds_ml\.venv\Lib\site-packages\sklearn\metrics\_regression.py:1187: UndefinedMetricWarning: R^2 score is not well-defined with less than two samples.
+  warnings.warn(msg, UndefinedMetricWarning)
+
+2026-06-17 21:29:22,626:WARNING:C:\Users\nagcl\lab\applied_ds_ml\.venv\Lib\site-packages\sklearn\metrics\_regression.py:1187: UndefinedMetricWarning: R^2 score is not well-defined with less than two samples.
+  warnings.warn(msg, UndefinedMetricWarning)
+
+2026-06-17 21:29:22,630:WARNING:C:\Users\nagcl\lab\applied_ds_ml\.venv\Lib\site-packages\sklearn\metrics\_regression.py:1187: UndefinedMetricWarning: R^2 score is not well-defined with less than two samples.
+  warnings.warn(msg, UndefinedMetricWarning)
+
+2026-06-17 21:29:22,639:INFO:Calculating mean and std
+2026-06-17 21:29:22,639:INFO:Creating metrics dataframe
+2026-06-17 21:29:22,640:INFO:Finalizing model
+2026-06-17 21:29:22,731:INFO:Uploading results into container
+2026-06-17 21:29:22,731:INFO:Uploading model into container now
+2026-06-17 21:29:22,736:INFO:_master_model_container: 23
+2026-06-17 21:29:22,736:INFO:_display_container: 5
+2026-06-17 21:29:22,736:INFO:RandomForestRegressor(n_jobs=-1, random_state=42)
+2026-06-17 21:29:22,736:INFO:create_model() successfully completed......................................
+2026-06-17 21:29:22,789:INFO:Initializing tune_model()
+2026-06-17 21:29:22,790:INFO:tune_model(self=<pycaret.regression.oop.RegressionExperiment object at 0x0000020EC652E8D0>, estimator=RandomForestRegressor(n_jobs=-1, random_state=42), fold=None, round=4, n_iter=10, custom_grid=None, optimize=RMSE, custom_scorer=None, search_library=scikit-learn, search_algorithm=None, early_stopping=False, early_stopping_max_iters=10, choose_better=True, fit_kwargs=None, groups=None, return_tuner=False, verbose=True, tuner_verbose=True, return_train_score=False, kwargs={})
+2026-06-17 21:29:22,790:INFO:Checking exceptions
+2026-06-17 21:29:22,791:INFO:Copying training dataset
+2026-06-17 21:29:22,793:INFO:Checking base model
+2026-06-17 21:29:22,793:INFO:Base model : Random Forest Regressor
+2026-06-17 21:29:22,793:INFO:Declaring metric variables
+2026-06-17 21:29:22,793:INFO:Defining Hyperparameters
+2026-06-17 21:29:22,843:INFO:Tuning with n_jobs=-1
+2026-06-17 21:29:22,843:INFO:Initializing RandomizedSearchCV
+2026-06-17 21:29:24,332:INFO:best_params: {'actual_estimator__n_estimators': 190, 'actual_estimator__min_samples_split': 2, 'actual_estimator__min_samples_leaf': 2, 'actual_estimator__min_impurity_decrease': 0.3, 'actual_estimator__max_features': 1.0, 'actual_estimator__max_depth': 4, 'actual_estimator__criterion': 'squared_error', 'actual_estimator__bootstrap': True}
+2026-06-17 21:29:24,332:INFO:Hyperparameter search completed
+2026-06-17 21:29:24,333:INFO:SubProcess create_model() called ==================================
+2026-06-17 21:29:24,333:INFO:Initializing create_model()
+2026-06-17 21:29:24,333:INFO:create_model(self=<pycaret.regression.oop.RegressionExperiment object at 0x0000020EC652E8D0>, estimator=RandomForestRegressor(n_jobs=-1, random_state=42), fold=KFold(n_splits=10, random_state=None, shuffle=False), round=4, cross_validation=True, predict=True, fit_kwargs={}, groups=None, refit=True, probability_threshold=None, experiment_custom_tags=None, verbose=True, system=False, add_to_model_list=True, metrics=None, display=<pycaret.internal.display.display.CommonDisplay object at 0x0000020EECBF5910>, model_only=True, return_train_score=False, error_score=0.0, kwargs={'n_estimators': 190, 'min_samples_split': 2, 'min_samples_leaf': 2, 'min_impurity_decrease': 0.3, 'max_features': 1.0, 'max_depth': 4, 'criterion': 'squared_error', 'bootstrap': True})
+2026-06-17 21:29:24,333:INFO:Checking exceptions
+2026-06-17 21:29:24,333:INFO:Importing libraries
+2026-06-17 21:29:24,333:INFO:Copying training dataset
+2026-06-17 21:29:24,335:INFO:Defining folds
+2026-06-17 21:29:24,335:INFO:Declaring metric variables
+2026-06-17 21:29:24,335:INFO:Importing untrained model
+2026-06-17 21:29:24,335:INFO:Declaring custom model
+2026-06-17 21:29:24,336:INFO:Random Forest Regressor Imported successfully
+2026-06-17 21:29:24,336:INFO:Starting cross validation
+2026-06-17 21:29:24,336:INFO:Cross validating with KFold(n_splits=10, random_state=None, shuffle=False), n_jobs=-1
+2026-06-17 21:29:24,588:WARNING:C:\Users\nagcl\lab\applied_ds_ml\.venv\Lib\site-packages\sklearn\metrics\_regression.py:1187: UndefinedMetricWarning: R^2 score is not well-defined with less than two samples.
+  warnings.warn(msg, UndefinedMetricWarning)
+
+2026-06-17 21:29:24,594:WARNING:C:\Users\nagcl\lab\applied_ds_ml\.venv\Lib\site-packages\sklearn\metrics\_regression.py:1187: UndefinedMetricWarning: R^2 score is not well-defined with less than two samples.
+  warnings.warn(msg, UndefinedMetricWarning)
+
+2026-06-17 21:29:24,598:WARNING:C:\Users\nagcl\lab\applied_ds_ml\.venv\Lib\site-packages\sklearn\metrics\_regression.py:1187: UndefinedMetricWarning: R^2 score is not well-defined with less than two samples.
+  warnings.warn(msg, UndefinedMetricWarning)
+
+2026-06-17 21:29:24,599:WARNING:C:\Users\nagcl\lab\applied_ds_ml\.venv\Lib\site-packages\sklearn\metrics\_regression.py:1187: UndefinedMetricWarning: R^2 score is not well-defined with less than two samples.
+  warnings.warn(msg, UndefinedMetricWarning)
+
+2026-06-17 21:29:24,602:INFO:Calculating mean and std
+2026-06-17 21:29:24,602:INFO:Creating metrics dataframe
+2026-06-17 21:29:24,603:INFO:Finalizing model
+2026-06-17 21:29:24,736:INFO:Uploading results into container
+2026-06-17 21:29:24,737:INFO:Uploading model into container now
+2026-06-17 21:29:24,737:INFO:_master_model_container: 24
+2026-06-17 21:29:24,737:INFO:_display_container: 6
+2026-06-17 21:29:24,737:INFO:RandomForestRegressor(max_depth=4, min_impurity_decrease=0.3,
+                      min_samples_leaf=2, n_estimators=190, n_jobs=-1,
+                      random_state=42)
+2026-06-17 21:29:24,738:INFO:create_model() successfully completed......................................
+2026-06-17 21:29:24,785:INFO:SubProcess create_model() end ==================================
+2026-06-17 21:29:24,785:INFO:choose_better activated
+2026-06-17 21:29:24,785:INFO:SubProcess create_model() called ==================================
+2026-06-17 21:29:24,786:INFO:Initializing create_model()
+2026-06-17 21:29:24,786:INFO:create_model(self=<pycaret.regression.oop.RegressionExperiment object at 0x0000020EC652E8D0>, estimator=RandomForestRegressor(n_jobs=-1, random_state=42), fold=KFold(n_splits=10, random_state=None, shuffle=False), round=4, cross_validation=True, predict=True, fit_kwargs={}, groups=None, refit=True, probability_threshold=None, experiment_custom_tags=None, verbose=False, system=False, add_to_model_list=True, metrics=None, display=None, model_only=True, return_train_score=False, error_score=0.0, kwargs={})
+2026-06-17 21:29:24,786:INFO:Checking exceptions
+2026-06-17 21:29:24,786:INFO:Importing libraries
+2026-06-17 21:29:24,786:INFO:Copying training dataset
+2026-06-17 21:29:24,788:INFO:Defining folds
+2026-06-17 21:29:24,788:INFO:Declaring metric variables
+2026-06-17 21:29:24,788:INFO:Importing untrained model
+2026-06-17 21:29:24,788:INFO:Declaring custom model
+2026-06-17 21:29:24,788:INFO:Random Forest Regressor Imported successfully
+2026-06-17 21:29:24,788:INFO:Starting cross validation
+2026-06-17 21:29:24,789:INFO:Cross validating with KFold(n_splits=10, random_state=None, shuffle=False), n_jobs=-1
+2026-06-17 21:29:24,937:WARNING:C:\Users\nagcl\lab\applied_ds_ml\.venv\Lib\site-packages\sklearn\metrics\_regression.py:1187: UndefinedMetricWarning: R^2 score is not well-defined with less than two samples.
+  warnings.warn(msg, UndefinedMetricWarning)
+
+2026-06-17 21:29:24,940:WARNING:C:\Users\nagcl\lab\applied_ds_ml\.venv\Lib\site-packages\sklearn\metrics\_regression.py:1187: UndefinedMetricWarning: R^2 score is not well-defined with less than two samples.
+  warnings.warn(msg, UndefinedMetricWarning)
+
+2026-06-17 21:29:24,941:WARNING:C:\Users\nagcl\lab\applied_ds_ml\.venv\Lib\site-packages\sklearn\metrics\_regression.py:1187: UndefinedMetricWarning: R^2 score is not well-defined with less than two samples.
+  warnings.warn(msg, UndefinedMetricWarning)
+
+2026-06-17 21:29:24,953:WARNING:C:\Users\nagcl\lab\applied_ds_ml\.venv\Lib\site-packages\sklearn\metrics\_regression.py:1187: UndefinedMetricWarning: R^2 score is not well-defined with less than two samples.
+  warnings.warn(msg, UndefinedMetricWarning)
+
+2026-06-17 21:29:24,958:INFO:Calculating mean and std
+2026-06-17 21:29:24,958:INFO:Creating metrics dataframe
+2026-06-17 21:29:24,959:INFO:Finalizing model
+2026-06-17 21:29:25,034:INFO:Uploading results into container
+2026-06-17 21:29:25,034:INFO:Uploading model into container now
+2026-06-17 21:29:25,035:INFO:_master_model_container: 25
+2026-06-17 21:29:25,035:INFO:_display_container: 7
+2026-06-17 21:29:25,035:INFO:RandomForestRegressor(n_jobs=-1, random_state=42)
+2026-06-17 21:29:25,035:INFO:create_model() successfully completed......................................
+2026-06-17 21:29:25,079:INFO:SubProcess create_model() end ==================================
+2026-06-17 21:29:25,079:INFO:RandomForestRegressor(n_jobs=-1, random_state=42) result for RMSE is 10.527
+2026-06-17 21:29:25,079:INFO:RandomForestRegressor(max_depth=4, min_impurity_decrease=0.3,
+                      min_samples_leaf=2, n_estimators=190, n_jobs=-1,
+                      random_state=42) result for RMSE is 11.6506
+2026-06-17 21:29:25,079:INFO:RandomForestRegressor(n_jobs=-1, random_state=42) is best model
+2026-06-17 21:29:25,079:INFO:choose_better completed
+2026-06-17 21:29:25,080:INFO:Original model was better than the tuned model, hence it will be returned. NOTE: The display metrics are for the tuned model (not the original one).
+2026-06-17 21:29:25,085:INFO:_master_model_container: 25
+2026-06-17 21:29:25,085:INFO:_display_container: 6
+2026-06-17 21:29:25,085:INFO:RandomForestRegressor(n_jobs=-1, random_state=42)
+2026-06-17 21:29:25,085:INFO:tune_model() successfully completed......................................
+2026-06-17 21:29:25,140:INFO:Initializing predict_model()
+2026-06-17 21:29:25,140:INFO:predict_model(self=<pycaret.regression.oop.RegressionExperiment object at 0x0000020EC652E8D0>, estimator=RandomForestRegressor(n_jobs=-1, random_state=42), probability_threshold=None, encoded_labels=False, raw_score=False, round=4, verbose=True, ml_usecase=None, preprocess=True, encode_labels=<function _SupervisedExperiment.predict_model.<locals>.encode_labels at 0x0000020EC6834360>)
+2026-06-17 21:29:25,140:INFO:Checking exceptions
+2026-06-17 21:29:25,140:INFO:Preloading libraries
+2026-06-17 21:29:25,176:WARNING:C:\Users\nagcl\lab\applied_ds_ml\.venv\Lib\site-packages\sklearn\metrics\_regression.py:483: FutureWarning: 'squared' is deprecated in version 1.4 and will be removed in 1.6. To calculate the root mean squared error, use the function'root_mean_squared_error'.
+  warnings.warn(
+
+2026-06-17 21:29:25,237:INFO:Initializing predict_model()
+2026-06-17 21:29:25,237:INFO:predict_model(self=<pycaret.regression.oop.RegressionExperiment object at 0x0000020EC652E8D0>, estimator=RandomForestRegressor(n_jobs=-1, random_state=42), probability_threshold=None, encoded_labels=False, raw_score=False, round=4, verbose=True, ml_usecase=None, preprocess=True, encode_labels=<function _SupervisedExperiment.predict_model.<locals>.encode_labels at 0x0000020EEC323240>)
+2026-06-17 21:29:25,237:INFO:Checking exceptions
+2026-06-17 21:29:25,238:INFO:Preloading libraries
+2026-06-17 21:29:25,238:INFO:Set up data.
+2026-06-17 21:29:25,239:INFO:Set up index.
+2026-06-17 21:29:25,318:INFO:Initializing save_model()
+2026-06-17 21:29:25,318:INFO:save_model(model=RandomForestRegressor(n_jobs=-1, random_state=42), model_name=house_price_pycaret_model, prep_pipe_=Pipeline(memory=FastMemory(location=C:\Users\nagcl\AppData\Local\Temp\joblib),
+         steps=[('numerical_imputer',
+                 TransformerWrapper(include=['area', 'bedrooms', 'age',
+                                             'distance'],
+                                    transformer=SimpleImputer())),
+                ('categorical_imputer',
+                 TransformerWrapper(include=[],
+                                    transformer=SimpleImputer(strategy='most_frequent')))]), verbose=True, use_case=MLUsecase.REGRESSION, kwargs={})
+2026-06-17 21:29:25,318:INFO:Adding model into prep_pipe
+2026-06-17 21:29:25,336:INFO:house_price_pycaret_model.pkl saved in current working directory
+2026-06-17 21:29:25,339:INFO:Pipeline(memory=Memory(location=None),
+         steps=[('numerical_imputer',
+                 TransformerWrapper(include=['area', 'bedrooms', 'age',
+                                             'distance'],
+                                    transformer=SimpleImputer())),
+                ('categorical_imputer',
+                 TransformerWrapper(include=[],
+                                    transformer=SimpleImputer(strategy='most_frequent'))),
+                ('trained_model',
+                 RandomForestRegressor(n_jobs=-1, random_state=42))])
+2026-06-17 21:29:25,339:INFO:save_model() successfully completed......................................
+2026-06-17 21:29:25,386:INFO:Initializing load_model()
+2026-06-17 21:29:25,386:INFO:load_model(model_name=house_price_pycaret_model, platform=None, authentication=None, verbose=True)
+2026-06-17 21:29:25,407:INFO:Initializing predict_model()
+2026-06-17 21:29:25,407:INFO:predict_model(self=<pycaret.regression.oop.RegressionExperiment object at 0x0000020EC652E8D0>, estimator=Pipeline(memory=FastMemory(location=C:\Users\nagcl\AppData\Local\Temp\joblib),
+         steps=[('numerical_imputer',
+                 TransformerWrapper(include=['area', 'bedrooms', 'age',
+                                             'distance'],
+                                    transformer=SimpleImputer())),
+                ('categorical_imputer',
+                 TransformerWrapper(include=[],
+                                    transformer=SimpleImputer(strategy='most_frequent'))),
+                ('trained_model',
+                 RandomForestRegressor(n_jobs=-1, random_state=42))]), probability_threshold=None, encoded_labels=False, raw_score=False, round=4, verbose=True, ml_usecase=None, preprocess=True, encode_labels=<function _SupervisedExperiment.predict_model.<locals>.encode_labels at 0x0000020EA350AD40>)
+2026-06-17 21:29:25,407:INFO:Checking exceptions
+2026-06-17 21:29:25,407:INFO:Preloading libraries
+2026-06-17 21:29:25,407:INFO:Set up data.
+2026-06-17 21:29:25,408:INFO:Set up index.
