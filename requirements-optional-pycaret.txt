@@ -1,4 +1,0 @@
-# Optional only.
-# Use this later for the PyCaret lab if the classroom machines support it.
-# Recommended Python for PyCaret labs: Python 3.10 or Python 3.11.
-pycaret

@@ -1,160 +1,100 @@
-# Student Environment Setup Guide
+# Setup Guide (Windows)
 
-Use this guide before running the notebooks.
+## Prerequisites
 
-## Recommended Setup
+- Windows 10 or 11
+- Internet connection
+- Admin access (for first-time Python install)
 
-- Use Python 3.11.
-- Create one virtual environment inside the project folder.
-- Install libraries from `requirements.txt`.
-- Use the same environment as the Jupyter notebook kernel.
+## Step 1: Install Python 3.11
 
-## Why Use a Virtual Environment?
-
-- It keeps this training separate from other Python projects.
-- All students use the same library versions.
-- It reduces "works on my system" problems.
-- It is easier to delete and recreate if something breaks.
-
-## Windows PowerShell Setup
-
-Open PowerShell inside the `applied_ds_ml` project folder.
-
-If the project is in your Downloads folder, Desktop, or any other location, first move into that folder. Example:
-
-```powershell
-cd path\to\applied_ds_ml
-```
-
-Check whether Python 3.11 is installed:
-
-```powershell
-py -3.11 --version
-```
-
-If Python 3.11 is available, create a virtual environment:
-
-```powershell
-py -3.11 -m venv .venv
-```
-
-## If Python 3.11 Is Not Found
-
-If you see this error:
-
-```text
-No suitable Python runtime found
-Pass --list (-0) to see all detected environments on your machine
-```
-
-First check detected Python versions:
-
-
-```powershell
-py -0p
-```
-
-Then install Python 3.11 using Windows Package Manager:
+Open **PowerShell** and run:
 
 ```powershell
 winget install Python.Python.3.11
 ```
 
-After installation:
-
-- Close PowerShell.
-- Open PowerShell again inside the `applied_ds_ml` project folder.
-- Run these commands:
+Close and reopen PowerShell, then verify:
 
 ```powershell
-py -3.11 --version
-py -3.11 -m venv .venv
+python --version
 ```
 
-Activate it:
+Expected output: `Python 3.11.x`
+
+If `python` is not recognized, check that Python is added to your system PATH. You can reinstall Python from https://www.python.org/downloads/ and check "Add Python to PATH" during installation.
+
+## Step 2: Clone or Download the Repo
+
+If using git:
 
 ```powershell
+git clone <repo-url>
+cd applied_ds_ml
+```
+
+Or download the ZIP and extract it. Open PowerShell inside the `applied_ds_ml` folder.
+
+## Step 3: Create Virtual Environment
+
+```powershell
+python -m venv .venv
+```
+
+## Step 4: Activate Virtual Environment
+
+```powershell
+Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
 .\.venv\Scripts\Activate.ps1
 ```
 
-Upgrade packaging tools:
+You should see `(.venv)` at the start of your prompt. This means the environment is active.
 
-```powershell
-python -m pip install --upgrade pip setuptools wheel
-```
+If you get a permission error, run PowerShell as Administrator for the `Set-ExecutionPolicy` command once, then switch back to normal PowerShell.
 
-Install required libraries:
+## Step 5: Install Packages
 
 ```powershell
 pip install -r requirements.txt
 ```
 
-Register the environment as a Jupyter kernel:
+This installs: numpy, pandas, matplotlib, seaborn, scikit-learn, jupyterlab, and notebook.
 
-```powershell
-python -m ipykernel install --user --name applied_ds_ml --display-name "Python (applied_ds_ml)"
-```
-
-Start Jupyter:
+## Step 6: Launch Jupyter
 
 ```powershell
 jupyter notebook
 ```
 
-Open the first Day 1 notebook:
-
-```text
-days/day_01_eda_preprocessing/notebooks/01_data_science_ecosystem_and_setup.ipynb
-```
-
-In Jupyter, select this kernel:
-
-```text
-Python (applied_ds_ml)
-```
-
-## If Activation Is Blocked
-
-If PowerShell blocks activation, run:
+Or if you prefer JupyterLab:
 
 ```powershell
-Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
+jupyter lab
 ```
 
-Then activate again:
+A browser tab will open. Navigate to `notebooks/` and open `day_01_data_science_lifecycle_demo.ipynb`.
+
+## Step 7: Verify Everything Works
+
+In the notebook, run the first code cell (Step 0: Setup). If all imports succeed and you see "Libraries ready.", your setup is complete.
+
+## Troubleshooting
+
+| Problem | Fix |
+|---|---|
+| `python` not recognized | Reinstall Python with "Add to PATH" checked |
+| `pip` not recognized | Use `python -m pip install -r requirements.txt` |
+| Activation fails | Run `Set-ExecutionPolicy RemoteSigned -Scope CurrentUser` first |
+| Jupyter opens wrong Python | Run `python -m jupyter notebook` instead |
+| Import error in notebook | Make sure you activated `.venv` before launching Jupyter |
+| `(.venv)` not showing | You forgot to activate. Run `.\.venv\Scripts\Activate.ps1` again |
+
+## Daily Workflow
+
+Every time you open a new PowerShell window:
 
 ```powershell
+cd applied_ds_ml
 .\.venv\Scripts\Activate.ps1
+jupyter notebook
 ```
-
-## Quick Verification
-
-After activating the environment, run:
-
-```powershell
-python --version
-pip list
-```
-
-Inside the notebook, the environment check cell should show the virtual environment Python path.
-
-## Optional PyCaret Setup
-
-Do not install PyCaret at the beginning of the course.
-
-Install it only when reaching the optional PyCaret lab:
-
-```powershell
-pip install -r requirements-optional-pycaret.txt
-```
-
-If PyCaret installation fails in a classroom, skip the PyCaret lab and continue with Scikit-learn.
-
-## Before Class
-
-Complete these checks before starting the first notebook:
-
-- The virtual environment is activated.
-- Jupyter opens successfully.
-- The kernel `Python (applied_ds_ml)` is available.
-- The first Day 1 notebook opens without errors.

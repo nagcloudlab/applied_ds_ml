@@ -1,9 +1,12 @@
-numpy==1.26.4
-pandas==2.2.2
-matplotlib==3.9.2
-seaborn==0.13.2
-scipy==1.14.1
-scikit-learn==1.5.2
-jupyterlab==4.2.5
-notebook==7.2.2
-ipykernel==6.29.5
+# Python 3.11 recommended | Python 3.10 also supported
+# Install: pip install -r requirements.txt
+
+numpy==1.26.4            # Numerical computing
+pandas==2.2.2            # DataFrames and data manipulation
+matplotlib==3.9.2        # Chart creation
+seaborn==0.13.2          # Statistical visualization
+scipy==1.14.1            # Scientific computing (used by other packages)
+scikit-learn==1.5.2      # Machine learning tools (scalers, models)
+jupyterlab==4.2.5        # Jupyter notebook interface
+notebook==7.2.2          # Classic notebook interface
+ipykernel==6.29.5        # Jupyter kernel for virtual environments
