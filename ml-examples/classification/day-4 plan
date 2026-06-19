@@ -1,0 +1,19 @@
+
+
+
+Level-2 - ML models
+-----------------------
+
+Supervised Learning
+-----------------------
+-> Regression
+    - Simple Linear Regression
+    - Multiple Linear Regression
+    - Decision Tree Regression
+-> Classification
+    - Logistic Regression
+    - Decision Tree Classification
+Unsupervised Learning
+-----------------------
+-> Clustering
+    - K-Means
