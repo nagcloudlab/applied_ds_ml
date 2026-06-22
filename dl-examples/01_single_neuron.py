@@ -52,7 +52,7 @@ print(f"""
 print("  Let's try a lazy student: studied 2 hrs, slept 3 hrs")
 score2 = (2 * weight_study) + (3 * weight_sleep) + bias
 print(f"    Score = (2 * {weight_study}) + (3 * {weight_sleep}) + ({bias}) = {score2}")
-print(f"    Result: {"PASS" if score2 > 0 else "FAIL"}")
+print(f"    Result: {'PASS' if score2 > 0 else 'FAIL'}")
 
 print("""
   THATS IT! A neuron = multiply each input by its weight, add bias.

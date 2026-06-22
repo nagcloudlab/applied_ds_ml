@@ -1,0 +1,1623 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Transformer Architecture - Visual Guide</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Fira+Code:wght@400;500&display=swap');
+
+  :root {
+    --bg: #0a0a1a;
+    --surface: #12122a;
+    --surface2: #1a1a3e;
+    --accent: #6c63ff;
+    --accent2: #00d4aa;
+    --accent3: #ff6b9d;
+    --accent4: #ffd93d;
+    --text: #e8e8f0;
+    --text-dim: #8888aa;
+    --glow: rgba(108, 99, 255, 0.3);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    overflow: hidden;
+    height: 100vh;
+  }
+
+  /* ── Slide Container ── */
+  .deck {
+    width: 100vw;
+    height: 100vh;
+    position: relative;
+  }
+
+  .slide {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 60px 80px;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(40px) scale(0.97);
+    transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+  }
+
+  .slide.active {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0) scale(1);
+  }
+
+  /* ── Typography ── */
+  h1 {
+    font-size: 3.5rem;
+    font-weight: 900;
+    letter-spacing: -2px;
+    line-height: 1.1;
+    margin-bottom: 20px;
+  }
+
+  h2 {
+    font-size: 2.6rem;
+    font-weight: 800;
+    letter-spacing: -1.5px;
+    margin-bottom: 24px;
+  }
+
+  h3 {
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: var(--accent2);
+    margin-bottom: 16px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+  }
+
+  p, li {
+    font-size: 1.25rem;
+    line-height: 1.7;
+    color: var(--text);
+  }
+
+  .dim { color: var(--text-dim); }
+  .accent { color: var(--accent); }
+  .accent2 { color: var(--accent2); }
+  .accent3 { color: var(--accent3); }
+  .accent4 { color: var(--accent4); }
+  .bold { font-weight: 700; }
+
+  .gradient-text {
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .gradient-text2 {
+    background: linear-gradient(135deg, var(--accent3), var(--accent4));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  /* ── Layout helpers ── */
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    width: 100%;
+    max-width: 1200px;
+    align-items: center;
+  }
+
+  .three-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 30px;
+    width: 100%;
+    max-width: 1200px;
+  }
+
+  .center-content {
+    text-align: center;
+    max-width: 900px;
+  }
+
+  .wide-content {
+    width: 100%;
+    max-width: 1100px;
+  }
+
+  ul { list-style: none; }
+  ul li {
+    padding: 8px 0;
+    padding-left: 28px;
+    position: relative;
+  }
+  ul li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 18px;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--accent);
+  }
+
+  /* ── Cards ── */
+  .card {
+    background: var(--surface);
+    border: 1px solid rgba(108, 99, 255, 0.15);
+    border-radius: 20px;
+    padding: 36px;
+    transition: all 0.3s ease;
+  }
+
+  .card:hover {
+    border-color: var(--accent);
+    box-shadow: 0 0 40px var(--glow);
+    transform: translateY(-4px);
+  }
+
+  .card-icon {
+    font-size: 2.5rem;
+    margin-bottom: 16px;
+    display: block;
+  }
+
+  .card h4 {
+    font-size: 1.3rem;
+    font-weight: 700;
+    margin-bottom: 12px;
+  }
+
+  .card p {
+    font-size: 1rem;
+    color: var(--text-dim);
+    line-height: 1.6;
+  }
+
+  /* ── Code blocks ── */
+  .code-block {
+    background: var(--surface);
+    border: 1px solid rgba(108, 99, 255, 0.2);
+    border-radius: 16px;
+    padding: 28px 32px;
+    font-family: 'Fira Code', monospace;
+    font-size: 1.05rem;
+    line-height: 1.8;
+    overflow-x: auto;
+    white-space: pre;
+    position: relative;
+  }
+
+  .code-block .comment { color: #5a5a7a; }
+  .code-block .keyword { color: var(--accent3); }
+  .code-block .func { color: var(--accent); }
+  .code-block .string { color: var(--accent2); }
+  .code-block .number { color: var(--accent4); }
+
+  /* ── Animated Architecture Diagram ── */
+  .arch-diagram {
+    display: flex;
+    gap: 40px;
+    align-items: stretch;
+    justify-content: center;
+    width: 100%;
+    max-width: 1000px;
+  }
+
+  .arch-column {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    flex: 1;
+    max-width: 340px;
+  }
+
+  .arch-block {
+    border-radius: 14px;
+    padding: 18px 24px;
+    text-align: center;
+    font-weight: 600;
+    font-size: 0.95rem;
+    transition: all 0.3s ease;
+    cursor: default;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .arch-block::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(255,255,255,0.05), transparent);
+    pointer-events: none;
+  }
+
+  .arch-block:hover {
+    transform: scale(1.05);
+    z-index: 2;
+  }
+
+  .arch-block.attn {
+    background: linear-gradient(135deg, #2d1b69, #1b1145);
+    border: 1px solid rgba(108, 99, 255, 0.4);
+  }
+  .arch-block.attn:hover { box-shadow: 0 0 30px rgba(108, 99, 255, 0.4); }
+
+  .arch-block.ff {
+    background: linear-gradient(135deg, #0d3b3b, #0a2525);
+    border: 1px solid rgba(0, 212, 170, 0.4);
+  }
+  .arch-block.ff:hover { box-shadow: 0 0 30px rgba(0, 212, 170, 0.3); }
+
+  .arch-block.norm {
+    background: var(--surface2);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    font-size: 0.8rem;
+    padding: 10px;
+    color: var(--text-dim);
+  }
+
+  .arch-block.io {
+    background: linear-gradient(135deg, #3b1b2d, #251020);
+    border: 1px solid rgba(255, 107, 157, 0.3);
+  }
+  .arch-block.io:hover { box-shadow: 0 0 30px rgba(255, 107, 157, 0.3); }
+
+  .arch-block.masked {
+    background: linear-gradient(135deg, #3b2d0d, #25200a);
+    border: 1px solid rgba(255, 217, 61, 0.3);
+  }
+  .arch-block.masked:hover { box-shadow: 0 0 30px rgba(255, 217, 61, 0.3); }
+
+  .arch-label {
+    font-size: 1.3rem;
+    font-weight: 800;
+    text-align: center;
+    margin-bottom: 8px;
+    letter-spacing: 1px;
+  }
+
+  .arch-arrow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    color: var(--text-dim);
+    align-self: center;
+  }
+
+  .nx-badge {
+    display: inline-block;
+    background: var(--accent);
+    color: white;
+    font-size: 0.75rem;
+    font-weight: 700;
+    padding: 3px 10px;
+    border-radius: 20px;
+    margin-top: 8px;
+  }
+
+  /* ── Attention Animation ── */
+  .attention-demo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+    width: 100%;
+    max-width: 800px;
+  }
+
+  .word-row {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .word-token {
+    background: var(--surface);
+    border: 2px solid rgba(108, 99, 255, 0.2);
+    border-radius: 12px;
+    padding: 12px 22px;
+    font-weight: 600;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+  }
+
+  .word-token:hover, .word-token.selected {
+    border-color: var(--accent);
+    box-shadow: 0 0 25px var(--glow);
+    transform: translateY(-3px);
+  }
+
+  .word-token .attn-weight {
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    background: var(--accent);
+    color: white;
+    font-size: 0.7rem;
+    font-weight: 700;
+    padding: 2px 7px;
+    border-radius: 10px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .word-token.highlight .attn-weight {
+    opacity: 1;
+  }
+
+  .word-token.highlight {
+    border-color: var(--accent2);
+    box-shadow: 0 0 20px rgba(0, 212, 170, 0.3);
+  }
+
+  .word-token.highlight-low {
+    border-color: rgba(0, 212, 170, 0.3);
+    opacity: 0.5;
+  }
+
+  .word-token.highlight-med {
+    border-color: rgba(0, 212, 170, 0.6);
+    opacity: 0.75;
+  }
+
+  .word-token.highlight-high {
+    border-color: var(--accent2);
+    box-shadow: 0 0 25px rgba(0, 212, 170, 0.4);
+  }
+
+  /* ── SVG Lines ── */
+  .attn-lines {
+    width: 100%;
+    height: 80px;
+    position: relative;
+  }
+
+  .attn-lines svg {
+    width: 100%;
+    height: 100%;
+  }
+
+  .attn-lines line {
+    stroke: var(--accent2);
+    stroke-width: 2;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+  }
+
+  /* ── QKV Visual ── */
+  .qkv-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    max-width: 900px;
+    width: 100%;
+  }
+
+  .qkv-card {
+    border-radius: 20px;
+    padding: 32px;
+    text-align: center;
+    transition: all 0.3s ease;
+  }
+
+  .qkv-card:hover { transform: translateY(-6px); }
+
+  .qkv-card.q {
+    background: linear-gradient(135deg, rgba(108, 99, 255, 0.15), rgba(108, 99, 255, 0.05));
+    border: 2px solid rgba(108, 99, 255, 0.3);
+  }
+  .qkv-card.q:hover { box-shadow: 0 0 40px rgba(108, 99, 255, 0.3); }
+
+  .qkv-card.k {
+    background: linear-gradient(135deg, rgba(0, 212, 170, 0.15), rgba(0, 212, 170, 0.05));
+    border: 2px solid rgba(0, 212, 170, 0.3);
+  }
+  .qkv-card.k:hover { box-shadow: 0 0 40px rgba(0, 212, 170, 0.3); }
+
+  .qkv-card.v {
+    background: linear-gradient(135deg, rgba(255, 107, 157, 0.15), rgba(255, 107, 157, 0.05));
+    border: 2px solid rgba(255, 107, 157, 0.3);
+  }
+  .qkv-card.v:hover { box-shadow: 0 0 40px rgba(255, 107, 157, 0.3); }
+
+  .qkv-letter {
+    font-size: 3rem;
+    font-weight: 900;
+    margin-bottom: 12px;
+  }
+
+  .qkv-card.q .qkv-letter { color: var(--accent); }
+  .qkv-card.k .qkv-letter { color: var(--accent2); }
+  .qkv-card.v .qkv-letter { color: var(--accent3); }
+
+  .qkv-card h4 {
+    font-size: 1.2rem;
+    margin-bottom: 8px;
+  }
+
+  .qkv-card p {
+    font-size: 0.95rem;
+    color: var(--text-dim);
+  }
+
+  /* ── Multi-head visual ── */
+  .heads-container {
+    display: flex;
+    gap: 14px;
+    justify-content: center;
+    flex-wrap: wrap;
+    max-width: 800px;
+  }
+
+  .head-box {
+    width: 80px;
+    height: 80px;
+    border-radius: 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    animation: headPulse 3s ease-in-out infinite;
+  }
+
+  .head-box:nth-child(1) { background: rgba(108, 99, 255, 0.2); border: 1px solid rgba(108, 99, 255, 0.4); animation-delay: 0s; }
+  .head-box:nth-child(2) { background: rgba(0, 212, 170, 0.2); border: 1px solid rgba(0, 212, 170, 0.4); animation-delay: 0.3s; }
+  .head-box:nth-child(3) { background: rgba(255, 107, 157, 0.2); border: 1px solid rgba(255, 107, 157, 0.4); animation-delay: 0.6s; }
+  .head-box:nth-child(4) { background: rgba(255, 217, 61, 0.2); border: 1px solid rgba(255, 217, 61, 0.4); animation-delay: 0.9s; }
+  .head-box:nth-child(5) { background: rgba(100, 200, 255, 0.2); border: 1px solid rgba(100, 200, 255, 0.4); animation-delay: 1.2s; }
+  .head-box:nth-child(6) { background: rgba(200, 100, 255, 0.2); border: 1px solid rgba(200, 100, 255, 0.4); animation-delay: 1.5s; }
+  .head-box:nth-child(7) { background: rgba(255, 150, 50, 0.2); border: 1px solid rgba(255, 150, 50, 0.4); animation-delay: 1.8s; }
+  .head-box:nth-child(8) { background: rgba(50, 255, 150, 0.2); border: 1px solid rgba(50, 255, 150, 0.4); animation-delay: 2.1s; }
+
+  .head-box:hover { transform: scale(1.15); }
+
+  .head-label { font-size: 0.7rem; color: var(--text-dim); margin-top: 4px; }
+
+  @keyframes headPulse {
+    0%, 100% { transform: scale(1); opacity: 0.8; }
+    50% { transform: scale(1.05); opacity: 1; }
+  }
+
+  /* ── Comparison Table ── */
+  .comp-table {
+    width: 100%;
+    max-width: 1000px;
+    border-collapse: separate;
+    border-spacing: 0;
+    border-radius: 16px;
+    overflow: hidden;
+    font-size: 1.05rem;
+  }
+
+  .comp-table th {
+    background: var(--surface2);
+    padding: 18px 24px;
+    text-align: left;
+    font-weight: 700;
+    font-size: 1.1rem;
+    border-bottom: 2px solid rgba(108, 99, 255, 0.2);
+  }
+
+  .comp-table td {
+    background: var(--surface);
+    padding: 16px 24px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+    transition: background 0.2s ease;
+  }
+
+  .comp-table tr:hover td { background: var(--surface2); }
+
+  .comp-table .bad { color: var(--accent3); }
+  .comp-table .good { color: var(--accent2); }
+
+  /* ── Timeline / Steps ── */
+  .step-flow {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    max-width: 1100px;
+    width: 100%;
+    justify-content: center;
+  }
+
+  .step-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    flex: 1;
+    position: relative;
+  }
+
+  .step-circle {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.6rem;
+    font-weight: 800;
+    margin-bottom: 14px;
+    transition: all 0.3s ease;
+  }
+
+  .step-item:hover .step-circle { transform: scale(1.15); }
+
+  .step-item:nth-child(odd) .step-circle {
+    background: linear-gradient(135deg, var(--accent), #4a42cc);
+    box-shadow: 0 0 30px var(--glow);
+  }
+
+  .step-item:nth-child(even) .step-circle {
+    background: linear-gradient(135deg, var(--accent2), #009977);
+    box-shadow: 0 0 30px rgba(0, 212, 170, 0.3);
+  }
+
+  .step-item p {
+    font-size: 0.9rem;
+    color: var(--text-dim);
+    max-width: 130px;
+  }
+
+  .step-item h4 {
+    font-size: 1rem;
+    margin-bottom: 6px;
+  }
+
+  .step-arrow {
+    font-size: 1.4rem;
+    color: var(--text-dim);
+    margin: 0 -5px;
+    margin-bottom: 40px;
+  }
+
+  /* ── Formula ── */
+  .formula {
+    background: var(--surface);
+    border: 1px solid rgba(108, 99, 255, 0.2);
+    border-radius: 16px;
+    padding: 28px 48px;
+    font-family: 'Fira Code', monospace;
+    font-size: 1.5rem;
+    text-align: center;
+    letter-spacing: 1px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .formula::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--accent), var(--accent2), var(--accent3));
+  }
+
+  /* ── Positional Encoding Visual ── */
+  .pe-grid {
+    display: grid;
+    grid-template-columns: repeat(16, 1fr);
+    gap: 4px;
+    max-width: 700px;
+    margin: 20px auto;
+  }
+
+  .pe-cell {
+    aspect-ratio: 1;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+  }
+
+  /* ── Variants Cards ── */
+  .variant-card {
+    border-radius: 20px;
+    padding: 36px;
+    text-align: center;
+    transition: all 0.3s ease;
+    cursor: default;
+  }
+
+  .variant-card:hover {
+    transform: translateY(-8px);
+  }
+
+  .variant-card.encoder-only {
+    background: linear-gradient(135deg, rgba(108, 99, 255, 0.12), rgba(108, 99, 255, 0.03));
+    border: 2px solid rgba(108, 99, 255, 0.2);
+  }
+  .variant-card.encoder-only:hover { box-shadow: 0 0 50px rgba(108, 99, 255, 0.2); }
+
+  .variant-card.decoder-only {
+    background: linear-gradient(135deg, rgba(255, 107, 157, 0.12), rgba(255, 107, 157, 0.03));
+    border: 2px solid rgba(255, 107, 157, 0.2);
+  }
+  .variant-card.decoder-only:hover { box-shadow: 0 0 50px rgba(255, 107, 157, 0.2); }
+
+  .variant-card.enc-dec {
+    background: linear-gradient(135deg, rgba(0, 212, 170, 0.12), rgba(0, 212, 170, 0.03));
+    border: 2px solid rgba(0, 212, 170, 0.2);
+  }
+  .variant-card.enc-dec:hover { box-shadow: 0 0 50px rgba(0, 212, 170, 0.2); }
+
+  .variant-icon { font-size: 3rem; margin-bottom: 16px; }
+
+  .variant-card h4 { font-size: 1.3rem; font-weight: 700; margin-bottom: 8px; }
+
+  .variant-examples {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    margin-top: 14px;
+    flex-wrap: wrap;
+  }
+
+  .variant-tag {
+    background: rgba(255, 255, 255, 0.08);
+    padding: 4px 14px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 600;
+  }
+
+  /* ── Navigation ── */
+  .nav-bar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 60px;
+    background: rgba(10, 10, 26, 0.9);
+    backdrop-filter: blur(20px);
+    border-top: 1px solid rgba(108, 99, 255, 0.15);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 30px;
+    z-index: 100;
+  }
+
+  .nav-dots {
+    display: flex;
+    gap: 8px;
+  }
+
+  .nav-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--surface2);
+    border: 1px solid rgba(108, 99, 255, 0.3);
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .nav-dot.active {
+    background: var(--accent);
+    box-shadow: 0 0 12px var(--glow);
+    transform: scale(1.3);
+  }
+
+  .nav-dot:hover { background: var(--accent); }
+
+  .nav-btn {
+    background: var(--surface);
+    border: 1px solid rgba(108, 99, 255, 0.3);
+    color: var(--text);
+    padding: 10px 24px;
+    border-radius: 12px;
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .nav-btn:hover {
+    background: var(--accent);
+    border-color: var(--accent);
+  }
+
+  .slide-counter {
+    font-family: 'Fira Code', monospace;
+    font-size: 0.9rem;
+    color: var(--text-dim);
+  }
+
+  /* ── Particle bg ── */
+  #particles {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .slide { z-index: 1; }
+  .nav-bar { z-index: 100; }
+
+  /* ── Animations ── */
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+  }
+
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .slide.active .animate-in {
+    animation: fadeInUp 0.6s ease forwards;
+  }
+
+  .slide.active .animate-in:nth-child(1) { animation-delay: 0.1s; }
+  .slide.active .animate-in:nth-child(2) { animation-delay: 0.25s; }
+  .slide.active .animate-in:nth-child(3) { animation-delay: 0.4s; }
+  .slide.active .animate-in:nth-child(4) { animation-delay: 0.55s; }
+  .slide.active .animate-in:nth-child(5) { animation-delay: 0.7s; }
+
+  .animate-in { opacity: 0; }
+
+  /* ── Responsive ── */
+  @media (max-width: 900px) {
+    .slide { padding: 40px 30px; }
+    h1 { font-size: 2.4rem; }
+    h2 { font-size: 1.8rem; }
+    .two-col { grid-template-columns: 1fr; gap: 30px; }
+    .three-col { grid-template-columns: 1fr; gap: 20px; }
+    .qkv-grid { grid-template-columns: 1fr; }
+    .step-flow { flex-direction: column; }
+    .step-arrow { transform: rotate(90deg); }
+  }
+
+  /* ── Pulse ring on title ── */
+  .pulse-ring {
+    display: inline-block;
+    position: relative;
+  }
+
+  .pulse-ring::after {
+    content: '';
+    position: absolute;
+    inset: -20px;
+    border: 2px solid var(--accent);
+    border-radius: 50%;
+    animation: ringPulse 2s ease-in-out infinite;
+    opacity: 0;
+  }
+
+  @keyframes ringPulse {
+    0% { transform: scale(0.8); opacity: 0; }
+    50% { opacity: 0.3; }
+    100% { transform: scale(1.3); opacity: 0; }
+  }
+
+  /* Interactive attention matrix */
+  .attn-matrix {
+    display: grid;
+    gap: 3px;
+    margin: 20px auto;
+    width: fit-content;
+  }
+
+  .attn-cell {
+    width: 52px;
+    height: 52px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.75rem;
+    font-weight: 600;
+    font-family: 'Fira Code', monospace;
+    transition: all 0.3s ease;
+    cursor: pointer;
+  }
+
+  .attn-cell:hover {
+    transform: scale(1.15);
+    z-index: 2;
+  }
+
+  .matrix-label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-dim);
+  }
+
+  /* Mask visual */
+  .mask-demo {
+    display: grid;
+    gap: 3px;
+    margin: 20px auto;
+    width: fit-content;
+  }
+
+  .mask-cell {
+    width: 56px;
+    height: 56px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    font-weight: 700;
+    transition: all 0.3s ease;
+  }
+
+  .mask-cell.allowed {
+    background: rgba(0, 212, 170, 0.2);
+    border: 1px solid rgba(0, 212, 170, 0.4);
+    color: var(--accent2);
+  }
+
+  .mask-cell.blocked {
+    background: rgba(255, 107, 157, 0.1);
+    border: 1px solid rgba(255, 107, 157, 0.15);
+    color: rgba(255, 107, 157, 0.4);
+  }
+
+  .mask-cell.label-cell {
+    background: transparent;
+    border: none;
+    font-size: 0.8rem;
+    color: var(--text-dim);
+  }
+
+  /* Key insight box */
+  .insight-box {
+    background: linear-gradient(135deg, rgba(108, 99, 255, 0.1), rgba(0, 212, 170, 0.05));
+    border: 1px solid rgba(108, 99, 255, 0.25);
+    border-radius: 16px;
+    padding: 24px 32px;
+    max-width: 700px;
+    margin-top: 20px;
+  }
+
+  .insight-box p {
+    font-size: 1.1rem;
+    font-style: italic;
+  }
+
+  .insight-label {
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--accent);
+    margin-bottom: 8px;
+  }
+</style>
+</head>
+<body>
+
+<canvas id="particles"></canvas>
+
+<div class="deck" id="deck">
+
+  <!-- ══════════ SLIDE 0: TITLE ══════════ -->
+  <div class="slide active" data-slide="0">
+    <div class="center-content">
+      <h3 class="animate-in">Deep Learning Masterclass</h3>
+      <h1 class="animate-in" style="font-size:4rem;">The <span class="gradient-text">Transformer</span><br>Architecture</h1>
+      <p class="dim animate-in" style="font-size:1.3rem; margin-top:16px;">
+        The architecture behind GPT, Claude, BERT, and modern AI
+      </p>
+      <div class="animate-in" style="margin-top: 40px; display:flex; gap:16px; justify-content:center; flex-wrap:wrap;">
+        <span class="variant-tag" style="font-size:1rem; padding:8px 20px; background:rgba(108,99,255,0.15); border:1px solid rgba(108,99,255,0.3);">Attention Is All You Need (2017)</span>
+      </div>
+      <p class="dim animate-in" style="margin-top: 40px; font-size: 0.95rem;">Use arrow keys or click to navigate</p>
+    </div>
+  </div>
+
+  <!-- ══════════ SLIDE 1: THE PROBLEM ══════════ -->
+  <div class="slide" data-slide="1">
+    <h3 class="animate-in">The Problem</h3>
+    <h2 class="animate-in">Why did we need Transformers?</h2>
+    <table class="comp-table animate-in" style="margin-top: 20px;">
+      <thead>
+        <tr>
+          <th>Challenge</th>
+          <th class="bad">RNNs / LSTMs</th>
+          <th class="good">Transformers</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Speed</strong></td>
+          <td class="bad">Sequential - one word at a time</td>
+          <td class="good">Parallel - all words at once</td>
+        </tr>
+        <tr>
+          <td><strong>Long-range context</strong></td>
+          <td class="bad">Forgets distant words</td>
+          <td class="good">Direct attention to any position</td>
+        </tr>
+        <tr>
+          <td><strong>Training</strong></td>
+          <td class="bad">Vanishing gradients</td>
+          <td class="good">Residual connections, short paths</td>
+        </tr>
+        <tr>
+          <td><strong>Scalability</strong></td>
+          <td class="bad">Hard to scale on GPUs</td>
+          <td class="good">Massively parallelizable</td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="insight-box animate-in">
+      <div class="insight-label">Key Insight</div>
+      <p>What if we let every word <span class="bold accent2">directly look at every other word</span>, instead of passing information sequentially?</p>
+    </div>
+  </div>
+
+  <!-- ══════════ SLIDE 2: BIG PICTURE ══════════ -->
+  <div class="slide" data-slide="2">
+    <h3 class="animate-in">The Big Picture</h3>
+    <h2 class="animate-in">How a Transformer processes text</h2>
+    <div class="step-flow animate-in" style="margin-top: 30px;">
+      <div class="step-item">
+        <div class="step-circle">1</div>
+        <h4>Tokenize</h4>
+        <p>Split text into tokens (sub-words)</p>
+      </div>
+      <span class="step-arrow">&#10132;</span>
+      <div class="step-item">
+        <div class="step-circle">2</div>
+        <h4>Embed</h4>
+        <p>Convert tokens to vectors</p>
+      </div>
+      <span class="step-arrow">&#10132;</span>
+      <div class="step-item">
+        <div class="step-circle">3</div>
+        <h4>Position</h4>
+        <p>Add positional encoding</p>
+      </div>
+      <span class="step-arrow">&#10132;</span>
+      <div class="step-item">
+        <div class="step-circle">4</div>
+        <h4>Attend</h4>
+        <p>Self-attention layers</p>
+      </div>
+      <span class="step-arrow">&#10132;</span>
+      <div class="step-item">
+        <div class="step-circle">5</div>
+        <h4>Transform</h4>
+        <p>Feed-forward networks</p>
+      </div>
+      <span class="step-arrow">&#10132;</span>
+      <div class="step-item">
+        <div class="step-circle">6</div>
+        <h4>Output</h4>
+        <p>Predict next token / class</p>
+      </div>
+    </div>
+    <div class="insight-box animate-in" style="margin-top: 30px;">
+      <div class="insight-label">Remember</div>
+      <p>Steps 4 & 5 repeat <span class="bold accent">N times</span> (stacked layers). GPT-3 uses 96 layers!</p>
+    </div>
+  </div>
+
+  <!-- ══════════ SLIDE 3: INPUT EMBEDDINGS ══════════ -->
+  <div class="slide" data-slide="3">
+    <h3 class="animate-in">Step 1 & 2</h3>
+    <h2 class="animate-in">Token Embeddings + Positional Encoding</h2>
+    <div class="two-col animate-in" style="margin-top: 20px;">
+      <div>
+        <div class="card" style="margin-bottom: 20px;">
+          <h4 class="accent">Token Embeddings</h4>
+          <p>Each word/subword is mapped to a learned dense vector (e.g., 512 or 768 dimensions).</p>
+          <div class="code-block" style="margin-top:16px; font-size:0.9rem;">
+<span class="string">"The"</span>  &rarr; [0.21, -0.5, 0.8, ...]
+<span class="string">"cat"</span>  &rarr; [0.73, 0.12, -0.3, ...]
+<span class="string">"sat"</span>  &rarr; [-0.1, 0.44, 0.9, ...]</div>
+        </div>
+      </div>
+      <div>
+        <div class="card" style="margin-bottom: 20px;">
+          <h4 class="accent2">Positional Encoding</h4>
+          <p>Since Transformers process all words in parallel, we must tell the model <strong>where</strong> each word is.</p>
+          <div class="code-block" style="margin-top:16px; font-size: 0.85rem;">
+<span class="comment">// Sinusoidal pattern:</span>
+PE(pos, 2i)   = <span class="func">sin</span>(pos / 10000^(2i/d))
+PE(pos, 2i+1) = <span class="func">cos</span>(pos / 10000^(2i/d))
+
+<span class="comment">// Final input:</span>
+input = <span class="string">embedding</span> + <span class="string">positional_encoding</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="animate-in" style="margin-top: 10px;">
+      <p class="dim" style="font-size:0.95rem;">Positional encoding heatmap (rows = positions, cols = dimensions):</p>
+      <div class="pe-grid" id="peGrid"></div>
+    </div>
+  </div>
+
+  <!-- ══════════ SLIDE 4: SELF ATTENTION INTRO ══════════ -->
+  <div class="slide" data-slide="4">
+    <h3 class="animate-in">The Core Innovation</h3>
+    <h2 class="animate-in">Self-Attention: <span class="gradient-text">"Who should I pay attention to?"</span></h2>
+    <div class="attention-demo animate-in">
+      <p class="dim">Click a word to see what it attends to:</p>
+      <div class="word-row" id="attnDemo">
+        <div class="word-token" data-word="The" onclick="showAttention(this, 0)">The<span class="attn-weight"></span></div>
+        <div class="word-token" data-word="cat" onclick="showAttention(this, 1)">cat<span class="attn-weight"></span></div>
+        <div class="word-token" data-word="sat" onclick="showAttention(this, 2)">sat<span class="attn-weight"></span></div>
+        <div class="word-token" data-word="on" onclick="showAttention(this, 3)">on<span class="attn-weight"></span></div>
+        <div class="word-token" data-word="the" onclick="showAttention(this, 4)">the<span class="attn-weight"></span></div>
+        <div class="word-token" data-word="mat" onclick="showAttention(this, 5)">mat<span class="attn-weight"></span></div>
+      </div>
+    </div>
+    <div class="animate-in" style="margin-top: 30px;">
+      <p style="font-size: 1.15rem; max-width: 800px; text-align: center; margin: 0 auto;">
+        Every word computes an <span class="bold accent">attention score</span> with every other word.
+        Higher scores = more relevance = more influence on the output.
+      </p>
+    </div>
+    <div class="insight-box animate-in">
+      <div class="insight-label">Analogy</div>
+      <p>Like a student in a group study session deciding <span class="accent2 bold">whose notes to look at</span> for each question.</p>
+    </div>
+  </div>
+
+  <!-- ══════════ SLIDE 5: Q, K, V ══════════ -->
+  <div class="slide" data-slide="5">
+    <h3 class="animate-in">The Mechanism</h3>
+    <h2 class="animate-in">Query, Key, Value</h2>
+    <div class="qkv-grid animate-in" style="margin-top: 20px;">
+      <div class="qkv-card q">
+        <div class="qkv-letter">Q</div>
+        <h4>Query</h4>
+        <p>"What am I looking for?"</p>
+        <p style="margin-top:10px; font-size:0.85rem; color:var(--accent);">Q = X &middot; W<sub>Q</sub></p>
+      </div>
+      <div class="qkv-card k">
+        <div class="qkv-letter">K</div>
+        <h4>Key</h4>
+        <p>"What do I contain?"</p>
+        <p style="margin-top:10px; font-size:0.85rem; color:var(--accent2);">K = X &middot; W<sub>K</sub></p>
+      </div>
+      <div class="qkv-card v">
+        <div class="qkv-letter">V</div>
+        <h4>Value</h4>
+        <p>"Here's my information."</p>
+        <p style="margin-top:10px; font-size:0.85rem; color:var(--accent3);">V = X &middot; W<sub>V</sub></p>
+      </div>
+    </div>
+    <div class="formula animate-in" style="margin-top: 30px;">
+      Attention(<span class="accent">Q</span>, <span class="accent2">K</span>, <span class="accent3">V</span>) = softmax( <span class="accent">Q</span> &middot; <span class="accent2">K</span><sup>T</sup> / &radic;<span class="accent4">d<sub>k</sub></span> ) &middot; <span class="accent3">V</span>
+    </div>
+    <div class="animate-in" style="margin-top: 20px; display:flex; gap:30px; justify-content:center; flex-wrap:wrap;">
+      <div style="text-align:center;">
+        <p class="dim" style="font-size:0.9rem;"><span class="accent">Q</span> &middot; <span class="accent2">K</span><sup>T</sup></p>
+        <p style="font-size:0.85rem;">Similarity scores</p>
+      </div>
+      <div style="text-align:center;">
+        <p class="dim" style="font-size:0.9rem;">/ &radic;<span class="accent4">d<sub>k</sub></span></p>
+        <p style="font-size:0.85rem;">Scale for stability</p>
+      </div>
+      <div style="text-align:center;">
+        <p class="dim" style="font-size:0.9rem;">softmax</p>
+        <p style="font-size:0.85rem;">Normalize to probabilities</p>
+      </div>
+      <div style="text-align:center;">
+        <p class="dim" style="font-size:0.9rem;">&middot; <span class="accent3">V</span></p>
+        <p style="font-size:0.85rem;">Weighted combination</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════ SLIDE 6: ATTENTION MATRIX ══════════ -->
+  <div class="slide" data-slide="6">
+    <h3 class="animate-in">Visualizing Attention</h3>
+    <h2 class="animate-in">The Attention Score Matrix</h2>
+    <p class="dim animate-in">Hover over cells to explore attention weights</p>
+    <div class="attn-matrix animate-in" id="attnMatrix" style="grid-template-columns: 60px repeat(6, 52px);"></div>
+    <div class="insight-box animate-in">
+      <div class="insight-label">How to read it</div>
+      <p>Each row shows how much a word (left) <span class="accent2 bold">attends to</span> each other word (top). Brighter = stronger attention.</p>
+    </div>
+  </div>
+
+  <!-- ══════════ SLIDE 7: MULTI-HEAD ATTENTION ══════════ -->
+  <div class="slide" data-slide="7">
+    <h3 class="animate-in">Parallel Perspectives</h3>
+    <h2 class="animate-in">Multi-Head Attention</h2>
+    <p class="dim animate-in" style="max-width:700px; text-align:center;">Instead of one attention computation, run <strong>multiple in parallel</strong>. Each head learns to focus on different relationships.</p>
+    <div class="heads-container animate-in" style="margin-top: 30px;">
+      <div class="head-box"><span>H1</span><span class="head-label">Grammar</span></div>
+      <div class="head-box"><span>H2</span><span class="head-label">Meaning</span></div>
+      <div class="head-box"><span>H3</span><span class="head-label">Position</span></div>
+      <div class="head-box"><span>H4</span><span class="head-label">Syntax</span></div>
+      <div class="head-box"><span>H5</span><span class="head-label">Coreference</span></div>
+      <div class="head-box"><span>H6</span><span class="head-label">Negation</span></div>
+      <div class="head-box"><span>H7</span><span class="head-label">Entities</span></div>
+      <div class="head-box"><span>H8</span><span class="head-label">Relations</span></div>
+    </div>
+    <div class="formula animate-in" style="margin-top: 30px; font-size: 1.15rem;">
+      MultiHead = Concat(head<sub>1</sub>, head<sub>2</sub>, ..., head<sub>h</sub>) &middot; W<sup>O</sup>
+    </div>
+    <div class="insight-box animate-in" style="margin-top: 20px;">
+      <div class="insight-label">Why multiple heads?</div>
+      <p>One head might learn <span class="accent bold">"cat sat"</span> (subject-verb), another <span class="accent2 bold">"sat on mat"</span> (action-location). Together, they capture richer relationships.</p>
+    </div>
+  </div>
+
+  <!-- ══════════ SLIDE 8: FEED FORWARD + RESIDUAL ══════════ -->
+  <div class="slide" data-slide="8">
+    <h3 class="animate-in">Processing & Stability</h3>
+    <h2 class="animate-in">Feed-Forward + Residual Connections</h2>
+    <div class="two-col animate-in" style="margin-top: 20px;">
+      <div>
+        <div class="card" style="border-color: rgba(0,212,170,0.3);">
+          <h4 class="accent2">Feed-Forward Network</h4>
+          <p>After attention <em>gathers</em> information, the FFN <em>processes</em> it. Applied to each position independently.</p>
+          <div class="formula" style="margin-top: 16px; font-size: 1rem; padding: 16px 24px;">
+            FFN(x) = ReLU(x&middot;W<sub>1</sub> + b<sub>1</sub>)&middot;W<sub>2</sub> + b<sub>2</sub>
+          </div>
+          <p style="margin-top: 14px; font-size: 0.9rem; color: var(--text-dim);">
+            Typically expands dimension 4x (e.g., 512 &rarr; 2048 &rarr; 512). This is where the model stores "knowledge."
+          </p>
+        </div>
+      </div>
+      <div>
+        <div class="card" style="border-color: rgba(108,99,255,0.3);">
+          <h4 class="accent">Add & Normalize</h4>
+          <p>Two critical tricks that make deep Transformers trainable:</p>
+          <div class="code-block" style="margin-top:16px; font-size:0.9rem; line-height:2;">
+<span class="comment">// Residual Connection</span>
+output = x <span class="keyword">+</span> SubLayer(x)
+
+<span class="comment">// Layer Normalization</span>
+output = <span class="func">LayerNorm</span>(output)</div>
+          <p style="margin-top: 14px; font-size: 0.9rem; color: var(--text-dim);">
+            <strong>Residual:</strong> Info can skip layers (prevents vanishing gradients)<br>
+            <strong>LayerNorm:</strong> Stabilizes activations for smoother training
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════ SLIDE 9: FULL ARCHITECTURE ══════════ -->
+  <div class="slide" data-slide="9">
+    <h3 class="animate-in">Putting It All Together</h3>
+    <h2 class="animate-in">The Full Transformer</h2>
+    <div class="arch-diagram animate-in" style="margin-top: 20px;">
+      <!-- Encoder -->
+      <div class="arch-column">
+        <div class="arch-label accent">ENCODER</div>
+        <div class="arch-block io">Input Embedding + Positional Encoding</div>
+        <div class="arch-block attn">Multi-Head Self-Attention</div>
+        <div class="arch-block norm">Add & Layer Norm</div>
+        <div class="arch-block ff">Feed-Forward Network</div>
+        <div class="arch-block norm">Add & Layer Norm</div>
+        <div class="nx-badge" style="text-align:center;">Repeat x N</div>
+      </div>
+
+      <!-- Arrow -->
+      <div class="arch-arrow" style="font-size:3rem;">&#10132;</div>
+
+      <!-- Decoder -->
+      <div class="arch-column">
+        <div class="arch-label accent3">DECODER</div>
+        <div class="arch-block io">Output Embedding + Positional Encoding</div>
+        <div class="arch-block masked">Masked Multi-Head Self-Attention</div>
+        <div class="arch-block norm">Add & Layer Norm</div>
+        <div class="arch-block attn">Multi-Head Cross-Attention <span class="dim" style="font-size:0.8rem;">(attends to encoder)</span></div>
+        <div class="arch-block norm">Add & Layer Norm</div>
+        <div class="arch-block ff">Feed-Forward Network</div>
+        <div class="arch-block norm">Add & Layer Norm</div>
+        <div class="nx-badge" style="text-align:center;">Repeat x N</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════ SLIDE 10: MASKED ATTENTION ══════════ -->
+  <div class="slide" data-slide="10">
+    <h3 class="animate-in">Decoder's Secret</h3>
+    <h2 class="animate-in">Masked Self-Attention: <span class="gradient-text2">No Peeking!</span></h2>
+    <p class="dim animate-in" style="max-width:700px; text-align:center;">During generation, the model can only attend to <strong>previous</strong> tokens, not future ones. This is enforced with a mask.</p>
+    <div class="mask-demo animate-in" id="maskDemo" style="grid-template-columns: 70px repeat(5, 56px); margin-top: 20px;"></div>
+    <div class="insight-box animate-in">
+      <div class="insight-label">Why mask?</div>
+      <p>When generating "The cat sat on the mat", to predict "sat", the model should only see "The cat" - not the answer! This prevents <span class="accent3 bold">information leakage</span> during training.</p>
+    </div>
+  </div>
+
+  <!-- ══════════ SLIDE 11: VARIANTS ══════════ -->
+  <div class="slide" data-slide="11">
+    <h3 class="animate-in">The Family</h3>
+    <h2 class="animate-in">Transformer Variants</h2>
+    <div class="three-col animate-in" style="margin-top: 20px;">
+      <div class="variant-card encoder-only">
+        <div class="variant-icon">&#128269;</div>
+        <h4 class="accent">Encoder-Only</h4>
+        <p class="dim" style="font-size:0.95rem;">Bidirectional. Sees full context. Best for understanding.</p>
+        <div class="variant-examples">
+          <span class="variant-tag">BERT</span>
+          <span class="variant-tag">RoBERTa</span>
+        </div>
+        <p style="font-size:0.85rem; margin-top:12px; color:var(--text-dim);">Classification, NER, Sentiment</p>
+      </div>
+      <div class="variant-card decoder-only">
+        <div class="variant-icon">&#9999;&#65039;</div>
+        <h4 class="accent3">Decoder-Only</h4>
+        <p class="dim" style="font-size:0.95rem;">Autoregressive. Generates left-to-right. Most popular today.</p>
+        <div class="variant-examples">
+          <span class="variant-tag">GPT</span>
+          <span class="variant-tag">Claude</span>
+          <span class="variant-tag">LLaMA</span>
+        </div>
+        <p style="font-size:0.85rem; margin-top:12px; color:var(--text-dim);">Text generation, Chat, Reasoning</p>
+      </div>
+      <div class="variant-card enc-dec">
+        <div class="variant-icon">&#128260;</div>
+        <h4 class="accent2">Encoder-Decoder</h4>
+        <p class="dim" style="font-size:0.95rem;">Full architecture. Maps input sequence to output sequence.</p>
+        <div class="variant-examples">
+          <span class="variant-tag">T5</span>
+          <span class="variant-tag">BART</span>
+          <span class="variant-tag">mBART</span>
+        </div>
+        <p style="font-size:0.85rem; margin-top:12px; color:var(--text-dim);">Translation, Summarization</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════ SLIDE 12: SCALE ══════════ -->
+  <div class="slide" data-slide="12">
+    <h3 class="animate-in">Why It Matters</h3>
+    <h2 class="animate-in">Scale is <span class="gradient-text">Everything</span></h2>
+    <div class="wide-content animate-in">
+      <table class="comp-table" style="margin-top: 20px;">
+        <thead>
+          <tr>
+            <th>Model</th>
+            <th>Year</th>
+            <th>Parameters</th>
+            <th>Layers</th>
+            <th>Heads</th>
+            <th>d_model</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>Original Transformer</strong></td><td>2017</td><td class="dim">65M</td><td>6</td><td>8</td><td>512</td></tr>
+          <tr><td><strong>BERT-Base</strong></td><td>2018</td><td class="dim">110M</td><td>12</td><td>12</td><td>768</td></tr>
+          <tr><td><strong>GPT-2</strong></td><td>2019</td><td class="dim">1.5B</td><td>48</td><td>25</td><td>1600</td></tr>
+          <tr><td><strong>GPT-3</strong></td><td>2020</td><td style="color:var(--accent2);">175B</td><td>96</td><td>96</td><td>12288</td></tr>
+          <tr><td><strong>GPT-4</strong></td><td>2023</td><td style="color:var(--accent3);">~1.8T (est.)</td><td>120 (est.)</td><td>-</td><td>-</td></tr>
+          <tr><td><strong>LLaMA 3</strong></td><td>2024</td><td style="color:var(--accent4);">405B</td><td>126</td><td>128</td><td>16384</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="insight-box animate-in" style="margin-top: 20px;">
+      <div class="insight-label">The same core architecture</div>
+      <p>All of these models use the <span class="accent bold">exact same Transformer building blocks</span>. The magic is in scale, data, and training.</p>
+    </div>
+  </div>
+
+  <!-- ══════════ SLIDE 13: SUMMARY ══════════ -->
+  <div class="slide" data-slide="13">
+    <h3 class="animate-in">Recap</h3>
+    <h2 class="animate-in">The Transformer in <span class="gradient-text">6 Key Ideas</span></h2>
+    <div class="three-col animate-in" style="margin-top: 20px;">
+      <div class="card">
+        <span class="card-icon" style="font-size:2rem; color:var(--accent);">01</span>
+        <h4>Self-Attention</h4>
+        <p>Every token attends to every other token to understand context.</p>
+      </div>
+      <div class="card">
+        <span class="card-icon" style="font-size:2rem; color:var(--accent2);">02</span>
+        <h4>Q, K, V</h4>
+        <p>Learned projections that compute similarity and extract information.</p>
+      </div>
+      <div class="card">
+        <span class="card-icon" style="font-size:2rem; color:var(--accent3);">03</span>
+        <h4>Multi-Head</h4>
+        <p>Multiple attention patterns capture different types of relationships.</p>
+      </div>
+      <div class="card">
+        <span class="card-icon" style="font-size:2rem; color:var(--accent4);">04</span>
+        <h4>Feed-Forward</h4>
+        <p>Per-position processing that stores and transforms knowledge.</p>
+      </div>
+      <div class="card">
+        <span class="card-icon" style="font-size:2rem; color:#64c8ff;">05</span>
+        <h4>Residuals + Norm</h4>
+        <p>Skip connections and normalization enable very deep networks.</p>
+      </div>
+      <div class="card">
+        <span class="card-icon" style="font-size:2rem; color:#c864ff;">06</span>
+        <h4>Positional Encoding</h4>
+        <p>Injects word order into a parallel architecture.</p>
+      </div>
+    </div>
+    <div class="formula animate-in" style="margin-top: 30px; font-size: 1.15rem; max-width: 800px;">
+      <span class="dim" style="font-size:0.85rem;">One sentence:</span><br>
+      Transformers let every word <span class="accent">attend to every other word</span> through learned <span class="accent2">Q-K-V projections</span>, enabling <span class="accent3">parallelism</span> and <span class="accent4">powerful context modeling</span>.
+    </div>
+  </div>
+
+</div>
+
+<!-- ── Navigation Bar ── -->
+<div class="nav-bar">
+  <button class="nav-btn" id="prevBtn" onclick="navigate(-1)">&larr; Prev</button>
+  <div class="nav-dots" id="navDots"></div>
+  <span class="slide-counter" id="slideCounter">1 / 14</span>
+  <button class="nav-btn" id="nextBtn" onclick="navigate(1)">Next &rarr;</button>
+</div>
+
+<script>
+  // ── Slide Navigation ──
+  let current = 0;
+  const slides = document.querySelectorAll('.slide');
+  const total = slides.length;
+  const dotsContainer = document.getElementById('navDots');
+  const counter = document.getElementById('slideCounter');
+
+  // Create dots
+  for (let i = 0; i < total; i++) {
+    const dot = document.createElement('div');
+    dot.className = 'nav-dot' + (i === 0 ? ' active' : '');
+    dot.onclick = () => goTo(i);
+    dotsContainer.appendChild(dot);
+  }
+
+  function goTo(n) {
+    slides[current].classList.remove('active');
+    dotsContainer.children[current].classList.remove('active');
+    current = Math.max(0, Math.min(n, total - 1));
+    slides[current].classList.add('active');
+    dotsContainer.children[current].classList.add('active');
+    counter.textContent = `${current + 1} / ${total}`;
+
+    // Trigger animations
+    if (current === 3) buildPEGrid();
+    if (current === 6) buildAttnMatrix();
+    if (current === 10) buildMaskDemo();
+  }
+
+  function navigate(dir) { goTo(current + dir); }
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); navigate(1); }
+    if (e.key === 'ArrowLeft') { e.preventDefault(); navigate(-1); }
+  });
+
+  // ── Particles Background ──
+  const canvas = document.getElementById('particles');
+  const ctx = canvas.getContext('2d');
+  let particles = [];
+
+  function resizeCanvas() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+  }
+
+  resizeCanvas();
+  window.addEventListener('resize', resizeCanvas);
+
+  for (let i = 0; i < 60; i++) {
+    particles.push({
+      x: Math.random() * canvas.width,
+      y: Math.random() * canvas.height,
+      vx: (Math.random() - 0.5) * 0.3,
+      vy: (Math.random() - 0.5) * 0.3,
+      r: Math.random() * 2 + 0.5,
+      alpha: Math.random() * 0.3 + 0.05
+    });
+  }
+
+  function drawParticles() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    particles.forEach(p => {
+      p.x += p.vx;
+      p.y += p.vy;
+      if (p.x < 0) p.x = canvas.width;
+      if (p.x > canvas.width) p.x = 0;
+      if (p.y < 0) p.y = canvas.height;
+      if (p.y > canvas.height) p.y = 0;
+
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(108, 99, 255, ${p.alpha})`;
+      ctx.fill();
+    });
+
+    // Draw connections
+    for (let i = 0; i < particles.length; i++) {
+      for (let j = i + 1; j < particles.length; j++) {
+        const dx = particles[i].x - particles[j].x;
+        const dy = particles[i].y - particles[j].y;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        if (dist < 150) {
+          ctx.beginPath();
+          ctx.moveTo(particles[i].x, particles[i].y);
+          ctx.lineTo(particles[j].x, particles[j].y);
+          ctx.strokeStyle = `rgba(108, 99, 255, ${0.06 * (1 - dist / 150)})`;
+          ctx.lineWidth = 0.5;
+          ctx.stroke();
+        }
+      }
+    }
+    requestAnimationFrame(drawParticles);
+  }
+  drawParticles();
+
+  // ── Self-Attention Demo ──
+  const attentionWeights = [
+    [0.05, 0.35, 0.15, 0.10, 0.05, 0.30], // "The" attends to
+    [0.08, 0.25, 0.40, 0.05, 0.02, 0.20], // "cat" attends to
+    [0.03, 0.45, 0.15, 0.12, 0.05, 0.20], // "sat" attends to
+    [0.02, 0.10, 0.35, 0.08, 0.05, 0.40], // "on" attends to
+    [0.05, 0.05, 0.10, 0.15, 0.10, 0.55], // "the" attends to
+    [0.02, 0.15, 0.30, 0.25, 0.08, 0.20], // "mat" attends to
+  ];
+
+  function showAttention(el, idx) {
+    const tokens = document.querySelectorAll('#attnDemo .word-token');
+    tokens.forEach((t, i) => {
+      t.classList.remove('selected', 'highlight', 'highlight-low', 'highlight-med', 'highlight-high');
+      const weight = attentionWeights[idx][i];
+      const weightEl = t.querySelector('.attn-weight');
+      weightEl.textContent = weight.toFixed(2);
+      t.classList.add('highlight');
+      weightEl.style.opacity = '1';
+
+      if (weight >= 0.35) {
+        t.classList.add('highlight-high');
+        weightEl.style.background = 'var(--accent2)';
+      } else if (weight >= 0.15) {
+        t.classList.add('highlight-med');
+        weightEl.style.background = 'var(--accent)';
+      } else {
+        t.classList.add('highlight-low');
+        weightEl.style.background = 'var(--text-dim)';
+      }
+    });
+    el.classList.add('selected');
+  }
+
+  // ── Positional Encoding Grid ──
+  function buildPEGrid() {
+    const grid = document.getElementById('peGrid');
+    if (grid.children.length > 0) return;
+    const rows = 8, cols = 16;
+    for (let pos = 0; pos < rows; pos++) {
+      for (let i = 0; i < cols; i++) {
+        const cell = document.createElement('div');
+        cell.className = 'pe-cell';
+        let val;
+        if (i % 2 === 0) {
+          val = Math.sin(pos / Math.pow(10000, i / cols));
+        } else {
+          val = Math.cos(pos / Math.pow(10000, (i - 1) / cols));
+        }
+        const normalized = (val + 1) / 2;
+        const r = Math.round(108 * normalized);
+        const g = Math.round(99 + 113 * normalized);
+        const b = Math.round(255 * (0.5 + normalized * 0.5));
+        cell.style.background = `rgba(${r}, ${g}, ${b}, ${0.3 + normalized * 0.7})`;
+        cell.title = `pos=${pos}, dim=${i}, val=${val.toFixed(3)}`;
+        grid.appendChild(cell);
+      }
+    }
+  }
+
+  // ── Attention Matrix ──
+  function buildAttnMatrix() {
+    const container = document.getElementById('attnMatrix');
+    if (container.children.length > 0) return;
+    const words = ['The', 'cat', 'sat', 'on', 'the', 'mat'];
+
+    // Header row
+    const corner = document.createElement('div');
+    corner.className = 'matrix-label';
+    corner.textContent = '';
+    container.appendChild(corner);
+    words.forEach(w => {
+      const label = document.createElement('div');
+      label.className = 'matrix-label';
+      label.textContent = w;
+      container.appendChild(label);
+    });
+
+    // Data rows
+    for (let i = 0; i < words.length; i++) {
+      const rowLabel = document.createElement('div');
+      rowLabel.className = 'matrix-label';
+      rowLabel.textContent = words[i];
+      container.appendChild(rowLabel);
+
+      for (let j = 0; j < words.length; j++) {
+        const cell = document.createElement('div');
+        cell.className = 'attn-cell';
+        const w = attentionWeights[i][j];
+        cell.textContent = w.toFixed(2);
+
+        const intensity = w / 0.55;
+        const r = Math.round(108 * (1 - intensity) + 0 * intensity);
+        const g = Math.round(99 * (1 - intensity) + 212 * intensity);
+        const b = Math.round(255 * (1 - intensity) + 170 * intensity);
+        cell.style.background = `rgba(${r}, ${g}, ${b}, ${0.1 + intensity * 0.5})`;
+        cell.style.color = intensity > 0.5 ? '#fff' : 'var(--text-dim)';
+        cell.title = `${words[i]} → ${words[j]}: ${w.toFixed(3)}`;
+
+        container.appendChild(cell);
+      }
+    }
+  }
+
+  // ── Mask Demo ──
+  function buildMaskDemo() {
+    const container = document.getElementById('maskDemo');
+    if (container.children.length > 0) return;
+    const words = ['The', 'cat', 'sat', 'on', 'mat'];
+
+    // Header
+    const corner = document.createElement('div');
+    corner.className = 'mask-cell label-cell';
+    container.appendChild(corner);
+    words.forEach(w => {
+      const label = document.createElement('div');
+      label.className = 'mask-cell label-cell';
+      label.textContent = w;
+      container.appendChild(label);
+    });
+
+    for (let i = 0; i < words.length; i++) {
+      const rowLabel = document.createElement('div');
+      rowLabel.className = 'mask-cell label-cell';
+      rowLabel.textContent = words[i];
+      container.appendChild(rowLabel);
+
+      for (let j = 0; j < words.length; j++) {
+        const cell = document.createElement('div');
+        if (j <= i) {
+          cell.className = 'mask-cell allowed';
+          cell.innerHTML = '&#10003;';
+        } else {
+          cell.className = 'mask-cell blocked';
+          cell.innerHTML = '&#10007;';
+        }
+        container.appendChild(cell);
+      }
+    }
+  }
+
+  // Touch swipe support
+  let touchStartX = 0;
+  document.addEventListener('touchstart', e => { touchStartX = e.touches[0].clientX; });
+  document.addEventListener('touchend', e => {
+    const diff = touchStartX - e.changedTouches[0].clientX;
+    if (Math.abs(diff) > 50) navigate(diff > 0 ? 1 : -1);
+  });
+</script>
+
+</body>
+</html>

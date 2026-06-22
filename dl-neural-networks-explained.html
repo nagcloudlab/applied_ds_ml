@@ -1,0 +1,1993 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Deep Learning - Neural Networks Explained</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600&display=swap');
+
+  :root {
+    --bg: #f5f7fb;
+    --surface: #edf0f7;
+    --card: #ffffff;
+    --accent: #5b52e0;
+    --accent2: #00a88a;
+    --accent3: #e04545;
+    --accent4: #c9920a;
+    --text: #1e1e2e;
+    --muted: #6b7084;
+    --gradient1: linear-gradient(135deg, #5b52e0, #00a88a);
+    --gradient2: linear-gradient(135deg, #e04545, #c9920a);
+    --gradient3: linear-gradient(135deg, #5b52e0, #c040d0);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    overflow: hidden;
+    height: 100vh;
+    width: 100vw;
+  }
+
+  /* ── Navigation ── */
+  .nav {
+    position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%);
+    display: flex; gap: 12px; z-index: 100;
+    background: rgba(255,255,255,0.95); padding: 12px 24px; border-radius: 50px;
+    border: 1px solid rgba(91,82,224,0.2); backdrop-filter: blur(20px);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+  }
+  .nav button {
+    background: var(--card); color: var(--text); border: 1px solid rgba(91,82,224,0.3);
+    padding: 10px 22px; border-radius: 25px; cursor: pointer; font-family: 'Inter';
+    font-weight: 600; font-size: 14px; transition: all 0.3s;
+  }
+  .nav button:hover { background: var(--accent); border-color: var(--accent); color: #fff; transform: scale(1.05); }
+  .slide-counter {
+    display: flex; align-items: center; color: var(--muted); font-size: 14px;
+    font-weight: 600; padding: 0 12px; min-width: 60px; justify-content: center;
+  }
+
+  /* ── Progress Bar ── */
+  .progress-bar {
+    position: fixed; top: 0; left: 0; height: 4px; background: var(--gradient1);
+    transition: width 0.5s ease; z-index: 100; border-radius: 0 2px 2px 0;
+    box-shadow: 0 0 10px rgba(91,82,224,0.3);
+  }
+
+  /* ── Slides ── */
+  .slide {
+    position: absolute; inset: 0; display: flex; flex-direction: column;
+    justify-content: center; align-items: center; padding: 40px 80px 100px;
+    opacity: 0; transform: translateX(100px); transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    pointer-events: none;
+  }
+  .slide.active {
+    opacity: 1; transform: translateX(0); pointer-events: all;
+  }
+  .slide.exit {
+    opacity: 0; transform: translateX(-100px);
+  }
+
+  h1 {
+    font-size: 52px; font-weight: 900; margin-bottom: 12px;
+    background: var(--gradient1); -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    line-height: 1.2;
+  }
+  h2 {
+    font-size: 40px; font-weight: 800; margin-bottom: 20px;
+    background: var(--gradient1); -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  }
+  .subtitle { font-size: 22px; color: var(--muted); font-weight: 400; margin-bottom: 30px; }
+  .tagline { font-size: 18px; color: var(--accent2); font-weight: 500; margin-top: 10px; }
+
+  /* ── Layout helpers ── */
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 50px; width: 100%; align-items: center; }
+  .content-box { text-align: left; }
+  .content-box p, .content-box li { font-size: 18px; line-height: 1.8; color: #3a3a50; }
+  .content-box ul { list-style: none; padding: 0; }
+  .content-box li { padding: 6px 0; padding-left: 28px; position: relative; }
+  .content-box li::before {
+    content: ''; position: absolute; left: 0; top: 14px;
+    width: 10px; height: 10px; border-radius: 50%;
+    background: var(--gradient1);
+  }
+
+  /* ── Neuron Diagram ── */
+  .neuron-visual {
+    position: relative; width: 500px; height: 380px;
+  }
+  .neuron-circle {
+    position: absolute; width: 100px; height: 100px; border-radius: 50%;
+    background: var(--gradient1); display: flex; align-items: center; justify-content: center;
+    font-weight: 800; font-size: 16px; color: #fff; box-shadow: 0 4px 16px rgba(91,82,224,0.3);
+    z-index: 2;
+  }
+  .neuron-input {
+    position: absolute; width: 80px; height: 80px; border-radius: 50%;
+    background: var(--card); border: 2px solid var(--accent);
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    font-size: 13px; font-weight: 600; z-index: 2;
+  }
+  .neuron-input .val { font-size: 18px; color: var(--accent2); font-weight: 800; }
+  .neuron-output {
+    position: absolute; width: 80px; height: 80px; border-radius: 50%;
+    background: var(--card); border: 2px solid var(--accent2);
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    font-size: 13px; font-weight: 600; z-index: 2;
+  }
+  .neuron-output .val { font-size: 18px; color: var(--accent2); font-weight: 800; }
+
+  /* ── Connection Lines (SVG) ── */
+  .connections { position: absolute; inset: 0; z-index: 1; }
+  .connections line {
+    stroke: rgba(91,82,224,0.35); stroke-width: 2;
+  }
+  .weight-label {
+    position: absolute; background: var(--surface); border: 1px solid var(--accent);
+    padding: 3px 10px; border-radius: 12px; font-size: 12px; font-weight: 700;
+    color: var(--accent4); z-index: 3;
+  }
+
+  /* ── Formula Card ── */
+  .formula-card {
+    background: var(--card); border: 1px solid rgba(91,82,224,0.15);
+    border-radius: 16px; padding: 28px 36px; margin: 16px 0;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+  }
+  .formula {
+    font-family: 'JetBrains Mono', monospace; font-size: 22px;
+    color: var(--accent4); text-align: center; padding: 8px 0;
+  }
+  .formula-sm {
+    font-family: 'JetBrains Mono', monospace; font-size: 17px;
+    color: var(--accent4); text-align: center; padding: 4px 0;
+  }
+  .formula-label { font-size: 14px; color: var(--muted); text-align: center; margin-bottom: 8px; font-weight: 600; }
+
+  /* ── Step Cards ── */
+  .step-card {
+    background: var(--card); border-left: 4px solid var(--accent);
+    border-radius: 0 12px 12px 0; padding: 18px 24px; margin: 10px 0;
+    font-size: 17px; line-height: 1.6;
+  }
+  .step-card.green { border-left-color: var(--accent2); }
+  .step-card.red { border-left-color: var(--accent3); }
+  .step-card.yellow { border-left-color: var(--accent4); }
+  .step-num {
+    display: inline-block; width: 28px; height: 28px; border-radius: 50%;
+    background: var(--accent); color: #fff; text-align: center; line-height: 28px;
+    font-size: 14px; font-weight: 800; margin-right: 10px;
+  }
+  .step-num.green { background: var(--accent2); color: #fff; }
+  .step-num.red { background: var(--accent3); color: #fff; }
+  .step-num.yellow { background: var(--accent4); color: #fff; }
+
+  .highlight { color: var(--accent2); font-weight: 700; }
+  .highlight2 { color: var(--accent4); font-weight: 700; }
+  .highlight3 { color: var(--accent3); font-weight: 700; }
+  .highlight4 { color: var(--accent); font-weight: 700; }
+  .mono { font-family: 'JetBrains Mono', monospace; }
+
+  /* ── Network Diagram ── */
+  .network-container { position: relative; width: 700px; height: 400px; }
+  .nn-node {
+    position: absolute; width: 60px; height: 60px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 700; font-size: 13px; z-index: 2;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  }
+  .nn-input { background: #e8f1ff; border: 2px solid #3b82f6; color: #2563eb; }
+  .nn-hidden { background: #f3e8ff; border: 2px solid #9333ea; color: #7c3aed; }
+  .nn-output { background: #e6faf5; border: 2px solid var(--accent2); color: var(--accent2); }
+  .layer-label {
+    position: absolute; font-size: 14px; font-weight: 700; text-align: center;
+    width: 120px;
+  }
+  .layer-label.input-l { color: #2563eb; }
+  .layer-label.hidden-l { color: #7c3aed; }
+  .layer-label.output-l { color: var(--accent2); }
+
+  /* ── Activation Function Graph ── */
+  .graph-container {
+    background: #fafbff; border-radius: 16px; padding: 30px;
+    border: 1px solid rgba(91,82,224,0.15);
+  }
+  .act-tabs { display: flex; gap: 10px; margin-bottom: 20px; justify-content: center; }
+  .act-tab {
+    padding: 8px 20px; border-radius: 20px; border: 1px solid rgba(91,82,224,0.2);
+    background: var(--surface); color: var(--text); cursor: pointer; font-weight: 600;
+    font-family: 'Inter'; font-size: 14px; transition: all 0.3s;
+  }
+  .act-tab.active { background: var(--accent); border-color: var(--accent); color: #fff; }
+  .act-tab:hover { border-color: var(--accent); }
+
+  /* ── Backprop Animation ── */
+  .backprop-flow {
+    display: flex; align-items: center; gap: 16px; flex-wrap: wrap; justify-content: center;
+  }
+  .bp-box {
+    background: var(--card); border-radius: 14px; padding: 18px 22px;
+    border: 2px solid var(--accent); text-align: center; min-width: 130px;
+    transition: all 0.5s;
+  }
+  .bp-box.active-bp { border-color: var(--accent3); box-shadow: 0 0 15px rgba(224,69,69,0.2); }
+  .bp-box .bp-title { font-size: 12px; color: var(--muted); font-weight: 700; text-transform: uppercase; letter-spacing: 1px; }
+  .bp-box .bp-val { font-size: 20px; font-weight: 800; color: var(--accent2); margin-top: 6px; }
+  .bp-arrow { font-size: 28px; color: var(--accent3); font-weight: 800; }
+
+  /* ── Example Table ── */
+  .example-table {
+    width: 100%; border-collapse: collapse; margin: 10px 0;
+  }
+  .example-table th {
+    background: var(--accent); color: #fff; padding: 12px 18px;
+    font-size: 14px; font-weight: 700; text-align: center;
+  }
+  .example-table th:first-child { border-radius: 10px 0 0 0; }
+  .example-table th:last-child { border-radius: 0 10px 0 0; }
+  .example-table td {
+    padding: 12px 18px; text-align: center; border-bottom: 1px solid rgba(91,82,224,0.15);
+    font-size: 15px;
+  }
+  .example-table tr:nth-child(even) { background: rgba(91,82,224,0.05); }
+  .pass { color: var(--accent2); font-weight: 700; }
+  .fail { color: var(--accent3); font-weight: 700; }
+
+  /* ── Big Number ── */
+  .big-num {
+    font-size: 64px; font-weight: 900;
+    background: var(--gradient1); -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  }
+
+  /* ── Animations ── */
+  @keyframes pulse { 0%,100% { transform: scale(1); } 50% { transform: scale(1.08); } }
+  @keyframes flowRight {
+    0% { stroke-dashoffset: 20; } 100% { stroke-dashoffset: 0; }
+  }
+  @keyframes flowLeft {
+    0% { stroke-dashoffset: -20; } 100% { stroke-dashoffset: 0; }
+  }
+  .pulse { animation: pulse 2s ease-in-out infinite; }
+
+  .flow-line {
+    stroke-dasharray: 10 10;
+    animation: flowRight 0.8s linear infinite;
+  }
+  .flow-line-back {
+    stroke-dasharray: 10 10;
+    animation: flowLeft 0.8s linear infinite;
+  }
+
+  /* ── Epoch Animation ── */
+  .epoch-container { display: flex; gap: 20px; align-items: flex-end; margin-top: 20px; }
+  .epoch-bar {
+    width: 60px; border-radius: 8px 8px 0 0; transition: height 1s ease;
+    display: flex; flex-direction: column; align-items: center; justify-content: flex-end;
+    padding-bottom: 8px; font-size: 12px; font-weight: 700; color: #fff;
+  }
+  .epoch-label { font-size: 12px; color: var(--muted); margin-top: 6px; text-align: center; }
+
+  .full-width { width: 100%; max-width: 1100px; }
+
+  /* ── Compact layout for dense slides ── */
+  .compact h2 { font-size: 34px; margin-bottom: 14px; }
+  .compact .step-card { padding: 14px 20px; margin: 7px 0; font-size: 15px; }
+  .compact .formula-card { padding: 20px 28px; margin: 10px 0; }
+  .compact .formula { font-size: 19px; }
+
+  .scroll-area {
+    max-height: calc(100vh - 200px); overflow-y: auto; width: 100%;
+    padding-right: 10px;
+  }
+  .scroll-area::-webkit-scrollbar { width: 6px; }
+  .scroll-area::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 3px; }
+
+  /* ── Title slide special ── */
+  .title-slide h1 { font-size: 62px; text-align: center; }
+  .title-slide .subtitle { font-size: 24px; text-align: center; }
+
+  .icon-row { display: flex; gap: 40px; margin: 30px 0; }
+  .icon-card {
+    background: var(--card); border-radius: 16px; padding: 24px; text-align: center;
+    flex: 1; border: 1px solid rgba(91,82,224,0.2); transition: all 0.3s;
+  }
+  .icon-card:hover { border-color: var(--accent); transform: translateY(-4px); }
+  .icon-card .ic-icon { font-size: 36px; margin-bottom: 10px; }
+  .icon-card .ic-title { font-size: 16px; font-weight: 700; color: var(--accent2); }
+  .icon-card .ic-desc { font-size: 13px; color: var(--muted); margin-top: 6px; }
+
+  /* ── Playground ── */
+  .playground-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; width: 100%; max-width: 1050px; }
+  .slider-group { margin: 10px 0; }
+  .slider-group label { font-size: 14px; font-weight: 600; color: var(--text); display: flex; justify-content: space-between; }
+  .slider-group input[type=range] {
+    width: 100%; margin-top: 6px; accent-color: var(--accent);
+    height: 6px; -webkit-appearance: none; background: var(--surface); border-radius: 3px; outline: none;
+  }
+  .slider-group input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none; width: 18px; height: 18px; border-radius: 50%;
+    background: var(--accent); cursor: pointer; border: 2px solid #fff; box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+  }
+  .pred-result {
+    text-align: center; padding: 24px; border-radius: 16px; margin-top: 14px;
+    font-size: 20px; font-weight: 800; transition: all 0.3s;
+  }
+  .pred-pass { background: #e6faf5; color: var(--accent2); border: 2px solid var(--accent2); }
+  .pred-fail { background: #fde8e8; color: var(--accent3); border: 2px solid var(--accent3); }
+
+  /* ── NN Types Cards ── */
+  .nn-type-card {
+    background: var(--card); border-radius: 16px; padding: 28px; text-align: center;
+    border: 1px solid rgba(91,82,224,0.12); box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+    transition: all 0.3s; flex: 1;
+  }
+  .nn-type-card:hover { transform: translateY(-6px); border-color: var(--accent); box-shadow: 0 8px 24px rgba(91,82,224,0.12); }
+  .nn-type-icon { font-size: 48px; margin-bottom: 12px; }
+  .nn-type-name { font-size: 18px; font-weight: 800; margin-bottom: 6px; }
+  .nn-type-desc { font-size: 13px; color: var(--muted); line-height: 1.6; }
+  .nn-type-use { font-size: 12px; color: var(--accent); font-weight: 700; margin-top: 10px; padding: 4px 12px;
+    background: rgba(91,82,224,0.08); border-radius: 20px; display: inline-block; }
+
+  /* ── Comparison columns ── */
+  .compare-col {
+    background: var(--card); border-radius: 16px; padding: 24px; flex: 1;
+    border: 1px solid rgba(91,82,224,0.12); box-shadow: 0 2px 10px rgba(0,0,0,0.04);
+  }
+  .compare-header { font-size: 16px; font-weight: 800; text-align: center; padding-bottom: 12px;
+    border-bottom: 2px solid; margin-bottom: 14px; }
+</style>
+</head>
+<body>
+
+<div class="progress-bar" id="progressBar"></div>
+
+<!-- ═══════════════════════════════════════ SLIDE 1: TITLE ═══════════════════════════════════════ -->
+<div class="slide active title-slide" id="slide-0">
+  <h1>Deep Learning</h1>
+  <h1 style="font-size:44px; margin-top:-8px;">Neural Networks Explained</h1>
+  <p class="subtitle">From a single neuron to backpropagation &mdash; with a hands-on example</p>
+  <div class="icon-row" style="max-width:800px;">
+    <div class="icon-card">
+      <div class="ic-icon">&#129504;</div>
+      <div class="ic-title">Neuron</div>
+      <div class="ic-desc">The building block</div>
+    </div>
+    <div class="icon-card">
+      <div class="ic-icon">&#128257;</div>
+      <div class="ic-title">Forward Pass</div>
+      <div class="ic-desc">Making predictions</div>
+    </div>
+    <div class="icon-card">
+      <div class="ic-icon">&#128200;</div>
+      <div class="ic-title">Loss</div>
+      <div class="ic-desc">Measuring error</div>
+    </div>
+    <div class="icon-card">
+      <div class="ic-icon">&#128260;</div>
+      <div class="ic-title">Backprop</div>
+      <div class="ic-desc">Learning from mistakes</div>
+    </div>
+  </div>
+  <p class="tagline">Press <b>&#8594;</b> arrow key or click Next to begin</p>
+</div>
+
+<!-- ═══════════════════════════════════════ SLIDE 2: THE PROBLEM ═══════════════════════════════════════ -->
+<div class="slide" id="slide-1">
+  <h2>Our Problem: Will the Student Pass?</h2>
+  <p class="subtitle">Let's teach a neural network to predict exam results</p>
+  <div class="two-col full-width">
+    <div>
+      <table class="example-table">
+        <tr><th>Hours Studied</th><th>Hours Slept</th><th>Result</th></tr>
+        <tr><td>2</td><td>9</td><td class="fail">Fail (0)</td></tr>
+        <tr><td>1</td><td>5</td><td class="fail">Fail (0)</td></tr>
+        <tr><td>5</td><td>7</td><td class="pass">Pass (1)</td></tr>
+        <tr><td>6</td><td>8</td><td class="pass">Pass (1)</td></tr>
+        <tr style="background: rgba(91,82,224,0.15); font-weight:700;">
+          <td>3</td><td>6</td><td style="color:var(--accent4);">? Predict</td></tr>
+      </table>
+    </div>
+    <div class="content-box">
+      <p style="font-size:20px; font-weight:600; color:var(--accent2); margin-bottom:16px;">We have 2 inputs:</p>
+      <ul>
+        <li><span class="highlight4">x&#8321;</span> = Hours Studied (normalized)</li>
+        <li><span class="highlight4">x&#8322;</span> = Hours Slept (normalized)</li>
+      </ul>
+      <p style="margin-top:20px; font-size:20px; font-weight:600; color:var(--accent3);">We want to predict:</p>
+      <ul>
+        <li><span class="highlight2">y</span> = Pass (1) or Fail (0)</li>
+      </ul>
+      <div class="formula-card" style="margin-top:20px;">
+        <p style="font-size:15px; color:var(--muted); text-align:center;">This is a <span class="highlight">Binary Classification</span> problem</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════ SLIDE 3: WHAT IS A NEURON ═══════════════════════════════════════ -->
+<div class="slide" id="slide-2">
+  <h2>What is a Neuron?</h2>
+  <p class="subtitle">The fundamental building block of a neural network</p>
+  <div class="two-col full-width">
+    <div style="display:flex; justify-content:center;">
+      <div class="neuron-visual" style="width:460px; height:320px;">
+        <svg class="connections" width="460" height="320">
+          <line x1="80" y1="80" x2="210" y2="160" class="flow-line" stroke="rgba(59,130,246,0.7)" stroke-width="3"/>
+          <line x1="80" y1="240" x2="210" y2="160" class="flow-line" stroke="rgba(59,130,246,0.7)" stroke-width="3"/>
+          <line x1="310" y1="160" x2="400" y2="160" class="flow-line" stroke="rgba(0,168,138,0.7)" stroke-width="3"/>
+        </svg>
+        <div class="neuron-input" style="left:0; top:40px;">
+          <span>x&#8321;</span>
+          <span class="val">0.5</span>
+        </div>
+        <div class="weight-label" style="left:110px; top:80px;">w&#8321; = 0.4</div>
+        <div class="neuron-input" style="left:0; top:200px;">
+          <span>x&#8322;</span>
+          <span class="val">0.75</span>
+        </div>
+        <div class="weight-label" style="left:110px; top:210px;">w&#8322; = 0.6</div>
+        <div class="neuron-circle pulse" style="left:180px; top:110px;">
+          <div style="text-align:center; line-height:1.3;">
+            <div style="font-size:11px; opacity:0.7;">&Sigma; + b</div>
+            <div style="font-size:10px; opacity:0.7;">then f(z)</div>
+          </div>
+        </div>
+        <div class="weight-label" style="left:195px; top:220px; border-color:var(--accent3);">b = 0.1</div>
+        <div class="neuron-output" style="left:370px; top:120px;">
+          <span>output</span>
+          <span class="val">0.72</span>
+        </div>
+      </div>
+    </div>
+    <div class="content-box">
+      <p style="font-size:20px; font-weight:600; color:var(--accent2); margin-bottom:14px;">A neuron does 3 things:</p>
+      <div class="step-card">
+        <span class="step-num">1</span>
+        <strong>Multiply</strong> each input by its weight
+      </div>
+      <div class="step-card green">
+        <span class="step-num green">2</span>
+        <strong>Sum</strong> all weighted inputs + bias
+      </div>
+      <div class="step-card yellow">
+        <span class="step-num yellow">3</span>
+        Apply <strong>activation function</strong> to produce output
+      </div>
+      <div class="formula-card" style="margin-top:16px;">
+        <div class="formula-label">Neuron Computation</div>
+        <div class="formula">z = (x&#8321;&middot;w&#8321;) + (x&#8322;&middot;w&#8322;) + b</div>
+        <div class="formula">output = f(z)</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════ SLIDE 4: INPUTS & WEIGHTS ═══════════════════════════════════════ -->
+<div class="slide" id="slide-3">
+  <h2>Inputs, Weights & Bias</h2>
+  <p class="subtitle">The three ingredients that shape every neuron's decision</p>
+  <div class="two-col full-width">
+    <div class="content-box">
+      <div class="formula-card">
+        <div class="formula-label" style="text-align:left;">INPUTS (x)</div>
+        <p style="font-size:16px; color:#3a3a50; line-height:1.8;">
+          The <span class="highlight">data</span> fed into the network.<br>
+          In our example: <span class="mono highlight2">x&#8321; = 0.5</span> (hours studied, normalized)<br>
+          and <span class="mono highlight2">x&#8322; = 0.75</span> (hours slept, normalized)
+        </p>
+      </div>
+      <div class="formula-card">
+        <div class="formula-label" style="text-align:left;">WEIGHTS (w)</div>
+        <p style="font-size:16px; color:#3a3a50; line-height:1.8;">
+          <span class="highlight">Importance</span> of each input. The network <em>learns</em> these!<br>
+          <span class="mono highlight2">w&#8321; = 0.4</span> &rarr; how much "study hours" matters<br>
+          <span class="mono highlight2">w&#8322; = 0.6</span> &rarr; how much "sleep hours" matters
+        </p>
+      </div>
+      <div class="formula-card">
+        <div class="formula-label" style="text-align:left;">BIAS (b)</div>
+        <p style="font-size:16px; color:#3a3a50; line-height:1.8;">
+          An <span class="highlight">offset</span> that shifts the output, like the y-intercept in a line.<br>
+          Allows the neuron to fire even when all inputs are zero.<br>
+          <span class="mono highlight2">b = 0.1</span>
+        </p>
+      </div>
+    </div>
+    <div style="display:flex; flex-direction:column; align-items:center; gap:20px;">
+      <div class="formula-card" style="width:100%; text-align:center;">
+        <div class="formula-label">Real-World Analogy</div>
+        <p style="font-size:17px; color:#3a3a50; line-height:2;">
+          Think of it as a <span class="highlight">recipe</span>:<br>
+          <span class="highlight4">Inputs</span> = Ingredients (flour, sugar)<br>
+          <span class="highlight4">Weights</span> = How much of each (2 cups, 1 cup)<br>
+          <span class="highlight3">Bias</span> = A pinch of salt (always added)
+        </p>
+      </div>
+      <div class="formula-card" style="width:100%;">
+        <div class="formula-label">Weighted Sum for Our Example</div>
+        <div class="formula-sm" style="line-height:2.2;">
+          z = (0.5 &times; 0.4) + (0.75 &times; 0.6) + 0.1<br>
+          z = 0.20 + 0.45 + 0.1<br>
+          <span style="color:var(--accent2); font-size:22px;">z = 0.75</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════ SLIDE 5: ACTIVATION FUNCTION ═══════════════════════════════════════ -->
+<div class="slide" id="slide-4">
+  <h2>Activation Functions</h2>
+  <p class="subtitle">Adding non-linearity &mdash; what makes neural networks powerful</p>
+  <div class="two-col full-width">
+    <div class="content-box">
+      <p style="font-size:17px; margin-bottom:16px;">Without activation functions, a neural network is just a <span class="highlight3">linear equation</span>. Activation functions let the network learn <span class="highlight">complex patterns</span>.</p>
+
+      <div class="formula-card">
+        <div class="formula-label">Sigmoid (used in our example)</div>
+        <div class="formula">&sigma;(z) = 1 / (1 + e<sup>-z</sup>)</div>
+        <p style="font-size:14px; color:var(--muted); text-align:center; margin-top:8px;">Squashes any value into range (0, 1) &mdash; perfect for probabilities!</p>
+      </div>
+
+      <div class="formula-card">
+        <div class="formula-label">ReLU (most popular for hidden layers)</div>
+        <div class="formula">f(z) = max(0, z)</div>
+        <p style="font-size:14px; color:var(--muted); text-align:center; margin-top:8px;">If positive, keep it. If negative, make it zero.</p>
+      </div>
+
+      <div class="formula-card">
+        <div class="formula-label">Tanh</div>
+        <div class="formula">f(z) = (e<sup>z</sup> - e<sup>-z</sup>) / (e<sup>z</sup> + e<sup>-z</sup>)</div>
+        <p style="font-size:14px; color:var(--muted); text-align:center; margin-top:8px;">Squashes values into range (-1, 1)</p>
+      </div>
+    </div>
+    <div>
+      <div class="graph-container">
+        <canvas id="activationCanvas" width="440" height="320"></canvas>
+        <div class="act-tabs">
+          <button class="act-tab active" onclick="drawActivation('sigmoid')">Sigmoid</button>
+          <button class="act-tab" onclick="drawActivation('relu')">ReLU</button>
+          <button class="act-tab" onclick="drawActivation('tanh')">Tanh</button>
+        </div>
+      </div>
+      <div class="formula-card" style="margin-top:16px;">
+        <div class="formula-label">Our Example: Sigmoid(0.75)</div>
+        <div class="formula-sm" style="line-height:2;">
+          &sigma;(0.75) = 1 / (1 + e<sup>-0.75</sup>)<br>
+          = 1 / (1 + 0.4724)<br>
+          <span style="color:var(--accent2); font-size:20px;">= 0.679 &asymp; 68% chance of passing</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════ SLIDE 6: LAYERS ═══════════════════════════════════════ -->
+<div class="slide" id="slide-5">
+  <h2>Layers of a Neural Network</h2>
+  <p class="subtitle">Stacking neurons into a powerful architecture</p>
+  <div class="two-col full-width">
+    <div style="display:flex; justify-content:center;">
+      <div class="network-container" style="width:560px; height:400px;">
+        <svg class="connections" width="560" height="400">
+          <!-- Input to Hidden 1 -->
+          <line x1="80" y1="120" x2="230" y2="80" class="flow-line" stroke="rgba(59,130,246,0.5)" stroke-width="1.5"/>
+          <line x1="80" y1="120" x2="230" y2="160" class="flow-line" stroke="rgba(59,130,246,0.5)" stroke-width="1.5"/>
+          <line x1="80" y1="120" x2="230" y2="240" class="flow-line" stroke="rgba(59,130,246,0.5)" stroke-width="1.5"/>
+          <line x1="80" y1="120" x2="230" y2="320" class="flow-line" stroke="rgba(59,130,246,0.5)" stroke-width="1.5"/>
+          <line x1="80" y1="280" x2="230" y2="80" class="flow-line" stroke="rgba(59,130,246,0.5)" stroke-width="1.5"/>
+          <line x1="80" y1="280" x2="230" y2="160" class="flow-line" stroke="rgba(59,130,246,0.5)" stroke-width="1.5"/>
+          <line x1="80" y1="280" x2="230" y2="240" class="flow-line" stroke="rgba(59,130,246,0.5)" stroke-width="1.5"/>
+          <line x1="80" y1="280" x2="230" y2="320" class="flow-line" stroke="rgba(59,130,246,0.5)" stroke-width="1.5"/>
+          <!-- Hidden to Output -->
+          <line x1="290" y1="80" x2="440" y2="200" class="flow-line" stroke="rgba(147,51,234,0.5)" stroke-width="1.5"/>
+          <line x1="290" y1="160" x2="440" y2="200" class="flow-line" stroke="rgba(147,51,234,0.5)" stroke-width="1.5"/>
+          <line x1="290" y1="240" x2="440" y2="200" class="flow-line" stroke="rgba(147,51,234,0.5)" stroke-width="1.5"/>
+          <line x1="290" y1="320" x2="440" y2="200" class="flow-line" stroke="rgba(147,51,234,0.5)" stroke-width="1.5"/>
+        </svg>
+        <!-- Input Layer -->
+        <div class="nn-node nn-input" style="left:50px; top:90px;">x&#8321;</div>
+        <div class="nn-node nn-input" style="left:50px; top:250px;">x&#8322;</div>
+        <div class="layer-label input-l" style="left:20px; top:350px;">Input<br>Layer</div>
+        <!-- Hidden Layer -->
+        <div class="nn-node nn-hidden" style="left:200px; top:50px;">h&#8321;</div>
+        <div class="nn-node nn-hidden" style="left:200px; top:130px;">h&#8322;</div>
+        <div class="nn-node nn-hidden" style="left:200px; top:210px;">h&#8323;</div>
+        <div class="nn-node nn-hidden" style="left:200px; top:290px;">h&#8324;</div>
+        <div class="layer-label hidden-l" style="left:200px; top:350px;">Hidden<br>Layer</div>
+        <!-- Output Layer -->
+        <div class="nn-node nn-output" style="left:410px; top:170px;">y&#770;</div>
+        <div class="layer-label output-l" style="left:380px; top:350px;">Output<br>Layer</div>
+      </div>
+    </div>
+    <div class="content-box">
+      <div class="step-card" style="border-left-color:#2563eb;">
+        <p style="font-size:17px;"><strong style="color:#2563eb;">Input Layer</strong></p>
+        <p style="font-size:15px; color:var(--muted);">Receives the raw data. One neuron per feature.<br>Our network: <span class="mono">2 neurons</span> (study hrs, sleep hrs)</p>
+      </div>
+      <div class="step-card" style="border-left-color:#7c3aed;">
+        <p style="font-size:17px;"><strong style="color:#7c3aed;">Hidden Layer(s)</strong></p>
+        <p style="font-size:15px; color:var(--muted);">Where the "learning" happens. Each neuron detects a pattern.<br>Our network: <span class="mono">4 neurons</span> (1 hidden layer)</p>
+      </div>
+      <div class="step-card green">
+        <p style="font-size:17px;"><strong style="color:var(--accent2);">Output Layer</strong></p>
+        <p style="font-size:15px; color:var(--muted);">Produces the final prediction.<br>Our network: <span class="mono">1 neuron</span> (pass probability)</p>
+      </div>
+      <div class="formula-card" style="margin-top:14px;">
+        <p style="font-size:15px; color:var(--muted); text-align:center;">
+          Every connection has a <span class="highlight2">weight</span>. Every neuron has a <span class="highlight3">bias</span>.<br>
+          Our simple network has: <span class="highlight">2&times;4 + 4&times;1 = <strong>12 weights</strong></span> + <span class="highlight3"><strong>5 biases</strong></span>
+        </p>
+      </div>
+      <div class="formula-card">
+        <p style="font-size:14px; color:var(--muted); text-align:center;">
+          <strong style="color:var(--accent4);">"Deep" Learning</strong> = networks with <em>multiple</em> hidden layers<br>
+          More layers = ability to learn more complex patterns
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════ SLIDE 7: FORWARD PROPAGATION ═══════════════════════════════════════ -->
+<div class="slide compact" id="slide-6">
+  <h2>Forward Propagation</h2>
+  <p class="subtitle" style="margin-bottom:14px;">Data flows forward through the network to produce a prediction</p>
+  <div class="full-width scroll-area" style="max-width:1000px;">
+    <div class="step-card">
+      <span class="step-num">1</span>
+      <strong>Feed Inputs:</strong> <span class="mono">x&#8321; = 0.5</span> (studied 3hrs, normalized), <span class="mono">x&#8322; = 0.75</span> (slept 6hrs, normalized)
+    </div>
+    <div class="step-card green">
+      <span class="step-num green">2</span>
+      <strong>Hidden Layer &mdash; Weighted Sum:</strong> Each hidden neuron computes its own z value
+    </div>
+    <div class="formula-card">
+      <div class="formula-sm" style="text-align:left; line-height:2;">
+        <span style="color:#7c3aed;">Neuron h&#8321;:</span> z&#8321; = (0.5 &times; 0.3) + (0.75 &times; 0.5) + 0.1 = 0.15 + 0.375 + 0.1 = <span class="highlight2">0.625</span><br>
+        <span style="color:#7c3aed;">Neuron h&#8322;:</span> z&#8322; = (0.5 &times; 0.7) + (0.75 &times; -0.2) + 0.05 = 0.35 - 0.15 + 0.05 = <span class="highlight2">0.25</span>
+      </div>
+    </div>
+    <div class="step-card yellow">
+      <span class="step-num yellow">3</span>
+      <strong>Hidden Layer &mdash; Activation (ReLU):</strong> Apply f(z) = max(0, z)
+    </div>
+    <div class="formula-card">
+      <div class="formula-sm" style="text-align:left; line-height:2;">
+        a&#8321; = ReLU(0.625) = <span class="highlight2">0.625</span> &nbsp;&nbsp;&nbsp; a&#8322; = ReLU(0.25) = <span class="highlight2">0.25</span>
+      </div>
+    </div>
+    <div class="step-card" style="border-left-color:var(--accent2);">
+      <span class="step-num green">4</span>
+      <strong>Output Layer &mdash; Weighted Sum + Sigmoid:</strong>
+    </div>
+    <div class="formula-card">
+      <div class="formula-sm" style="line-height:2.2;">
+        z<sub>out</sub> = (0.625 &times; 0.8) + (0.25 &times; 0.6) + 0.2 = 0.5 + 0.15 + 0.2 = <span class="highlight2">0.85</span><br>
+        <span style="color:var(--accent2);">y&#770;</span> = &sigma;(0.85) = 1 / (1 + e<sup>-0.85</sup>) = 1 / 1.427 = <span style="color:var(--accent2); font-size:22px; font-weight:800;">0.700</span>
+      </div>
+    </div>
+    <div class="step-card red">
+      <span class="step-num red">5</span>
+      <strong>Prediction:</strong> <span class="highlight">0.700</span> &rarr; 70% probability of passing. Since 0.70 &gt; 0.5, we predict <span class="pass">PASS</span>
+    </div>
+    <div style="display:flex; justify-content:center; margin-top:16px;">
+      <div style="display:flex; align-items:center; gap:16px; background:var(--card); padding:16px 32px; border-radius:14px; border:1px solid rgba(91,82,224,0.3);">
+        <div style="text-align:center;">
+          <div style="font-size:13px; color:var(--muted);">Inputs</div>
+          <div style="font-size:22px; font-weight:800; color:#2563eb;">x&#8321;, x&#8322;</div>
+        </div>
+        <div style="font-size:28px; color:var(--accent);">&rarr;</div>
+        <div style="text-align:center;">
+          <div style="font-size:13px; color:var(--muted);">Hidden</div>
+          <div style="font-size:22px; font-weight:800; color:#7c3aed;">z &rarr; a</div>
+        </div>
+        <div style="font-size:28px; color:var(--accent);">&rarr;</div>
+        <div style="text-align:center;">
+          <div style="font-size:13px; color:var(--muted);">Output</div>
+          <div style="font-size:22px; font-weight:800; color:var(--accent2);">y&#770; = 0.70</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════ SLIDE 8: ERROR & LOSS ═══════════════════════════════════════ -->
+<div class="slide" id="slide-7">
+  <h2>Error & Loss Function</h2>
+  <p class="subtitle">How far off is our prediction?</p>
+  <div class="two-col full-width">
+    <div class="content-box">
+      <p style="font-size:18px; margin-bottom:16px;">The network predicted <span class="highlight">0.70</span> but the actual answer is <span class="highlight3">1</span> (Pass).</p>
+      <p style="font-size:18px; margin-bottom:20px;">We need a way to <strong>measure this error</strong> &mdash; that's the <span class="highlight2">Loss Function</span>.</p>
+
+      <div class="formula-card">
+        <div class="formula-label">Binary Cross-Entropy Loss (for classification)</div>
+        <div class="formula" style="font-size:18px;">L = -[y&middot;log(y&#770;) + (1-y)&middot;log(1-y&#770;)]</div>
+      </div>
+
+      <div class="formula-card">
+        <div class="formula-label">Our Example</div>
+        <div class="formula-sm" style="line-height:2;">
+          y = 1 (actual: Pass), y&#770; = 0.70 (predicted)<br>
+          L = -[1&middot;log(0.70) + 0&middot;log(0.30)]<br>
+          L = -[log(0.70)]<br>
+          L = -[-0.357]<br>
+          <span style="color:var(--accent3); font-size:22px; font-weight:800;">L = 0.357</span>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="formula-card" style="text-align:center; padding:30px;">
+        <div style="font-size:14px; color:var(--muted); font-weight:700; margin-bottom:16px;">LOSS LANDSCAPE</div>
+        <canvas id="lossCanvas" width="400" height="250"></canvas>
+        <p style="font-size:13px; color:var(--muted); margin-top:12px;">We want to reach the <span class="highlight2">minimum</span> of this curve</p>
+      </div>
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-top:16px;">
+        <div class="formula-card" style="text-align:center;">
+          <div style="font-size:13px; color:var(--muted); font-weight:700;">PERFECT PREDICTION</div>
+          <div style="font-size:28px; font-weight:800; color:var(--accent2); margin-top:6px;">Loss = 0</div>
+          <div style="font-size:12px; color:var(--muted);">y&#770; = y exactly</div>
+        </div>
+        <div class="formula-card" style="text-align:center;">
+          <div style="font-size:13px; color:var(--muted); font-weight:700;">WORST PREDICTION</div>
+          <div style="font-size:28px; font-weight:800; color:var(--accent3); margin-top:6px;">Loss = &infin;</div>
+          <div style="font-size:12px; color:var(--muted);">y&#770; opposite of y</div>
+        </div>
+      </div>
+      <div class="formula-card" style="margin-top:14px;">
+        <p style="font-size:14px; color:var(--muted); text-align:center;">
+          Other loss functions: <span class="highlight2">MSE</span> (regression), <span class="highlight2">Cross-Entropy</span> (multi-class)
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════ SLIDE 9: BACKPROPAGATION ═══════════════════════════════════════ -->
+<div class="slide compact" id="slide-8">
+  <h2>Backpropagation</h2>
+  <p class="subtitle" style="margin-bottom:10px;">The network learns by propagating the error backward to update weights</p>
+  <div class="full-width scroll-area" style="max-width:1050px;">
+    <div style="display:flex; justify-content:center; margin-bottom:18px;">
+      <div class="backprop-flow">
+        <div class="bp-box" style="border-color:var(--accent2);">
+          <div class="bp-title">Prediction</div>
+          <div class="bp-val">y&#770; = 0.70</div>
+        </div>
+        <div class="bp-arrow">&rarr;</div>
+        <div class="bp-box" style="border-color:var(--accent3);">
+          <div class="bp-title">Loss</div>
+          <div class="bp-val" style="color:var(--accent3);">0.357</div>
+        </div>
+        <div class="bp-arrow" style="color:var(--accent4);">&larr;</div>
+        <div class="bp-box" style="border-color:var(--accent4);">
+          <div class="bp-title">Gradients</div>
+          <div class="bp-val" style="color:var(--accent4);">&part;L/&part;w</div>
+        </div>
+        <div class="bp-arrow" style="color:var(--accent4);">&larr;</div>
+        <div class="bp-box" style="border-color:var(--accent);">
+          <div class="bp-title">Update Weights</div>
+          <div class="bp-val" style="color:var(--accent);">w<sub>new</sub></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="step-card red">
+      <span class="step-num red">1</span>
+      <strong>Compute Loss Gradient:</strong> How does the loss change with respect to the output?
+    </div>
+    <div class="formula-card">
+      <div class="formula-sm">
+        &part;L/&part;y&#770; = -(y/y&#770;) + (1-y)/(1-y&#770;) = -(1/0.70) = <span class="highlight3">-1.429</span>
+      </div>
+    </div>
+
+    <div class="step-card yellow">
+      <span class="step-num yellow">2</span>
+      <strong>Chain Rule &mdash; Propagate Backward:</strong> Multiply gradients layer by layer
+    </div>
+    <div class="formula-card">
+      <div class="formula-sm" style="line-height:2.2; text-align:left;">
+        <span style="color:var(--accent4);">&part;L/&part;w</span> = <span style="color:var(--accent3);">&part;L/&part;y&#770;</span> &times; <span style="color:#7c3aed;">&part;y&#770;/&part;z</span> &times; <span style="color:#2563eb;">&part;z/&part;w</span> &nbsp;&nbsp; (Chain Rule!)<br>
+        For output weight w<sub>o1</sub>: &part;L/&part;w<sub>o1</sub> = (-1.429) &times; (0.21) &times; (0.625) = <span class="highlight3">-0.1875</span>
+      </div>
+    </div>
+
+    <div class="step-card green">
+      <span class="step-num green">3</span>
+      <strong>Update Weights (Gradient Descent):</strong>
+    </div>
+    <div class="formula-card">
+      <div class="formula-label">Weight Update Rule</div>
+      <div class="formula">w<sub>new</sub> = w<sub>old</sub> - &eta; &times; &part;L/&part;w</div>
+      <div style="font-size:14px; color:var(--muted); text-align:center; margin-top:8px;">
+        &eta; (eta) = <span class="highlight2">learning rate</span> = 0.1 (how big each step is)
+      </div>
+    </div>
+    <div class="formula-card">
+      <div class="formula-sm" style="line-height:2.2;">
+        w<sub>o1</sub> = 0.8 - 0.1 &times; (-0.1875) = 0.8 + 0.01875 = <span class="highlight2">0.8188</span><br>
+        <span style="color:var(--muted);">The weight increased! Moving toward the correct answer.</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════ SLIDE 10: TRAINING LOOP ═══════════════════════════════════════ -->
+<div class="slide" id="slide-9">
+  <h2>The Training Loop</h2>
+  <p class="subtitle">Repeat forward + backward until the network learns</p>
+  <div class="two-col full-width">
+    <div style="display:flex; flex-direction:column; align-items:center;">
+      <div style="position:relative; width:400px; height:380px;">
+        <svg width="400" height="380">
+          <!-- Circular arrows -->
+          <path d="M 200 40 A 140 140 0 0 1 340 180" fill="none" stroke="var(--accent)" stroke-width="4" stroke-linecap="round"/>
+          <polygon points="340,170 350,185 330,185" fill="var(--accent)"/>
+
+          <path d="M 340 200 A 140 140 0 0 1 200 340" fill="none" stroke="var(--accent3)" stroke-width="4" stroke-linecap="round"/>
+          <polygon points="210,340 195,330 195,350" fill="var(--accent3)"/>
+
+          <path d="M 180 340 A 140 140 0 0 1 60 200" fill="none" stroke="var(--accent4)" stroke-width="4" stroke-linecap="round"/>
+          <polygon points="60,210 50,195 70,195" fill="var(--accent4)"/>
+
+          <path d="M 60 180 A 140 140 0 0 1 180 40" fill="none" stroke="var(--accent2)" stroke-width="4" stroke-linecap="round"/>
+          <polygon points="180,40 165,50 175,30" fill="var(--accent2)"/>
+        </svg>
+        <!-- Labels -->
+        <div style="position:absolute; top:10px; left:50%; transform:translateX(-50%); text-align:center;">
+          <div style="font-weight:800; font-size:16px; color:var(--accent2);">1. Forward Pass</div>
+          <div style="font-size:12px; color:var(--muted);">Compute prediction</div>
+        </div>
+        <div style="position:absolute; top:50%; right:10px; transform:translateY(-50%); text-align:center;">
+          <div style="font-weight:800; font-size:16px; color:var(--accent);">2. Compute Loss</div>
+          <div style="font-size:12px; color:var(--muted);">Measure error</div>
+        </div>
+        <div style="position:absolute; bottom:10px; left:50%; transform:translateX(-50%); text-align:center;">
+          <div style="font-weight:800; font-size:16px; color:var(--accent3);">3. Backward Pass</div>
+          <div style="font-size:12px; color:var(--muted);">Compute gradients</div>
+        </div>
+        <div style="position:absolute; top:50%; left:2px; transform:translateY(-50%); text-align:center;">
+          <div style="font-weight:800; font-size:16px; color:var(--accent4);">4. Update</div>
+          <div style="font-size:12px; color:var(--muted);">Adjust weights</div>
+        </div>
+        <!-- Center -->
+        <div style="position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);
+                    background:var(--card); border-radius:50%; width:100px; height:100px;
+                    display:flex; align-items:center; justify-content:center; flex-direction:column;
+                    border:2px solid var(--accent);">
+          <div style="font-size:12px; color:var(--muted);">EPOCH</div>
+          <div style="font-size:28px; font-weight:900; color:var(--accent2);" id="epochNum">1</div>
+        </div>
+      </div>
+      <button onclick="animateEpochs()" style="margin-top:10px; padding:10px 28px; background:var(--accent);
+              border:none; color:#fff; border-radius:25px; font-family:'Inter'; font-weight:700;
+              cursor:pointer; font-size:15px;">&#9654; Animate Training</button>
+    </div>
+    <div class="content-box">
+      <p style="font-size:17px; margin-bottom:16px;">One complete cycle = one <span class="highlight2">Epoch</span></p>
+      <div class="formula-card">
+        <div class="formula-label">Loss Decreasing Over Epochs</div>
+        <div class="epoch-container" id="epochBars">
+          <div style="text-align:center;">
+            <div class="epoch-bar" style="height:140px; background:var(--accent3);">0.36</div>
+            <div class="epoch-label">E1</div>
+          </div>
+          <div style="text-align:center;">
+            <div class="epoch-bar" style="height:105px; background:#e8683e;">0.27</div>
+            <div class="epoch-label">E2</div>
+          </div>
+          <div style="text-align:center;">
+            <div class="epoch-bar" style="height:75px; background:var(--accent4);">0.19</div>
+            <div class="epoch-label">E3</div>
+          </div>
+          <div style="text-align:center;">
+            <div class="epoch-bar" style="height:50px; background:#4caf50;">0.12</div>
+            <div class="epoch-label">E4</div>
+          </div>
+          <div style="text-align:center;">
+            <div class="epoch-bar" style="height:25px; background:var(--accent2);">0.05</div>
+            <div class="epoch-label">E5</div>
+          </div>
+        </div>
+      </div>
+      <div class="formula-card" style="margin-top:14px;">
+        <p style="font-size:15px; color:var(--muted); text-align:center; line-height:1.8;">
+          <span class="highlight2">Batch Size</span> = How many samples per step<br>
+          <span class="highlight2">Epoch</span> = One pass through ALL training data<br>
+          <span class="highlight2">Learning Rate</span> = Step size (too big = overshoot, too small = slow)<br>
+          Typical training: <span class="highlight4">100 &ndash; 1000+ epochs</span>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════ SLIDE 11: GRADIENT DESCENT DEEP DIVE ═══════════════════════════════════════ -->
+<div class="slide" id="slide-10">
+  <h2>Gradient Descent Deep Dive</h2>
+  <p class="subtitle">How the network finds the best weights &mdash; like a ball rolling downhill</p>
+  <div class="two-col full-width">
+    <div style="display:flex; flex-direction:column; align-items:center;">
+      <canvas id="gdCanvas" width="460" height="300" style="border-radius:14px; background:#fafbff; border:1px solid rgba(91,82,224,0.12);"></canvas>
+      <button onclick="animateGD()" style="margin-top:14px; padding:10px 28px; background:var(--accent);
+              border:none; color:#fff; border-radius:25px; font-family:'Inter'; font-weight:700;
+              cursor:pointer; font-size:14px;">Roll the Ball Down!</button>
+    </div>
+    <div class="content-box">
+      <p style="font-size:17px; margin-bottom:14px;">Gradient = <span class="highlight">slope</span> of the loss curve at current position. It tells us <em>which direction</em> to move.</p>
+      <div class="step-card">
+        <span class="step-num">1</span>
+        <strong>Compute gradient</strong> (slope) at current weight
+      </div>
+      <div class="step-card green">
+        <span class="step-num green">2</span>
+        <strong>Step opposite</strong> to the gradient (downhill)
+      </div>
+      <div class="step-card yellow">
+        <span class="step-num yellow">3</span>
+        <strong>Repeat</strong> until reaching the minimum
+      </div>
+      <div class="formula-card" style="margin-top:12px;">
+        <div class="formula-label">Three Flavors</div>
+        <div style="font-size:14px; color:var(--muted); line-height:2;">
+          <strong style="color:var(--accent);">Batch GD</strong> &mdash; Use ALL data per step (slow but stable)<br>
+          <strong style="color:var(--accent3);">Stochastic GD</strong> &mdash; Use 1 sample per step (noisy but fast)<br>
+          <strong style="color:var(--accent2);">Mini-batch GD</strong> &mdash; Use small batch (best of both!)
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════ SLIDE 12: LEARNING RATE ═══════════════════════════════════════ -->
+<div class="slide" id="slide-11">
+  <h2>Learning Rate &mdash; The Most Important Hyperparameter</h2>
+  <p class="subtitle">Too big? Overshoot. Too small? Takes forever. Just right? Converge!</p>
+  <div style="display:flex; gap:20px; max-width:1050px; width:100%;">
+    <div class="compare-col" style="text-align:center;">
+      <div class="compare-header" style="border-color:var(--accent3); color:var(--accent3);">Too High (&eta; = 1.0)</div>
+      <canvas id="lrHighCanvas" width="280" height="180" style="border-radius:10px; background:#fafbff;"></canvas>
+      <p style="font-size:13px; color:var(--accent3); margin-top:10px; font-weight:600;">Overshoots the minimum!<br>Loss bounces wildly or diverges.</p>
+    </div>
+    <div class="compare-col" style="text-align:center;">
+      <div class="compare-header" style="border-color:var(--accent4); color:var(--accent4);">Too Low (&eta; = 0.001)</div>
+      <canvas id="lrLowCanvas" width="280" height="180" style="border-radius:10px; background:#fafbff;"></canvas>
+      <p style="font-size:13px; color:var(--accent4); margin-top:10px; font-weight:600;">Tiny steps, takes ages.<br>May get stuck in local minimum.</p>
+    </div>
+    <div class="compare-col" style="text-align:center;">
+      <div class="compare-header" style="border-color:var(--accent2); color:var(--accent2);">Just Right (&eta; = 0.01)</div>
+      <canvas id="lrGoodCanvas" width="280" height="180" style="border-radius:10px; background:#fafbff;"></canvas>
+      <p style="font-size:13px; color:var(--accent2); margin-top:10px; font-weight:600;">Smooth convergence!<br>Reaches minimum efficiently.</p>
+    </div>
+  </div>
+  <div class="formula-card" style="max-width:700px; margin-top:18px;">
+    <p style="font-size:14px; color:var(--muted); text-align:center; line-height:1.8;">
+      Common starting values: <span class="mono highlight4">0.001</span> to <span class="mono highlight4">0.01</span><br>
+      <span class="highlight2">Learning Rate Schedulers</span> reduce &eta; over time (start fast, fine-tune later)
+    </p>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════ SLIDE 13: VANISHING & EXPLODING GRADIENTS ═══════════════════════════════════════ -->
+<div class="slide compact" id="slide-12">
+  <h2>Vanishing & Exploding Gradients</h2>
+  <p class="subtitle" style="margin-bottom:12px;">Why deep networks are hard to train &mdash; and how we fix it</p>
+  <div class="two-col full-width">
+    <div>
+      <div class="formula-card" style="border-left:4px solid var(--accent3);">
+        <div style="font-size:16px; font-weight:800; color:var(--accent3); margin-bottom:8px;">Vanishing Gradients</div>
+        <p style="font-size:14px; color:var(--muted); line-height:1.8;">
+          In deep networks, gradients get <strong>multiplied</strong> at each layer via chain rule.<br>
+          If each gradient is small (e.g. 0.2):
+        </p>
+        <div class="formula-sm" style="margin:10px 0; font-size:15px;">
+          0.2 &times; 0.2 &times; 0.2 &times; 0.2 = <span class="highlight3">0.0016</span>
+        </div>
+        <p style="font-size:14px; color:var(--muted);">Early layers learn <strong>almost nothing</strong>. Sigmoid/Tanh are prone to this.</p>
+      </div>
+      <div class="formula-card" style="border-left:4px solid var(--accent4);">
+        <div style="font-size:16px; font-weight:800; color:var(--accent4); margin-bottom:8px;">Exploding Gradients</div>
+        <p style="font-size:14px; color:var(--muted); line-height:1.8;">
+          If each gradient is large (e.g. 5.0):
+        </p>
+        <div class="formula-sm" style="margin:10px 0; font-size:15px;">
+          5 &times; 5 &times; 5 &times; 5 = <span class="highlight3">625</span>
+        </div>
+        <p style="font-size:14px; color:var(--muted);">Weights blow up to NaN. Network becomes unstable.</p>
+      </div>
+    </div>
+    <div>
+      <div style="display:flex; align-items:center; gap:6px; justify-content:center; margin-bottom:18px; flex-wrap:wrap;">
+        <div style="text-align:center;">
+          <div style="background:var(--accent); color:#fff; border-radius:10px; padding:10px 14px; font-size:13px; font-weight:700;">Layer 5</div>
+          <div style="font-size:11px; color:var(--accent); margin-top:4px; font-weight:700;">grad=0.8</div>
+        </div>
+        <div style="color:var(--muted);">&rarr;</div>
+        <div style="text-align:center;">
+          <div style="background:rgba(91,82,224,0.6); color:#fff; border-radius:10px; padding:10px 14px; font-size:13px; font-weight:700;">Layer 4</div>
+          <div style="font-size:11px; color:var(--accent); margin-top:4px; font-weight:700;">grad=0.3</div>
+        </div>
+        <div style="color:var(--muted);">&rarr;</div>
+        <div style="text-align:center;">
+          <div style="background:rgba(91,82,224,0.35); color:#fff; border-radius:10px; padding:10px 14px; font-size:13px; font-weight:700;">Layer 3</div>
+          <div style="font-size:11px; color:var(--accent4); margin-top:4px; font-weight:700;">grad=0.05</div>
+        </div>
+        <div style="color:var(--muted);">&rarr;</div>
+        <div style="text-align:center;">
+          <div style="background:rgba(91,82,224,0.18); color:var(--muted); border-radius:10px; padding:10px 14px; font-size:13px; font-weight:700;">Layer 2</div>
+          <div style="font-size:11px; color:var(--accent3); margin-top:4px; font-weight:700;">grad=0.004</div>
+        </div>
+        <div style="color:var(--muted);">&rarr;</div>
+        <div style="text-align:center;">
+          <div style="background:rgba(91,82,224,0.08); color:var(--muted); border-radius:10px; padding:10px 14px; font-size:13px; font-weight:700;">Layer 1</div>
+          <div style="font-size:11px; color:var(--accent3); margin-top:4px; font-weight:700;">grad&asymp;0</div>
+        </div>
+      </div>
+      <div class="formula-card" style="border-left:4px solid var(--accent2);">
+        <div style="font-size:16px; font-weight:800; color:var(--accent2); margin-bottom:10px;">Solutions</div>
+        <div style="font-size:14px; color:var(--muted); line-height:2;">
+          <strong style="color:var(--accent2);">ReLU activation</strong> &mdash; Gradient is 0 or 1 (doesn't shrink!)<br>
+          <strong style="color:var(--accent2);">Batch Normalization</strong> &mdash; Normalizes layer outputs<br>
+          <strong style="color:var(--accent2);">Residual Connections</strong> &mdash; Skip connections (ResNet)<br>
+          <strong style="color:var(--accent2);">Gradient Clipping</strong> &mdash; Cap gradients to max value<br>
+          <strong style="color:var(--accent2);">Proper Initialization</strong> &mdash; Xavier / He initialization
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════ SLIDE 14: OVERFITTING vs UNDERFITTING ═══════════════════════════════════════ -->
+<div class="slide" id="slide-13">
+  <h2>Overfitting vs Underfitting</h2>
+  <p class="subtitle">The fundamental tradeoff in all of machine learning</p>
+  <div style="display:flex; gap:20px; max-width:1050px; width:100%;">
+    <div class="compare-col" style="flex:1;">
+      <div class="compare-header" style="border-color:var(--accent4); color:var(--accent4);">Underfitting</div>
+      <canvas id="underfitCanvas" width="260" height="180" style="border-radius:10px; background:#fafbff; display:block; margin:0 auto;"></canvas>
+      <div style="margin-top:12px; font-size:13px; color:var(--muted); line-height:1.8; text-align:center;">
+        Model is <strong>too simple</strong>.<br>
+        Can't capture the pattern.<br>
+        <span style="color:var(--accent4); font-weight:700;">High training error + High test error</span><br>
+        Fix: More layers, more neurons, train longer
+      </div>
+    </div>
+    <div class="compare-col" style="flex:1; border-color: var(--accent2);">
+      <div class="compare-header" style="border-color:var(--accent2); color:var(--accent2);">Just Right</div>
+      <canvas id="goodfitCanvas" width="260" height="180" style="border-radius:10px; background:#fafbff; display:block; margin:0 auto;"></canvas>
+      <div style="margin-top:12px; font-size:13px; color:var(--muted); line-height:1.8; text-align:center;">
+        Model captures the <strong>true pattern</strong>.<br>
+        Generalizes to new data.<br>
+        <span style="color:var(--accent2); font-weight:700;">Low training error + Low test error</span><br>
+        The sweet spot!
+      </div>
+    </div>
+    <div class="compare-col" style="flex:1;">
+      <div class="compare-header" style="border-color:var(--accent3); color:var(--accent3);">Overfitting</div>
+      <canvas id="overfitCanvas" width="260" height="180" style="border-radius:10px; background:#fafbff; display:block; margin:0 auto;"></canvas>
+      <div style="margin-top:12px; font-size:13px; color:var(--muted); line-height:1.8; text-align:center;">
+        Model <strong>memorizes noise</strong>.<br>
+        Fails on new data.<br>
+        <span style="color:var(--accent3); font-weight:700;">Low training error + High test error</span><br>
+        Fix: Regularization, more data, dropout
+      </div>
+    </div>
+  </div>
+  <div class="formula-card" style="max-width:700px; margin-top:16px; text-align:center;">
+    <canvas id="trainValCanvas" width="600" height="140" style="display:block; margin:0 auto;"></canvas>
+    <p style="font-size:12px; color:var(--muted); margin-top:8px;">
+      <span style="color:var(--accent);">&#9632; Training Loss</span> &nbsp;&nbsp;
+      <span style="color:var(--accent3);">&#9632; Validation Loss</span> &nbsp;&nbsp;
+      Gap = Overfitting!
+    </p>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════ SLIDE 15: REGULARIZATION ═══════════════════════════════════════ -->
+<div class="slide compact" id="slide-14">
+  <h2>Regularization &mdash; Fighting Overfitting</h2>
+  <p class="subtitle" style="margin-bottom:12px;">Techniques to make models generalize better to unseen data</p>
+  <div style="display:grid; grid-template-columns:1fr 1fr; gap:18px; max-width:1050px; width:100%;">
+    <div class="formula-card" style="border-left:4px solid var(--accent);">
+      <div style="font-size:17px; font-weight:800; color:var(--accent); margin-bottom:8px;">Dropout</div>
+      <div style="display:flex; gap:8px; justify-content:center; margin:12px 0;">
+        <div style="width:36px; height:36px; border-radius:50%; background:var(--accent); display:flex; align-items:center; justify-content:center; color:#fff; font-weight:800; font-size:12px;">ON</div>
+        <div style="width:36px; height:36px; border-radius:50%; background:#ddd; display:flex; align-items:center; justify-content:center; color:#999; font-weight:800; font-size:10px; text-decoration:line-through;">OFF</div>
+        <div style="width:36px; height:36px; border-radius:50%; background:var(--accent); display:flex; align-items:center; justify-content:center; color:#fff; font-weight:800; font-size:12px;">ON</div>
+        <div style="width:36px; height:36px; border-radius:50%; background:#ddd; display:flex; align-items:center; justify-content:center; color:#999; font-weight:800; font-size:10px; text-decoration:line-through;">OFF</div>
+        <div style="width:36px; height:36px; border-radius:50%; background:var(--accent); display:flex; align-items:center; justify-content:center; color:#fff; font-weight:800; font-size:12px;">ON</div>
+      </div>
+      <p style="font-size:13px; color:var(--muted); line-height:1.7;">Randomly <strong>turns off</strong> neurons during training (e.g. 20-50%). Forces network to not rely on any single neuron. Like training many smaller networks!</p>
+    </div>
+    <div class="formula-card" style="border-left:4px solid var(--accent2);">
+      <div style="font-size:17px; font-weight:800; color:var(--accent2); margin-bottom:8px;">L1 & L2 Regularization</div>
+      <div class="formula-sm" style="margin:10px 0;">
+        L2: Loss + &lambda;&sum;w<sup>2</sup><br>
+        L1: Loss + &lambda;&sum;|w|
+      </div>
+      <p style="font-size:13px; color:var(--muted); line-height:1.7;"><strong>Penalizes large weights</strong> by adding them to the loss. L2 (Ridge) shrinks weights. L1 (Lasso) drives some to exactly zero (feature selection!).</p>
+    </div>
+    <div class="formula-card" style="border-left:4px solid var(--accent3);">
+      <div style="font-size:17px; font-weight:800; color:var(--accent3); margin-bottom:8px;">Early Stopping</div>
+      <div style="display:flex; align-items:center; gap:8px; justify-content:center; margin:10px 0;">
+        <div style="font-size:28px;">&#128200;</div>
+        <div style="font-size:14px; color:var(--muted);">Monitor validation loss &rarr;<br>Stop when it starts <strong>increasing</strong></div>
+      </div>
+      <p style="font-size:13px; color:var(--muted); line-height:1.7;">Save the model at the point of lowest validation loss. Simple but very effective!</p>
+    </div>
+    <div class="formula-card" style="border-left:4px solid var(--accent4);">
+      <div style="font-size:17px; font-weight:800; color:var(--accent4); margin-bottom:8px;">Data Augmentation & Batch Norm</div>
+      <p style="font-size:13px; color:var(--muted); line-height:1.7; margin-top:8px;">
+        <strong style="color:var(--accent4);">Data Augmentation:</strong> Create variations of training data (flip, rotate, crop images). More data = less overfitting.<br><br>
+        <strong style="color:var(--accent4);">Batch Normalization:</strong> Normalize inputs to each layer. Stabilizes training, acts as mild regularizer, and allows higher learning rates.
+      </p>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════ SLIDE 16: OPTIMIZERS ═══════════════════════════════════════ -->
+<div class="slide" id="slide-15">
+  <h2>Optimizers &mdash; Smarter Ways to Descend</h2>
+  <p class="subtitle">Beyond vanilla gradient descent</p>
+  <div style="display:flex; gap:18px; max-width:1100px; width:100%; flex-wrap:wrap;">
+    <div class="compare-col" style="flex:1; min-width:220px;">
+      <div class="compare-header" style="border-color:var(--accent); color:var(--accent);">SGD + Momentum</div>
+      <div style="text-align:center; margin:12px 0;">
+        <div style="font-size:40px;">&#9917;</div>
+        <p style="font-size:12px; color:var(--muted); margin-top:4px;">Ball with inertia</p>
+      </div>
+      <div class="formula-sm" style="font-size:13px;">v = &beta;v + &eta;&nabla;L<br>w = w - v</div>
+      <p style="font-size:13px; color:var(--muted); margin-top:10px; line-height:1.6;">Accumulates velocity from past gradients. Helps push through <strong>flat regions</strong> and reduces oscillation.</p>
+    </div>
+    <div class="compare-col" style="flex:1; min-width:220px;">
+      <div class="compare-header" style="border-color:var(--accent4); color:var(--accent4);">RMSProp</div>
+      <div style="text-align:center; margin:12px 0;">
+        <div style="font-size:40px;">&#9878;</div>
+        <p style="font-size:12px; color:var(--muted); margin-top:4px;">Adaptive step size</p>
+      </div>
+      <div class="formula-sm" style="font-size:13px;">s = &beta;s + (1-&beta;)(&nabla;L)&sup2;<br>w = w - &eta;&nabla;L/&radic;s</div>
+      <p style="font-size:13px; color:var(--muted); margin-top:10px; line-height:1.6;">Divides LR by running average of gradient magnitude. <strong>Adapts per parameter</strong> &mdash; big gradients get smaller steps.</p>
+    </div>
+    <div class="compare-col" style="flex:1; min-width:220px; border-color:var(--accent2);">
+      <div class="compare-header" style="border-color:var(--accent2); color:var(--accent2);">Adam (Most Popular!)</div>
+      <div style="text-align:center; margin:12px 0;">
+        <div style="font-size:40px;">&#128171;</div>
+        <p style="font-size:12px; color:var(--muted); margin-top:4px;">Momentum + RMSProp</p>
+      </div>
+      <div class="formula-sm" style="font-size:13px;">m = &beta;&#8321;m + (1-&beta;&#8321;)&nabla;L<br>v = &beta;&#8322;v + (1-&beta;&#8322;)(&nabla;L)&sup2;<br>w = w - &eta;&middot;m&#770;/&radic;v&#770;</div>
+      <p style="font-size:13px; color:var(--muted); margin-top:10px; line-height:1.6;">Combines both ideas. <strong>Default choice</strong> for most tasks. Works well out of the box with &eta;=0.001.</p>
+    </div>
+  </div>
+  <div class="formula-card" style="max-width:750px; margin-top:16px; text-align:center;">
+    <p style="font-size:14px; color:var(--muted); line-height:1.8;">
+      <strong style="color:var(--accent);">Rule of thumb:</strong> Start with <span class="highlight2">Adam</span> (lr=0.001).
+      If fine-tuning, try <span class="highlight4">SGD + Momentum</span> (often better final accuracy).
+    </p>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════ SLIDE 17: WEIGHT INITIALIZATION ═══════════════════════════════════════ -->
+<div class="slide compact" id="slide-16">
+  <h2>Weight Initialization &mdash; The Starting Point Matters</h2>
+  <p class="subtitle" style="margin-bottom:12px;">Bad initialization = slow training or no training at all</p>
+  <div class="two-col full-width">
+    <div>
+      <div class="formula-card" style="border-left:4px solid var(--accent3);">
+        <div style="font-size:16px; font-weight:800; color:var(--accent3); margin-bottom:6px;">All Zeros?</div>
+        <p style="font-size:14px; color:var(--muted); line-height:1.7;">If all weights start at 0, every neuron computes the <strong>same thing</strong>. Gradients are identical &rarr; all neurons stay identical forever. <span class="highlight3">Symmetry problem!</span></p>
+      </div>
+      <div class="formula-card" style="border-left:4px solid var(--accent4);">
+        <div style="font-size:16px; font-weight:800; color:var(--accent4); margin-bottom:6px;">Too Large?</div>
+        <p style="font-size:14px; color:var(--muted); line-height:1.7;">Activations saturate (sigmoid outputs all 1s), gradients vanish. Network can't learn.</p>
+      </div>
+      <div class="formula-card" style="border-left:4px solid var(--accent2);">
+        <div style="font-size:16px; font-weight:800; color:var(--accent2); margin-bottom:6px;">Just Right: Smart Initialization</div>
+        <p style="font-size:14px; color:var(--muted); line-height:1.7;">Random, but scaled by the number of inputs. Keeps activations and gradients in a <strong>healthy range</strong> across all layers.</p>
+      </div>
+    </div>
+    <div>
+      <div class="formula-card">
+        <div class="formula-label">Xavier / Glorot Init (for Sigmoid, Tanh)</div>
+        <div class="formula" style="font-size:18px;">w ~ N(0, &radic;(2 / (n<sub>in</sub> + n<sub>out</sub>)))</div>
+        <p style="font-size:13px; color:var(--muted); text-align:center; margin-top:8px;">Keeps variance consistent across layers</p>
+      </div>
+      <div class="formula-card">
+        <div class="formula-label">He Init (for ReLU) &mdash; Most Common</div>
+        <div class="formula" style="font-size:18px;">w ~ N(0, &radic;(2 / n<sub>in</sub>))</div>
+        <p style="font-size:13px; color:var(--muted); text-align:center; margin-top:8px;">Accounts for ReLU killing half the neurons (zeros)</p>
+      </div>
+      <div class="formula-card" style="text-align:center;">
+        <div style="font-size:14px; color:var(--muted); line-height:1.8;">
+          <strong style="color:var(--accent);">In practice:</strong> Frameworks do this automatically!<br>
+          <span class="mono" style="font-size:13px;">PyTorch: nn.Linear uses Kaiming (He) by default</span><br>
+          <span class="mono" style="font-size:13px;">TensorFlow: Dense uses Glorot (Xavier) by default</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════ SLIDE 18: INTERACTIVE PLAYGROUND ═══════════════════════════════════════ -->
+<div class="slide" id="slide-17">
+  <h2>Interactive Playground</h2>
+  <p class="subtitle">Tweak the weights and bias &mdash; watch the neuron compute live!</p>
+  <div class="playground-grid">
+    <div>
+      <div class="formula-card">
+        <div class="formula-label" style="text-align:left; font-size:16px; margin-bottom:14px;">Adjust Parameters</div>
+        <div class="slider-group">
+          <label>Input x&#8321; (Hours Studied) <span id="pg_x1_val" class="mono highlight4">0.50</span></label>
+          <input type="range" id="pg_x1" min="0" max="1" step="0.01" value="0.50" oninput="updatePlayground()">
+        </div>
+        <div class="slider-group">
+          <label>Input x&#8322; (Hours Slept) <span id="pg_x2_val" class="mono highlight4">0.75</span></label>
+          <input type="range" id="pg_x2" min="0" max="1" step="0.01" value="0.75" oninput="updatePlayground()">
+        </div>
+        <div class="slider-group">
+          <label>Weight w&#8321; <span id="pg_w1_val" class="mono highlight2">0.40</span></label>
+          <input type="range" id="pg_w1" min="-2" max="2" step="0.01" value="0.40" oninput="updatePlayground()">
+        </div>
+        <div class="slider-group">
+          <label>Weight w&#8322; <span id="pg_w2_val" class="mono highlight2">0.60</span></label>
+          <input type="range" id="pg_w2" min="-2" max="2" step="0.01" value="0.60" oninput="updatePlayground()">
+        </div>
+        <div class="slider-group">
+          <label>Bias b <span id="pg_b_val" class="mono highlight3">0.10</span></label>
+          <input type="range" id="pg_b" min="-2" max="2" step="0.01" value="0.10" oninput="updatePlayground()">
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="formula-card" style="text-align:center;">
+        <div class="formula-label" style="font-size:16px; margin-bottom:10px;">Live Computation</div>
+        <div class="formula-sm" style="line-height:2.2; text-align:left;">
+          z = (x&#8321; &times; w&#8321;) + (x&#8322; &times; w&#8322;) + b<br>
+          z = (<span id="pg_calc_x1">0.50</span> &times; <span id="pg_calc_w1">0.40</span>) + (<span id="pg_calc_x2">0.75</span> &times; <span id="pg_calc_w2">0.60</span>) + <span id="pg_calc_b">0.10</span><br>
+          z = <span id="pg_z" style="color:var(--accent); font-size:20px; font-weight:800;">0.75</span>
+        </div>
+        <div style="margin:14px 0; padding-top:14px; border-top:1px solid rgba(91,82,224,0.1);">
+          <div class="formula-sm" style="line-height:2;">
+            &sigma;(z) = 1 / (1 + e<sup>-<span id="pg_z2">0.75</span></sup>)<br>
+            <span style="font-size:22px; font-weight:900;" id="pg_output_val">= 0.679</span>
+          </div>
+        </div>
+      </div>
+      <div id="pg_result" class="pred-result pred-pass">
+        <div style="font-size:14px; font-weight:600;">PREDICTION</div>
+        <div style="font-size:32px; margin:4px 0;" id="pg_pred_text">PASS (67.9%)</div>
+        <div style="font-size:13px; opacity:0.8;" id="pg_pred_sub">Probability > 50% threshold</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════ SLIDE 19: TYPES OF NEURAL NETWORKS ═══════════════════════════════════════ -->
+<div class="slide" id="slide-18">
+  <h2>Types of Neural Networks</h2>
+  <p class="subtitle">Different architectures for different problems</p>
+  <div style="display:flex; gap:18px; max-width:1100px; width:100%;">
+    <div class="nn-type-card">
+      <div class="nn-type-icon">&#128444;</div>
+      <div class="nn-type-name" style="color:var(--accent);">CNN</div>
+      <div style="font-size:12px; font-weight:600; color:var(--accent);">Convolutional Neural Network</div>
+      <div class="nn-type-desc" style="margin-top:10px;">
+        Slides <strong>filters</strong> across images to detect edges, shapes, objects. Layers: Conv &rarr; Pool &rarr; Conv &rarr; Pool &rarr; Dense.
+        Uses <strong>parameter sharing</strong> (same filter everywhere).
+      </div>
+      <div class="nn-type-use">Images, Video, Medical Scans</div>
+    </div>
+    <div class="nn-type-card">
+      <div class="nn-type-icon">&#128257;</div>
+      <div class="nn-type-name" style="color:var(--accent2);">RNN / LSTM</div>
+      <div style="font-size:12px; font-weight:600; color:var(--accent2);">Recurrent Neural Network</div>
+      <div class="nn-type-desc" style="margin-top:10px;">
+        Has <strong>memory</strong> &mdash; output feeds back as input. Processes sequences one step at a time.
+        LSTM/GRU solve the vanishing gradient problem with <strong>gates</strong>.
+      </div>
+      <div class="nn-type-use">Time Series, Speech, Music</div>
+    </div>
+    <div class="nn-type-card">
+      <div class="nn-type-icon">&#10024;</div>
+      <div class="nn-type-name" style="color:var(--accent4);">Transformer</div>
+      <div style="font-size:12px; font-weight:600; color:var(--accent4);">Attention Is All You Need</div>
+      <div class="nn-type-desc" style="margin-top:10px;">
+        Uses <strong>self-attention</strong> to look at all positions simultaneously. Processes entire sequences in parallel.
+        Powers GPT, BERT, and all modern LLMs.
+      </div>
+      <div class="nn-type-use">NLP, ChatGPT, Translation, Code</div>
+    </div>
+    <div class="nn-type-card">
+      <div class="nn-type-icon">&#127912;</div>
+      <div class="nn-type-name" style="color:var(--accent3);">GAN</div>
+      <div style="font-size:12px; font-weight:600; color:var(--accent3);">Generative Adversarial Network</div>
+      <div class="nn-type-desc" style="margin-top:10px;">
+        Two networks compete: <strong>Generator</strong> creates fake data, <strong>Discriminator</strong> tries to catch it.
+        Both improve through this adversarial game.
+      </div>
+      <div class="nn-type-use">Image Generation, Deepfakes, Art</div>
+    </div>
+  </div>
+  <div class="formula-card" style="max-width:800px; margin-top:16px; text-align:center;">
+    <p style="font-size:14px; color:var(--muted);">
+      All built on the same foundation: <span class="highlight4">neurons</span>, <span class="highlight2">weights</span>, <span class="highlight">forward pass</span>, <span class="highlight3">backpropagation</span> &mdash; everything you've learned!
+    </p>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════ SLIDE 20: FULL PICTURE ═══════════════════════════════════════ -->
+<div class="slide" id="slide-19">
+  <h2>The Complete Picture</h2>
+  <p class="subtitle">Everything connected: from raw data to learned predictions</p>
+  <div class="full-width" style="max-width:1100px;">
+    <div style="display:flex; justify-content:center; gap:0; flex-wrap:wrap;">
+      <!-- Step boxes in a flow -->
+      <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap; justify-content:center;">
+        <div class="bp-box" style="border-color:#2563eb; min-width:140px;">
+          <div class="bp-title">1. Input Data</div>
+          <div class="bp-val" style="color:#2563eb; font-size:14px;">x&#8321;=0.5, x&#8322;=0.75</div>
+        </div>
+        <div class="bp-arrow">&rarr;</div>
+        <div class="bp-box" style="border-color:#7c3aed; min-width:140px;">
+          <div class="bp-title">2. Weighted Sum</div>
+          <div class="bp-val" style="color:#7c3aed; font-size:14px;">&Sigma;(x&middot;w) + b</div>
+        </div>
+        <div class="bp-arrow">&rarr;</div>
+        <div class="bp-box" style="border-color:var(--accent4); min-width:140px;">
+          <div class="bp-title">3. Activation</div>
+          <div class="bp-val" style="color:var(--accent4); font-size:14px;">ReLU / Sigmoid</div>
+        </div>
+        <div class="bp-arrow">&rarr;</div>
+        <div class="bp-box" style="border-color:var(--accent2); min-width:140px;">
+          <div class="bp-title">4. Prediction</div>
+          <div class="bp-val" style="font-size:14px;">y&#770; = 0.70</div>
+        </div>
+      </div>
+    </div>
+    <div style="display:flex; justify-content:center; margin:12px 0;">
+      <div style="font-size:32px; color:var(--accent3);">&#8595;</div>
+    </div>
+    <div style="display:flex; justify-content:center; gap:8px; flex-wrap:wrap;">
+      <div class="bp-box" style="border-color:var(--accent3); min-width:160px;">
+        <div class="bp-title">5. Loss</div>
+        <div class="bp-val" style="color:var(--accent3); font-size:14px;">L = 0.357</div>
+      </div>
+      <div class="bp-arrow" style="color:var(--accent4);">&rarr;</div>
+      <div class="bp-box" style="border-color:var(--accent4); min-width:160px;">
+        <div class="bp-title">6. Gradients (Backprop)</div>
+        <div class="bp-val" style="color:var(--accent4); font-size:14px;">&part;L/&part;w via Chain Rule</div>
+      </div>
+      <div class="bp-arrow">&rarr;</div>
+      <div class="bp-box" style="border-color:var(--accent); min-width:160px;">
+        <div class="bp-title">7. Update Weights</div>
+        <div class="bp-val" style="color:var(--accent); font-size:14px;">w = w - &eta;&middot;&nabla;L</div>
+      </div>
+      <div class="bp-arrow" style="color:var(--accent2);">&rarr;</div>
+      <div class="bp-box" style="border-color:var(--accent2); min-width:160px;">
+        <div class="bp-title">8. Repeat!</div>
+        <div class="bp-val" style="font-size:14px;">Until loss &rarr; 0</div>
+      </div>
+    </div>
+
+    <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:16px; margin-top:28px;">
+      <div class="formula-card" style="text-align:center;">
+        <div style="font-size:14px; color:var(--accent4); font-weight:700; margin-bottom:6px;">Before Training</div>
+        <div style="font-size:13px; color:var(--muted);">Random weights &rarr; random predictions</div>
+        <div style="font-size:24px; font-weight:800; color:var(--accent3); margin-top:6px;">y&#770; = 0.52</div>
+        <div style="font-size:12px; color:var(--accent3);">(basically guessing)</div>
+      </div>
+      <div class="formula-card" style="text-align:center;">
+        <div style="font-size:14px; color:var(--accent4); font-weight:700; margin-bottom:6px;">Mid Training (Epoch 50)</div>
+        <div style="font-size:13px; color:var(--muted);">Weights adjusting &rarr; better predictions</div>
+        <div style="font-size:24px; font-weight:800; color:var(--accent4); margin-top:6px;">y&#770; = 0.78</div>
+        <div style="font-size:12px; color:var(--accent4);">Getting warmer!</div>
+      </div>
+      <div class="formula-card" style="text-align:center;">
+        <div style="font-size:14px; color:var(--accent4); font-weight:700; margin-bottom:6px;">After Training (Epoch 500)</div>
+        <div style="font-size:13px; color:var(--muted);">Optimized weights &rarr; accurate predictions</div>
+        <div style="font-size:24px; font-weight:800; color:var(--accent2); margin-top:6px;">y&#770; = 0.96</div>
+        <div style="font-size:12px; color:var(--accent2);">Confident: PASS!</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════ SLIDE 21: KEY TAKEAWAYS ═══════════════════════════════════════ -->
+<div class="slide" id="slide-20">
+  <h2>Key Takeaways</h2>
+  <p class="subtitle">The complete neural network knowledge map</p>
+  <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:12px; max-width:1100px; width:100%;">
+    <div class="formula-card" style="padding:16px 20px;">
+      <div style="display:flex; align-items:center; gap:10px;">
+        <div style="min-width:34px; height:34px; border-radius:50%; background:linear-gradient(135deg,#2563eb,#5b52e0);
+                    display:flex; align-items:center; justify-content:center; font-weight:900; font-size:14px; color:#fff;">1</div>
+        <div>
+          <div style="font-weight:700; font-size:14px; color:var(--accent2);">Neuron</div>
+          <div style="font-size:12px; color:var(--muted);">Weighted sum + bias + activation</div>
+        </div>
+      </div>
+    </div>
+    <div class="formula-card" style="padding:16px 20px;">
+      <div style="display:flex; align-items:center; gap:10px;">
+        <div style="min-width:34px; height:34px; border-radius:50%; background:linear-gradient(135deg,#2563eb,#5b52e0);
+                    display:flex; align-items:center; justify-content:center; font-weight:900; font-size:14px; color:#fff;">2</div>
+        <div>
+          <div style="font-weight:700; font-size:14px; color:var(--accent2);">Weights & Bias</div>
+          <div style="font-size:12px; color:var(--muted);">Learnable params adjusted in training</div>
+        </div>
+      </div>
+    </div>
+    <div class="formula-card" style="padding:16px 20px;">
+      <div style="display:flex; align-items:center; gap:10px;">
+        <div style="min-width:34px; height:34px; border-radius:50%; background:linear-gradient(135deg,#7c3aed,#c040d0);
+                    display:flex; align-items:center; justify-content:center; font-weight:900; font-size:14px; color:#fff;">3</div>
+        <div>
+          <div style="font-weight:700; font-size:14px; color:var(--accent2);">Layers</div>
+          <div style="font-size:12px; color:var(--muted);">Input &rarr; Hidden &rarr; Output</div>
+        </div>
+      </div>
+    </div>
+    <div class="formula-card" style="padding:16px 20px;">
+      <div style="display:flex; align-items:center; gap:10px;">
+        <div style="min-width:34px; height:34px; border-radius:50%; background:linear-gradient(135deg,#7c3aed,#c040d0);
+                    display:flex; align-items:center; justify-content:center; font-weight:900; font-size:14px; color:#fff;">4</div>
+        <div>
+          <div style="font-weight:700; font-size:14px; color:var(--accent2);">Activation Functions</div>
+          <div style="font-size:12px; color:var(--muted);">Sigmoid, ReLU, Tanh &mdash; non-linearity</div>
+        </div>
+      </div>
+    </div>
+    <div class="formula-card" style="padding:16px 20px;">
+      <div style="display:flex; align-items:center; gap:10px;">
+        <div style="min-width:34px; height:34px; border-radius:50%; background:linear-gradient(135deg,var(--accent2),#009478);
+                    display:flex; align-items:center; justify-content:center; font-weight:900; font-size:14px; color:#fff;">5</div>
+        <div>
+          <div style="font-weight:700; font-size:14px; color:var(--accent2);">Forward Propagation</div>
+          <div style="font-size:12px; color:var(--muted);">Input &rarr; compute &rarr; prediction</div>
+        </div>
+      </div>
+    </div>
+    <div class="formula-card" style="padding:16px 20px;">
+      <div style="display:flex; align-items:center; gap:10px;">
+        <div style="min-width:34px; height:34px; border-radius:50%; background:linear-gradient(135deg,var(--accent3),#d97706);
+                    display:flex; align-items:center; justify-content:center; font-weight:900; font-size:14px; color:#fff;">6</div>
+        <div>
+          <div style="font-weight:700; font-size:14px; color:var(--accent2);">Loss Function</div>
+          <div style="font-size:12px; color:var(--muted);">Measure error: BCE, MSE, Cross-Entropy</div>
+        </div>
+      </div>
+    </div>
+    <div class="formula-card" style="padding:16px 20px;">
+      <div style="display:flex; align-items:center; gap:10px;">
+        <div style="min-width:34px; height:34px; border-radius:50%; background:linear-gradient(135deg,var(--accent4),#e04545);
+                    display:flex; align-items:center; justify-content:center; font-weight:900; font-size:14px; color:#fff;">7</div>
+        <div>
+          <div style="font-weight:700; font-size:14px; color:var(--accent2);">Backpropagation</div>
+          <div style="font-size:12px; color:var(--muted);">Chain rule &rarr; gradients &rarr; update weights</div>
+        </div>
+      </div>
+    </div>
+    <div class="formula-card" style="padding:16px 20px;">
+      <div style="display:flex; align-items:center; gap:10px;">
+        <div style="min-width:34px; height:34px; border-radius:50%; background:linear-gradient(135deg,#e04545,#c040d0);
+                    display:flex; align-items:center; justify-content:center; font-weight:900; font-size:14px; color:#fff;">8</div>
+        <div>
+          <div style="font-weight:700; font-size:14px; color:var(--accent2);">Learning Rate & Optimizers</div>
+          <div style="font-size:12px; color:var(--muted);">SGD, Momentum, Adam &mdash; step size</div>
+        </div>
+      </div>
+    </div>
+    <div class="formula-card" style="padding:16px 20px;">
+      <div style="display:flex; align-items:center; gap:10px;">
+        <div style="min-width:34px; height:34px; border-radius:50%; background:linear-gradient(135deg,#2563eb,#00a88a);
+                    display:flex; align-items:center; justify-content:center; font-weight:900; font-size:14px; color:#fff;">9</div>
+        <div>
+          <div style="font-weight:700; font-size:14px; color:var(--accent2);">Regularization</div>
+          <div style="font-size:12px; color:var(--muted);">Dropout, L1/L2, Early Stopping</div>
+        </div>
+      </div>
+    </div>
+    <div class="formula-card" style="padding:16px 20px;">
+      <div style="display:flex; align-items:center; gap:10px;">
+        <div style="min-width:34px; height:34px; border-radius:50%; background:linear-gradient(135deg,#c9920a,#e04545);
+                    display:flex; align-items:center; justify-content:center; font-weight:900; font-size:13px; color:#fff;">10</div>
+        <div>
+          <div style="font-weight:700; font-size:14px; color:var(--accent2);">Overfit vs Underfit</div>
+          <div style="font-size:12px; color:var(--muted);">Bias-variance tradeoff</div>
+        </div>
+      </div>
+    </div>
+    <div class="formula-card" style="padding:16px 20px;">
+      <div style="display:flex; align-items:center; gap:10px;">
+        <div style="min-width:34px; height:34px; border-radius:50%; background:linear-gradient(135deg,var(--accent),#7c3aed);
+                    display:flex; align-items:center; justify-content:center; font-weight:900; font-size:13px; color:#fff;">11</div>
+        <div>
+          <div style="font-weight:700; font-size:14px; color:var(--accent2);">Weight Initialization</div>
+          <div style="font-size:12px; color:var(--muted);">Xavier, He &mdash; starting point matters</div>
+        </div>
+      </div>
+    </div>
+    <div class="formula-card" style="padding:16px 20px;">
+      <div style="display:flex; align-items:center; gap:10px;">
+        <div style="min-width:34px; height:34px; border-radius:50%; background:linear-gradient(135deg,#00a88a,#2563eb);
+                    display:flex; align-items:center; justify-content:center; font-weight:900; font-size:13px; color:#fff;">12</div>
+        <div>
+          <div style="font-weight:700; font-size:14px; color:var(--accent2);">Network Types</div>
+          <div style="font-size:12px; color:var(--muted);">CNN, RNN, Transformer, GAN</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div style="margin-top:20px; text-align:center;">
+    <p style="font-size:18px; color:var(--accent4); font-weight:600;">Neural Networks = Universal Function Approximators</p>
+    <p style="font-size:14px; color:var(--muted); margin-top:4px;">Given enough neurons, layers, and data, they can learn <em>any</em> pattern.</p>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════ NAVIGATION ═══════════════════════════════════════ -->
+<div class="nav">
+  <button onclick="prevSlide()">&#8592; Prev</button>
+  <div class="slide-counter"><span id="currentSlide">1</span> / <span id="totalSlides">12</span></div>
+  <button onclick="nextSlide()">Next &#8594;</button>
+</div>
+
+<script>
+  // ── Slide Navigation ──
+  const slides = document.querySelectorAll('.slide');
+  let current = 0;
+  const total = slides.length;
+  document.getElementById('totalSlides').textContent = total;
+
+  function showSlide(n) {
+    slides.forEach((s, i) => {
+      s.classList.remove('active', 'exit');
+      if (i < n) s.classList.add('exit');
+    });
+    slides[n].classList.add('active');
+    document.getElementById('currentSlide').textContent = n + 1;
+    document.getElementById('progressBar').style.width = ((n + 1) / total * 100) + '%';
+
+    // Draw canvases when their slides become active
+    if (n === 4) setTimeout(() => drawActivation('sigmoid'), 300);
+    if (n === 7) setTimeout(drawLossCanvas, 300);
+    if (n === 10) setTimeout(drawGDCanvas, 300);
+    if (n === 11) setTimeout(drawLRCanvases, 300);
+    if (n === 13) setTimeout(drawFitCanvases, 300);
+    if (n === 17) setTimeout(updatePlayground, 100);
+  }
+
+  function nextSlide() { if (current < total - 1) { current++; showSlide(current); } }
+  function prevSlide() { if (current > 0) { current--; showSlide(current); } }
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); nextSlide(); }
+    if (e.key === 'ArrowLeft') { e.preventDefault(); prevSlide(); }
+  });
+
+  // ── Activation Function Graph ──
+  function drawActivation(type) {
+    const canvas = document.getElementById('activationCanvas');
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    const w = canvas.width, h = canvas.height;
+    ctx.clearRect(0, 0, w, h);
+
+    // Axes
+    ctx.strokeStyle = 'rgba(100,100,140,0.3)';
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.moveTo(0, h/2); ctx.lineTo(w, h/2); // x-axis
+    ctx.moveTo(w/2, 0); ctx.lineTo(w/2, h); // y-axis
+    ctx.stroke();
+
+    // Labels
+    ctx.fillStyle = '#5a5a7a';
+    ctx.font = '12px Inter';
+    ctx.fillText('-6', 10, h/2 + 16);
+    ctx.fillText('6', w - 20, h/2 + 16);
+    ctx.fillText('0', w/2 + 6, h/2 + 16);
+
+    // Grid
+    ctx.strokeStyle = 'rgba(100,100,140,0.15)';
+    for (let i = 1; i <= 3; i++) {
+      ctx.beginPath();
+      ctx.moveTo(0, h/2 - i * h/8); ctx.lineTo(w, h/2 - i * h/8);
+      ctx.moveTo(0, h/2 + i * h/8); ctx.lineTo(w, h/2 + i * h/8);
+      ctx.stroke();
+    }
+
+    // Function
+    const funcs = {
+      sigmoid: (x) => 1 / (1 + Math.exp(-x)),
+      relu: (x) => Math.max(0, x),
+      tanh: (x) => Math.tanh(x)
+    };
+    const ranges = {
+      sigmoid: { yMin: -0.2, yMax: 1.2 },
+      relu: { yMin: -1, yMax: 6 },
+      tanh: { yMin: -1.5, yMax: 1.5 }
+    };
+
+    const fn = funcs[type];
+    const range = ranges[type];
+    const xMin = -6, xMax = 6;
+
+    ctx.beginPath();
+    ctx.strokeStyle = type === 'sigmoid' ? '#5b52e0' : type === 'relu' ? '#00a88a' : '#e04545';
+    ctx.lineWidth = 3;
+    ctx.shadowColor = ctx.strokeStyle;
+    ctx.shadowBlur = 10;
+
+    for (let px = 0; px <= w; px++) {
+      const x = xMin + (px / w) * (xMax - xMin);
+      const y = fn(x);
+      const py = h - ((y - range.yMin) / (range.yMax - range.yMin)) * h;
+      if (px === 0) ctx.moveTo(px, py); else ctx.lineTo(px, py);
+    }
+    ctx.stroke();
+    ctx.shadowBlur = 0;
+
+    // Label
+    const labels = { sigmoid: 'Sigmoid: 1/(1+e^(-x))', relu: 'ReLU: max(0, x)', tanh: 'Tanh' };
+    ctx.fillStyle = ctx.strokeStyle;
+    ctx.font = 'bold 14px JetBrains Mono';
+    ctx.fillText(labels[type], 10, 24);
+
+    // Y-axis labels
+    ctx.fillStyle = '#5a5a7a';
+    ctx.font = '11px Inter';
+    if (type === 'sigmoid') {
+      ctx.fillText('1.0', w/2 + 6, h - ((1 - range.yMin) / (range.yMax - range.yMin)) * h + 4);
+      ctx.fillText('0.5', w/2 + 6, h - ((0.5 - range.yMin) / (range.yMax - range.yMin)) * h + 4);
+    } else if (type === 'tanh') {
+      ctx.fillText('1.0', w/2 + 6, h - ((1 - range.yMin) / (range.yMax - range.yMin)) * h + 4);
+      ctx.fillText('-1.0', w/2 + 6, h - ((-1 - range.yMin) / (range.yMax - range.yMin)) * h + 4);
+    }
+
+    // Update tabs
+    document.querySelectorAll('.act-tab').forEach(t => {
+      t.classList.toggle('active', t.textContent.toLowerCase() === type);
+    });
+  }
+
+  // ── Loss Canvas ──
+  function drawLossCanvas() {
+    const canvas = document.getElementById('lossCanvas');
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    const w = canvas.width, h = canvas.height;
+    ctx.clearRect(0, 0, w, h);
+
+    // Draw loss curve
+    ctx.beginPath();
+    ctx.strokeStyle = 'rgba(91,82,224,0.2)';
+    ctx.lineWidth = 1;
+    ctx.moveTo(40, h - 30); ctx.lineTo(w - 20, h - 30);
+    ctx.stroke();
+
+    ctx.beginPath();
+    ctx.strokeStyle = '#e04545';
+    ctx.lineWidth = 3;
+    ctx.shadowColor = '#e04545';
+    ctx.shadowBlur = 8;
+    const padding = 40;
+    for (let px = padding; px <= w - 20; px++) {
+      const t = (px - padding) / (w - 20 - padding);
+      const x = -2 + t * 4;
+      const y = x * x * 0.3 + 0.5;
+      const py = (h - 30) - (y / 3) * (h - 60);
+      if (px === padding) ctx.moveTo(px, py); else ctx.lineTo(px, py);
+    }
+    ctx.stroke();
+    ctx.shadowBlur = 0;
+
+    // Mark current position
+    const currT = 0.62;
+    const currX = -2 + currT * 4;
+    const currY = currX * currX * 0.3 + 0.5;
+    const currPx = padding + currT * (w - 20 - padding);
+    const currPy = (h - 30) - (currY / 3) * (h - 60);
+
+    ctx.beginPath();
+    ctx.arc(currPx, currPy, 8, 0, Math.PI * 2);
+    ctx.fillStyle = '#b8840a';
+    ctx.shadowColor = '#b8840a';
+    ctx.shadowBlur = 15;
+    ctx.fill();
+    ctx.shadowBlur = 0;
+
+    ctx.fillStyle = '#b8840a';
+    ctx.font = 'bold 13px Inter';
+    ctx.fillText('We are here', currPx - 35, currPy - 16);
+
+    // Arrow pointing to minimum
+    const minPx = padding + 0.5 * (w - 20 - padding);
+    const minY = 0.5;
+    const minPy = (h - 30) - (minY / 3) * (h - 60);
+
+    ctx.beginPath();
+    ctx.arc(minPx, minPy, 6, 0, Math.PI * 2);
+    ctx.fillStyle = '#00a88a';
+    ctx.shadowColor = '#00a88a';
+    ctx.shadowBlur = 15;
+    ctx.fill();
+    ctx.shadowBlur = 0;
+
+    ctx.fillStyle = '#00a88a';
+    ctx.font = 'bold 12px Inter';
+    ctx.fillText('Goal: Minimum', minPx - 40, minPy + 22);
+
+    // Labels
+    ctx.fillStyle = '#5a5a7a';
+    ctx.font = '12px Inter';
+    ctx.fillText('Weights', w/2 - 20, h - 8);
+    ctx.save();
+    ctx.translate(14, h/2 + 15);
+    ctx.rotate(-Math.PI/2);
+    ctx.fillText('Loss', 0, 0);
+    ctx.restore();
+  }
+
+  // ── Epoch Animation ──
+  let animating = false;
+  function animateEpochs() {
+    if (animating) return;
+    animating = true;
+    const el = document.getElementById('epochNum');
+    let epoch = 1;
+    const interval = setInterval(() => {
+      epoch++;
+      el.textContent = epoch;
+      el.style.color = epoch <= 100 ? 'var(--accent3)' : epoch <= 300 ? 'var(--accent4)' : 'var(--accent2)';
+      if (epoch >= 500) {
+        clearInterval(interval);
+        animating = false;
+        el.textContent = '500';
+        el.style.color = 'var(--accent2)';
+      }
+    }, 15);
+  }
+
+  // ── Gradient Descent Canvas ──
+  let gdBallX = 0.15;
+  let gdAnimating = false;
+  function drawGDCanvas(ballT) {
+    const canvas = document.getElementById('gdCanvas');
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    const w = canvas.width, h = canvas.height;
+    ctx.clearRect(0, 0, w, h);
+    const pad = 40;
+    // Draw curve
+    ctx.beginPath();
+    ctx.strokeStyle = '#5b52e0';
+    ctx.lineWidth = 3;
+    for (let px = pad; px <= w - pad; px++) {
+      const t = (px - pad) / (w - 2*pad);
+      const x = -2.5 + t * 5;
+      const y = 0.3*x*x*x*x - 1.5*x*x + 3;
+      const py = pad + ((y + 1) / 6) * (h - 2*pad);
+      if (px === pad) ctx.moveTo(px, py); else ctx.lineTo(px, py);
+    }
+    ctx.stroke();
+    // Axis
+    ctx.strokeStyle = 'rgba(100,100,140,0.2)';
+    ctx.lineWidth = 1;
+    ctx.beginPath(); ctx.moveTo(pad, h - pad); ctx.lineTo(w - pad, h - pad); ctx.stroke();
+    ctx.fillStyle = '#6b7084'; ctx.font = '12px Inter';
+    ctx.fillText('Weights', w/2 - 20, h - 10);
+    ctx.save(); ctx.translate(14, h/2); ctx.rotate(-Math.PI/2); ctx.fillText('Loss', 0, 0); ctx.restore();
+    // Ball
+    if (ballT === undefined) ballT = gdBallX;
+    const bx = pad + ballT * (w - 2*pad);
+    const bXVal = -2.5 + ballT * 5;
+    const bY = 0.3*bXVal*bXVal*bXVal*bXVal - 1.5*bXVal*bXVal + 3;
+    const by = pad + ((bY + 1) / 6) * (h - 2*pad);
+    ctx.beginPath(); ctx.arc(bx, by - 10, 12, 0, Math.PI*2);
+    ctx.fillStyle = '#e04545'; ctx.shadowColor = '#e04545'; ctx.shadowBlur = 8; ctx.fill(); ctx.shadowBlur = 0;
+    ctx.fillStyle = '#fff'; ctx.font = 'bold 9px Inter'; ctx.fillText('W', bx - 4, by - 7);
+    // Min marker
+    const minT = 0.5;
+    const minPx = pad + minT * (w - 2*pad);
+    const minXVal = -2.5 + minT * 5;
+    const minYVal = 0.3*minXVal*minXVal*minXVal*minXVal - 1.5*minXVal*minXVal + 3;
+    const minPy = pad + ((minYVal + 1) / 6) * (h - 2*pad);
+    ctx.beginPath(); ctx.arc(minPx, minPy - 10, 6, 0, Math.PI*2);
+    ctx.fillStyle = '#00a88a'; ctx.fill();
+    ctx.fillStyle = '#00a88a'; ctx.font = 'bold 11px Inter'; ctx.fillText('Goal', minPx - 12, minPy + 10);
+  }
+  function animateGD() {
+    if (gdAnimating) return;
+    gdAnimating = true;
+    gdBallX = 0.15;
+    const target = 0.5;
+    const step = () => {
+      gdBallX += (target - gdBallX) * 0.04;
+      drawGDCanvas(gdBallX);
+      if (Math.abs(gdBallX - target) > 0.005) requestAnimationFrame(step);
+      else { gdBallX = target; drawGDCanvas(target); gdAnimating = false; }
+    };
+    step();
+  }
+
+  // ── Learning Rate Canvases ──
+  function drawLRCanvases() {
+    drawLRCurve('lrHighCanvas', '#e04545', [0.2, 0.8, 0.15, 0.85, 0.3, 0.7, 0.25, 0.75, 0.35, 0.65, 0.4]);
+    drawLRCurve('lrLowCanvas', '#c9920a', [0.15, 0.17, 0.19, 0.21, 0.23, 0.25, 0.27, 0.29, 0.31, 0.33, 0.35]);
+    drawLRCurve('lrGoodCanvas', '#00a88a', [0.15, 0.25, 0.33, 0.39, 0.43, 0.46, 0.48, 0.49, 0.495, 0.5, 0.5]);
+  }
+  function drawLRCurve(canvasId, color, positions) {
+    const canvas = document.getElementById(canvasId);
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    const w = canvas.width, h = canvas.height;
+    ctx.clearRect(0, 0, w, h);
+    const pad = 25;
+    // Draw parabola
+    ctx.beginPath(); ctx.strokeStyle = 'rgba(100,100,140,0.25)'; ctx.lineWidth = 2;
+    for (let px = pad; px <= w - pad; px++) {
+      const t = (px - pad) / (w - 2*pad);
+      const x = -2 + t * 4;
+      const y = x*x*0.4 + 0.5;
+      const py = h - pad - (y / 3) * (h - 2*pad);
+      if (px === pad) ctx.moveTo(px, py); else ctx.lineTo(px, py);
+    }
+    ctx.stroke();
+    // Draw path
+    ctx.beginPath(); ctx.strokeStyle = color; ctx.lineWidth = 2; ctx.setLineDash([4,4]);
+    positions.forEach((pos, i) => {
+      const px = pad + pos * (w - 2*pad);
+      const xVal = -2 + pos * 4;
+      const y = xVal*xVal*0.4 + 0.5;
+      const py = h - pad - (y / 3) * (h - 2*pad);
+      if (i === 0) ctx.moveTo(px, py); else ctx.lineTo(px, py);
+    });
+    ctx.stroke(); ctx.setLineDash([]);
+    // Draw ball at last pos
+    const lastPos = positions[positions.length - 1];
+    const lastPx = pad + lastPos * (w - 2*pad);
+    const lastXVal = -2 + lastPos * 4;
+    const lastY = lastXVal*lastXVal*0.4 + 0.5;
+    const lastPy = h - pad - (lastY / 3) * (h - 2*pad);
+    ctx.beginPath(); ctx.arc(lastPx, lastPy, 7, 0, Math.PI*2);
+    ctx.fillStyle = color; ctx.fill();
+  }
+
+  // ── Fit Canvases (Overfit/Underfit/Goodfit) ──
+  function drawFitCanvases() {
+    const points = [];
+    for (let i = 0; i < 12; i++) {
+      const x = 20 + i * 20;
+      const y = 100 - 35*Math.sin(i*0.5) + (Math.random()-0.5)*20;
+      points.push({x, y});
+    }
+    drawFitCurve('underfitCanvas', points, 'line', '#c9920a');
+    drawFitCurve('goodfitCanvas', points, 'smooth', '#00a88a');
+    drawFitCurve('overfitCanvas', points, 'wiggly', '#e04545');
+    drawTrainValCurve();
+  }
+  function drawFitCurve(id, points, type, color) {
+    const canvas = document.getElementById(id);
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    const w = canvas.width, h = canvas.height;
+    ctx.clearRect(0, 0, w, h);
+    // Points
+    points.forEach(p => {
+      ctx.beginPath(); ctx.arc(p.x, p.y, 4, 0, Math.PI*2);
+      ctx.fillStyle = '#5b52e0'; ctx.fill();
+    });
+    // Curve
+    ctx.beginPath(); ctx.strokeStyle = color; ctx.lineWidth = 2.5;
+    if (type === 'line') {
+      ctx.moveTo(10, 110); ctx.lineTo(250, 60);
+    } else if (type === 'smooth') {
+      ctx.moveTo(10, 105);
+      ctx.bezierCurveTo(60, 85, 120, 55, 160, 70);
+      ctx.bezierCurveTo(200, 85, 230, 75, 250, 80);
+    } else {
+      ctx.moveTo(points[0].x, points[0].y);
+      for (let i = 1; i < points.length; i++) {
+        const xc = (points[i].x + points[i-1].x) / 2;
+        const yc = (points[i].y + points[i-1].y) / 2;
+        ctx.quadraticCurveTo(points[i-1].x, points[i-1].y, xc, yc);
+      }
+      ctx.lineTo(points[points.length-1].x, points[points.length-1].y);
+    }
+    ctx.stroke();
+  }
+  function drawTrainValCurve() {
+    const canvas = document.getElementById('trainValCanvas');
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    const w = canvas.width, h = canvas.height;
+    ctx.clearRect(0, 0, w, h);
+    const pad = 40;
+    // Axes
+    ctx.strokeStyle = 'rgba(100,100,140,0.2)'; ctx.lineWidth = 1;
+    ctx.beginPath(); ctx.moveTo(pad, 10); ctx.lineTo(pad, h-20); ctx.lineTo(w-10, h-20); ctx.stroke();
+    ctx.fillStyle = '#6b7084'; ctx.font = '11px Inter';
+    ctx.fillText('Epochs', w/2, h-4); ctx.fillText('Loss', 4, 14);
+    // Training loss (keeps going down)
+    ctx.beginPath(); ctx.strokeStyle = '#5b52e0'; ctx.lineWidth = 2.5;
+    for (let px = pad; px <= w - 20; px++) {
+      const t = (px - pad) / (w - 20 - pad);
+      const y = 0.9 * Math.exp(-3*t) + 0.05;
+      const py = 14 + y * (h - 40);
+      if (px === pad) ctx.moveTo(px, py); else ctx.lineTo(px, py);
+    }
+    ctx.stroke();
+    // Validation loss (goes down then up)
+    ctx.beginPath(); ctx.strokeStyle = '#e04545'; ctx.lineWidth = 2.5;
+    for (let px = pad; px <= w - 20; px++) {
+      const t = (px - pad) / (w - 20 - pad);
+      const y = 0.9 * Math.exp(-2.5*t) + 0.1 + 0.5*t*t;
+      const py = 14 + y * (h - 40);
+      if (px === pad) ctx.moveTo(px, py); else ctx.lineTo(px, py);
+    }
+    ctx.stroke();
+    // Early stopping line
+    const stopT = 0.42;
+    const stopPx = pad + stopT * (w - 20 - pad);
+    ctx.setLineDash([6,4]); ctx.strokeStyle = '#00a88a'; ctx.lineWidth = 2;
+    ctx.beginPath(); ctx.moveTo(stopPx, 10); ctx.lineTo(stopPx, h-20); ctx.stroke();
+    ctx.setLineDash([]);
+    ctx.fillStyle = '#00a88a'; ctx.font = 'bold 11px Inter';
+    ctx.fillText('Early Stop', stopPx - 25, h - 24);
+    // Overfit zone
+    ctx.fillStyle = 'rgba(224,69,69,0.08)';
+    ctx.fillRect(stopPx, 10, w - 20 - stopPx, h - 30);
+    ctx.fillStyle = '#e04545'; ctx.font = '10px Inter';
+    ctx.fillText('Overfitting zone', stopPx + 10, 24);
+  }
+
+  // ── Interactive Playground ──
+  function updatePlayground() {
+    const x1 = parseFloat(document.getElementById('pg_x1').value);
+    const x2 = parseFloat(document.getElementById('pg_x2').value);
+    const w1 = parseFloat(document.getElementById('pg_w1').value);
+    const w2 = parseFloat(document.getElementById('pg_w2').value);
+    const b = parseFloat(document.getElementById('pg_b').value);
+    document.getElementById('pg_x1_val').textContent = x1.toFixed(2);
+    document.getElementById('pg_x2_val').textContent = x2.toFixed(2);
+    document.getElementById('pg_w1_val').textContent = w1.toFixed(2);
+    document.getElementById('pg_w2_val').textContent = w2.toFixed(2);
+    document.getElementById('pg_b_val').textContent = b.toFixed(2);
+    const z = x1*w1 + x2*w2 + b;
+    const sig = 1 / (1 + Math.exp(-z));
+    document.getElementById('pg_calc_x1').textContent = x1.toFixed(2);
+    document.getElementById('pg_calc_x2').textContent = x2.toFixed(2);
+    document.getElementById('pg_calc_w1').textContent = w1.toFixed(2);
+    document.getElementById('pg_calc_w2').textContent = w2.toFixed(2);
+    document.getElementById('pg_calc_b').textContent = b.toFixed(2);
+    document.getElementById('pg_z').textContent = z.toFixed(3);
+    document.getElementById('pg_z2').textContent = z.toFixed(3);
+    document.getElementById('pg_output_val').textContent = '= ' + sig.toFixed(4);
+    const pct = (sig * 100).toFixed(1);
+    const resEl = document.getElementById('pg_result');
+    const predText = document.getElementById('pg_pred_text');
+    const predSub = document.getElementById('pg_pred_sub');
+    if (sig >= 0.5) {
+      resEl.className = 'pred-result pred-pass';
+      predText.textContent = 'PASS (' + pct + '%)';
+      predSub.textContent = 'Probability >= 50% threshold';
+    } else {
+      resEl.className = 'pred-result pred-fail';
+      predText.textContent = 'FAIL (' + pct + '%)';
+      predSub.textContent = 'Probability < 50% threshold';
+    }
+  }
+
+  // ── Initialize ──
+  showSlide(0);
+</script>
+
+</body>
+</html>
